@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
 import HomeScreen from "./Screens/Home";
-import SettingsScreen from "./Screens/settings";
+import SettingsScreen from "./Screens/Settings";
 
 type RootStackParams = {
   Home: undefined;
