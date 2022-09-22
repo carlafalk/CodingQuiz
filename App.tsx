@@ -18,7 +18,12 @@ const RootStack = createNativeStackNavigator<RootStackParams>();
 export default function App() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Home">
+      <RootStack.Navigator
+        initialRouteName="Categories"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <RootStack.Screen name="Home" component={HomeScreen} />
         <RootStack.Screen name="About" component={AboutScreen} />
         <RootStack.Screen name="Categories" component={CategoriesScreen} />
