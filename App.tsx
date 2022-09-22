@@ -1,6 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StyleSheet } from "react-native";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useCallback, useEffect } from "react";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
 import HomeScreen from "./Screens/Home";
@@ -16,8 +18,29 @@ export type RootStackParams = {
 const RootStack = createNativeStackNavigator<RootStackParams>();
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    ShareTechMono: require("./assets/fonts/ShareTechMono-Regular.ttf"),
+  });
+
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={onLayoutRootView}>
       <RootStack.Navigator initialRouteName="Home">
         <RootStack.Screen name="Home" component={HomeScreen} />
         <RootStack.Screen name="About" component={AboutScreen} />
@@ -27,12 +50,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
