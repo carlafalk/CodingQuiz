@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Text } from "react-native";
 import styled from "styled-components/native";
 import CSSImg from "../assets/languageIcons/css-3.png";
 import HTMLImg from "../assets/languageIcons/html-5.png";
@@ -10,46 +9,63 @@ import TSImg from "../assets/languageIcons/typescript.png";
 import Background from "../Components/Background";
 import { colors } from "../Styles/Shared";
 
+// type Props = NativeStackScreenProps<RootStackParams, "Categories">;
+// onPress={navigation.navigate("Home")}
+// { navigation }: Props
+
 const CategoriesScreen = () => {
   return (
     <Background>
-      <StyledView>
-        <BackAndTitle>
-          <Back>
-            <Ionicons name="ios-arrow-back" size={45} color="white" />
-          </Back>
-          <Title>
-            <Text>CHOOSE A CATEGORY</Text>
-          </Title>
-        </BackAndTitle>
-        <CardContainer>
-          <ReactCard>
-            <CardImage source={ReactImg} />
-            <Text>REACT</Text>
-          </ReactCard>
-          <HTMLCard>
-            <CardImage source={HTMLImg} />
-            <Text>HTML</Text>
-          </HTMLCard>
-          <CSSCard>
-            <CardImage source={CSSImg} />
-            <Text>CSS</Text>
-          </CSSCard>
-          <JavaScriptCard>
-            <CardImage source={JSImg} />
-            <Text>JAVASCRIPT</Text>
-          </JavaScriptCard>
-          <TypeScriptCard>
-            <CardImage source={TSImg} />
-            <Text>TYPESCRIPT</Text>
-          </TypeScriptCard>
-        </CardContainer>
-      </StyledView>
+      <Container>
+        <StyledView>
+          <BackAndTitle>
+            <Back activeOpacity={0.8}>
+              <Ionicons name="ios-arrow-back" size={45} color="white" />
+            </Back>
+
+            <Title>
+              <TitleText>CHOOSE A CATEGORY</TitleText>
+            </Title>
+          </BackAndTitle>
+          <CardContainer>
+            <ReactCard activeOpacity={0.8}>
+              <CardImage source={ReactImg} />
+              <StyledText>REACT</StyledText>
+            </ReactCard>
+
+            <HTMLCard activeOpacity={0.8}>
+              <CardImage source={HTMLImg} />
+              <StyledText>HTML</StyledText>
+            </HTMLCard>
+
+            <CSSCard activeOpacity={0.8}>
+              <CardImage source={CSSImg} />
+              <StyledText>CSS</StyledText>
+            </CSSCard>
+
+            <JavaScriptCard activeOpacity={0.8}>
+              <CardImage source={JSImg} />
+              <StyledText>JAVASCRIPT</StyledText>
+            </JavaScriptCard>
+
+            <TypeScriptCard activeOpacity={0.8}>
+              <CardImage source={TSImg} />
+              <StyledText>TYPESCRIPT</StyledText>
+            </TypeScriptCard>
+          </CardContainer>
+        </StyledView>
+      </Container>
     </Background>
   );
 };
 
 export default CategoriesScreen;
+
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
 
 const StyledView = styled.View`
   width: 80%;
@@ -57,7 +73,6 @@ const StyledView = styled.View`
 `;
 
 const CardContainer = styled.View`
-  width: 100%;
   height: 80%;
 
   justify-content: space-between;
@@ -65,7 +80,6 @@ const CardContainer = styled.View`
 
 const BackAndTitle = styled.View`
   height: 20%;
-  width: 100%;
 
   flex-direction: row;
   align-items: center;
@@ -77,23 +91,22 @@ const Title = styled.View`
   background-color: ${colors.darkPurple};
   justify-content: center;
   align-items: center;
-  margin-top: 20%;
+  margin-top: 10%;
   border-radius: 15px;
   elevation: 8;
 `;
-const Back = styled.View`
+const Back = styled.TouchableOpacity`
   height: 40%;
   width: 20%;
   background-color: ${colors.darkPurple};
   margin-right: auto;
   justify-content: center;
   align-items: center;
-  margin-top: 20%;
+  margin-top: 10%;
   border-radius: 15px;
   elevation: 8;
 `;
-const ReactCard = styled.View`
-  width: 100%;
+const ReactCard = styled.TouchableOpacity`
   height: 18%;
   background-color: ${colors.categories.react};
   border-radius: 15px;
@@ -101,8 +114,7 @@ const ReactCard = styled.View`
   align-items: center;
   elevation: 8;
 `;
-const HTMLCard = styled.View`
-  width: 100%;
+const HTMLCard = styled.TouchableOpacity`
   height: 18%;
   background-color: ${colors.categories.html};
   border-radius: 15px;
@@ -110,8 +122,7 @@ const HTMLCard = styled.View`
   align-items: center;
   elevation: 8;
 `;
-const CSSCard = styled.View`
-  width: 100%;
+const CSSCard = styled.TouchableOpacity`
   height: 18%;
   background-color: ${colors.categories.css};
   border-radius: 15px;
@@ -119,8 +130,7 @@ const CSSCard = styled.View`
   align-items: center;
   elevation: 8;
 `;
-const JavaScriptCard = styled.View`
-  width: 100%;
+const JavaScriptCard = styled.TouchableOpacity`
   height: 18%;
   background-color: ${colors.categories.javaScript};
   border-radius: 15px;
@@ -128,8 +138,7 @@ const JavaScriptCard = styled.View`
   align-items: center;
   elevation: 8;
 `;
-const TypeScriptCard = styled.View`
-  width: 100%;
+const TypeScriptCard = styled.TouchableOpacity`
   height: 18%;
   background-color: ${colors.categories.typeScript};
   border-radius: 15px;
@@ -142,7 +151,19 @@ const CardImage = styled.Image`
   height: 71px;
   width: 71px;
   margin: 0 25px;
-  elevation: 8;
+  elevation: 2;
+  shadowcolor: black;
+`;
+
+const StyledText = styled.Text`
+  font-family: "ShareTechMono";
+  color: white;
+  font-size: 30px;
+`;
+const TitleText = styled.Text`
+  font-family: "ShareTechMono";
+  color: white;
+  font-size: 20px;
 `;
 
 // const styles = StyleSheet.create({
