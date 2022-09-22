@@ -6,7 +6,7 @@ import CategoriesScreen from "./Screens/Categories";
 import HomeScreen from "./Screens/Home";
 import SettingsScreen from "./Screens/Settings";
 
-type RootStackParams = {
+export type RootStackParams = {
   Home: undefined;
   About: undefined;
   Categories: undefined;
