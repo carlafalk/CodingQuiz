@@ -10,7 +10,7 @@ interface Props {
 const Background = ({ children, dark }: Props) => {
   return (
     <StyledBg source={bg} resizeMode="cover">
-      <StyledView>{children}</StyledView>
+      {children}
     </StyledBg>
   );
 };
