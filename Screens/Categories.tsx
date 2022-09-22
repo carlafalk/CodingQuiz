@@ -1,166 +1,77 @@
 import { Ionicons } from "@expo/vector-icons";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { Text } from "react-native";
 import styled from "styled-components/native";
+import { RootStackParams } from "../App";
 import CSSImg from "../assets/languageIcons/css-3.png";
 import HTMLImg from "../assets/languageIcons/html-5.png";
 import JSImg from "../assets/languageIcons/js.png";
 import ReactImg from "../assets/languageIcons/react.png";
 import TSImg from "../assets/languageIcons/typescript.png";
 import Background from "../Components/Background";
+import CategoryButton from "../Components/Buttons/CategoryButton";
 import { colors } from "../Styles/Shared";
 
-const CategoriesScreen = () => {
+type Props = NativeStackScreenProps<RootStackParams, "Categories">;
+
+const CategoriesScreen = ({ navigation }: Props) => {
   return (
     <Background>
-      <StyledView>
-        <BackAndTitle>
-          <Back>
-            <Ionicons name="ios-arrow-back" size={45} color="white" />
-          </Back>
-          <Title>
-            <Text>CHOOSE A CATEGORY</Text>
-          </Title>
-        </BackAndTitle>
-        <CardContainer>
-          <ReactCard>
-            <CardImage source={ReactImg} />
-            <Text>REACT</Text>
-          </ReactCard>
-          <HTMLCard>
-            <CardImage source={HTMLImg} />
-            <Text>HTML</Text>
-          </HTMLCard>
-          <CSSCard>
-            <CardImage source={CSSImg} />
-            <Text>CSS</Text>
-          </CSSCard>
-          <JavaScriptCard>
-            <CardImage source={JSImg} />
-            <Text>JAVASCRIPT</Text>
-          </JavaScriptCard>
-          <TypeScriptCard>
-            <CardImage source={TSImg} />
-            <Text>TYPESCRIPT</Text>
-          </TypeScriptCard>
-        </CardContainer>
-      </StyledView>
+      <BackAndTitle>
+        <Back activeOpacity={0.8} onPress={() => navigation.goBack()}>
+          <Ionicons name="ios-arrow-back" size={45} color="white" />
+        </Back>
+
+        <Title>
+          <TitleText>choose a category</TitleText>
+        </Title>
+      </BackAndTitle>
+      <ButtonContainer>
+        <CategoryButton title="react" color={colors.categories.react} img={ReactImg} />
+        <CategoryButton title="html" color={colors.categories.html} img={HTMLImg} />
+        <CategoryButton title="css" color={colors.categories.css} img={CSSImg} />
+        <CategoryButton title="javascript" color={colors.categories.javaScript} img={JSImg} />
+        <CategoryButton title="typescript" color={colors.categories.typeScript} img={TSImg} />
+      </ButtonContainer>
     </Background>
   );
 };
 
 export default CategoriesScreen;
 
-const StyledView = styled.View`
-  width: 80%;
-  height: 90%;
-`;
-
-const CardContainer = styled.View`
-  width: 100%;
-  height: 80%;
-
-  justify-content: space-between;
+const ButtonContainer = styled.View`
+  margin: 0 45px;
 `;
 
 const BackAndTitle = styled.View`
-  height: 20%;
-  width: 100%;
-
+  height: 48px;
   flex-direction: row;
   align-items: center;
+  margin: 60px 45px 20% 45px;
 `;
 
 const Title = styled.View`
   width: 70%;
-  height: 40%;
+  padding: 13px 0;
   background-color: ${colors.darkPurple};
   justify-content: center;
   align-items: center;
-  margin-top: 20%;
   border-radius: 15px;
   elevation: 8;
 `;
-const Back = styled.View`
-  height: 40%;
+const Back = styled.TouchableOpacity`
   width: 20%;
   background-color: ${colors.darkPurple};
   margin-right: auto;
   justify-content: center;
   align-items: center;
-  margin-top: 20%;
   border-radius: 15px;
-  elevation: 8;
-`;
-const ReactCard = styled.View`
-  width: 100%;
-  height: 18%;
-  background-color: ${colors.categories.react};
-  border-radius: 15px;
-  flex-direction: row;
-  align-items: center;
-  elevation: 8;
-`;
-const HTMLCard = styled.View`
-  width: 100%;
-  height: 18%;
-  background-color: ${colors.categories.html};
-  border-radius: 15px;
-  flex-direction: row;
-  align-items: center;
-  elevation: 8;
-`;
-const CSSCard = styled.View`
-  width: 100%;
-  height: 18%;
-  background-color: ${colors.categories.css};
-  border-radius: 15px;
-  flex-direction: row;
-  align-items: center;
-  elevation: 8;
-`;
-const JavaScriptCard = styled.View`
-  width: 100%;
-  height: 18%;
-  background-color: ${colors.categories.javaScript};
-  border-radius: 15px;
-  flex-direction: row;
-  align-items: center;
-  elevation: 8;
-`;
-const TypeScriptCard = styled.View`
-  width: 100%;
-  height: 18%;
-  background-color: ${colors.categories.typeScript};
-  border-radius: 15px;
-  flex-direction: row;
-  align-items: center;
   elevation: 8;
 `;
 
-const CardImage = styled.Image`
-  height: 71px;
-  width: 71px;
-  margin: 0 25px;
-  elevation: 8;
+const TitleText = styled.Text`
+  font-family: "ShareTechMono";
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
 `;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   background: {
-//     flex: 1,
-//     justifyContent: "flex-start",
-//     marginBottom: 250,
-//     transform: [{ scale: 3 }],
-//   },
-//   reactCard: {
-//     height: "60%",
-//     width: "45%",
-//     backgroundColor: `${colors.categories.react}`,
-//     marginLeft: 106,
-//     marginTop: 120,
-//     zIndex: 14,
-//   },
-// });

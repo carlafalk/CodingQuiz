@@ -48,6 +48,7 @@ const LogoContainer = styled.View`
 const Logo = styled.Image`
   height: 80%;
   width: 80%;
+  resize-mode: contain;
 `;
 
 const ButtonContainer = styled.View`
