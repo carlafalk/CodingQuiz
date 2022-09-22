@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <NavigationContainer onReady={onLayoutRootView}>
-      <RootStack.Navigator initialRouteName="Categories">
+      <RootStack.Navigator initialRouteName="Home">
         <RootStack.Screen name="Home" component={HomeScreen} />
         <RootStack.Screen name="About" component={AboutScreen} />
         <RootStack.Screen name="Categories" component={CategoriesScreen} />
