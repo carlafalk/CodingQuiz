@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
+import Logo from "../Components/Logo";
 import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
 import Items from "../data/quizItemData";
@@ -32,7 +33,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   return (
     <Background dark>
       <TopSection title={route.params.category} />
-      <QuestionContainer style={{ marginTop: 30 }}>
+      <QuestionContainer>
         <Question>{questions[0].question}</Question>
         <Divider style={{ width: "100%" }} />
         <AnswerContainer>
@@ -54,6 +55,7 @@ const GameScreen = ({ navigation, route }: Props) => {
           <SubmitText>submit</SubmitText>
         </SubmitButton>
       </QuestionContainer>
+      <Logo topMargin={20} size="small" />
     </Background>
   );
 };
