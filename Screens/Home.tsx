@@ -1,14 +1,23 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useRef } from "react";
+import { Modalize } from "react-native-modalize";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import logo from "../assets/Images/logo.png";
 import Background from "../Components/Background";
 import { colors } from "../Styles/Shared";
+import SettingsScreen from "./Settings";
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 type HomeNavigationProps = NativeStackScreenProps<RootStackParams>;
 
 const HomeScreen = ({ navigation }: HomeNavigationProps) => {
+  const modalizeRef = useRef<Modalize>(null);
+
+  const handleOpen = () => {
+    modalizeRef.current?.open();
+  };
+
   return (
     <Background>
       <LogoContainer>
@@ -18,18 +27,32 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
         <PlayButton onPress={() => navigation.navigate("Categories")}>
           <BtnTitle>Play</BtnTitle>
         </PlayButton>
-        <SettingsButton onPress={() => navigation.navigate("Settings")}>
+        <SettingsButton onPress={handleOpen}>
           <BtnTitle>Settings</BtnTitle>
         </SettingsButton>
         <AboutButton onPress={() => navigation.navigate("About")}>
           <BtnTitle>About</BtnTitle>
         </AboutButton>
       </ButtonContainer>
+      <Modalize ref={modalizeRef} rootStyle={modalRootStyle} modalStyle={modalModalStyle} modalTopOffset={150}>
+        <SettingsScreen />
+      </Modalize>
     </Background>
   );
 };
 
-export default HomeScreen;
+export default gestureHandlerRootHOC(HomeScreen);
+
+const modalRootStyle = {
+  backgroundColor: "rgba(0,0,0,0.5)",
+};
+
+const modalModalStyle = {
+  backgroundColor: "#2A242F",
+  padding: 20,
+  borderRadius: 20,
+  flex: 1,
+};
 
 const BtnTitle = styled.Text`
   font-family: ShareTechMono;
