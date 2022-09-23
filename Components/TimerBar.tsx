@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: Constants.statusBarHeight,
-    // backgroundColor: "#82148b",
     padding: 1,
   },
   progressBar: {
