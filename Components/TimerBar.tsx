@@ -1,6 +1,7 @@
 import Constants from "expo-constants";
 import React, { useEffect, useState } from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
+import { colors } from "../Styles/Shared";
 
 const TimerBar = () => {
   const [timeLeft, setTimeLeft] = useState(100);
@@ -25,9 +26,9 @@ const TimerBar = () => {
       <View style={styles.progressBar}>
         <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: "#8BED4F", borderRadius: 8, width: `${timeLeft}%` }]} />
         <View style={styles.progressBarShine}></View>
-        <View style={styles.progressBarClock}></View>
-
-        <Text>{!timeIsUp ? timeLeft / 10 : "time is up"}</Text>
+        <View style={styles.progressBarClock}>
+          <Text style={styles.timeLeftText}>{timeLeft / 10}</Text>
+        </View>
       </View>
     </View>
   );
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: Constants.statusBarHeight,
-
+    // backgroundColor: "#82148b",
     padding: 1,
   },
   progressBar: {
@@ -66,7 +67,22 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 4,
   },
   progressBarClock: {
-    height: 50,
-    widht: 50,
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    top: -15,
+    right: 5,
+    height: 60,
+    width: 60,
+    backgroundColor: colors.lightPurple,
+    borderColor: colors.mustard,
+    borderWidth: 5,
+    borderRadius: 50,
+    elevation: 5,
+  },
+  timeLeftText: {
+    fontFamily: "ShareTechMono",
+    fontSize: 20,
+    color: colors.lightGreen,
   },
 });
