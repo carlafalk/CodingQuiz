@@ -1,7 +1,7 @@
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import styled from "styled-components/native";
 import { colors } from "../Styles/Shared";
+import BackButton from "./Buttons/BackButton";
 
 interface Props {
   title: string;
@@ -11,9 +11,7 @@ interface Props {
 const TopSection = ({ title, onPress }: Props) => {
   return (
     <Container>
-      <Back activeOpacity={0.8} onPress={onPress}>
-        <Ionicons name="ios-arrow-back" size={45} color="white" />
-      </Back>
+      <BackButton onPress={() => onPress()} />
       <Title>
         <TitleText>{title}</TitleText>
       </Title>
@@ -34,15 +32,6 @@ const Title = styled.View`
   width: 70%;
   padding: 13px 0;
   background-color: ${colors.darkPurple};
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  elevation: 8;
-`;
-const Back = styled.TouchableOpacity`
-  width: 20%;
-  background-color: ${colors.darkPurple};
-  margin-right: auto;
   justify-content: center;
   align-items: center;
   border-radius: 15px;
