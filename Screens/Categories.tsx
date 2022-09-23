@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import styled from "styled-components/native";
@@ -9,6 +8,7 @@ import JSImg from "../assets/languageIcons/js.png";
 import ReactImg from "../assets/languageIcons/react.png";
 import TSImg from "../assets/languageIcons/typescript.png";
 import Background from "../Components/Background";
+import BackButton from "../Components/Buttons/BackButton";
 import CategoryButton from "../Components/Buttons/CategoryButton";
 import { colors } from "../Styles/Shared";
 
@@ -18,9 +18,11 @@ const CategoriesScreen = ({ navigation }: Props) => {
   return (
     <Background dark>
       <BackAndTitle>
-        <Back activeOpacity={0.8} onPress={() => navigation.goBack()}>
-          <Ionicons name="ios-arrow-back" size={45} color="white" />
-        </Back>
+        <BackButton
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
 
         <Title>
           <TitleText>choose a category</TitleText>
@@ -54,15 +56,6 @@ const Title = styled.View`
   width: 70%;
   padding: 13px 0;
   background-color: ${colors.darkPurple};
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  elevation: 8;
-`;
-const Back = styled.TouchableOpacity`
-  width: 20%;
-  background-color: ${colors.darkPurple};
-  margin-right: auto;
   justify-content: center;
   align-items: center;
   border-radius: 15px;
