@@ -16,7 +16,7 @@ type Props = NativeStackScreenProps<RootStackParams, "Categories">;
 
 const CategoriesScreen = ({ navigation }: Props) => {
   return (
-    <Background>
+    <Background dark>
       <BackAndTitle>
         <BackButton
           onPress={() => {
@@ -64,7 +64,7 @@ const Title = styled.View`
 
 const TitleText = styled.Text`
   font-family: "ShareTechMono";
-  color: white;
+  color: ${colors.commons.white};
   font-size: 20px;
   text-transform: uppercase;
 `;

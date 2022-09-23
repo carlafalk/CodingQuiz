@@ -9,20 +9,19 @@ interface Props {
 
 const Background = ({ children, dark }: Props) => {
   return (
-    <StyledBg source={bg} resizeMode="cover">
-      {children}
-    </StyledBg>
+    <Bg source={bg} resizeMode="cover" dark={dark}>
+      {dark ? <DarkenBg>{children}</DarkenBg> : children}
+    </Bg>
   );
 };
 
 export default Background;
 
-const StyledBg = styled.ImageBackground`
+const Bg = styled.ImageBackground`
   flex: 1;
 `;
 
-const StyledView = styled.View`
+const DarkenBg = styled.View`
   flex: 1;
-  justify-content: center;
-  align-items: center;
+  background-color: #0000005d;
 `;
