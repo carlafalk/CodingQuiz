@@ -12,4 +12,8 @@ export const colors = {
     javaScript: "#FFBE17",
     typeScript: "#0754A8",
   },
+  commons: {
+    white: "#FFFFFF",
+    black: "#000000",
+  },
 };
