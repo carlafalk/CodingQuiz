@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
+import AnswerButton from "../Components/Buttons/AnswerButton";
 import Logo from "../Components/Logo";
 import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
 import Items from "../data/quizItemData";
-import QuizItem from "../models/QuizItem";
+import QuizItem, { Answer } from "../models/QuizItem";
 import { colors } from "../Styles/Shared";
-import { MdText, SmText } from "../Styles/texts";
+import { MdText } from "../Styles/texts";
 import { Divider } from "../Styles/views";
 
 type Props = NativeStackScreenProps<RootStackParams, "Game">;
@@ -17,7 +18,9 @@ type Props = NativeStackScreenProps<RootStackParams, "Game">;
 const GameScreen = ({ navigation, route }: Props) => {
   const [questions, setQuestions] = useState<QuizItem[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
 
+  console.log(selectedAnswer);
   useEffect(() => {
     const randomQuestions = () => {
       const filteredQuestions = Items.filter((item) => item.category === route.params.category);
@@ -30,6 +33,15 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   if (questions.length === 0) return null;
 
+  function handlePress(answer: Answer) {
+    setSelectedAnswer(answer);
+  }
+
+  function handleSubmit() {
+    if (selectedAnswer?.isCorrect) {
+    }
+  }
+
   return (
     <Background dark>
       <TopSection title={route.params.category} />
@@ -37,21 +49,12 @@ const GameScreen = ({ navigation, route }: Props) => {
         <Question>{questions[0].question}</Question>
         <Divider style={{ width: "100%" }} />
         <AnswerContainer>
-          <AnswerCard>
-            <Answer>{questions[0].answers[0].answer}</Answer>
-          </AnswerCard>
-          <AnswerCard>
-            <Answer>{questions[0].answers[1].answer}</Answer>
-          </AnswerCard>
-          <AnswerCard>
-            <Answer>{questions[0].answers[2].answer}</Answer>
-          </AnswerCard>
-          <AnswerCard>
-            <Answer>{questions[0].answers[3].answer}</Answer>
-          </AnswerCard>
+          {questions[0].answers.map((answer) => (
+            <AnswerButton onPress={handlePress} answer={answer} key={answer.answer} selectedAnswer={selectedAnswer} />
+          ))}
         </AnswerContainer>
         <TimerBar />
-        <SubmitButton>
+        <SubmitButton onPress={handleSubmit} disabled={!selectedAnswer ? true : false}>
           <SubmitText>submit</SubmitText>
         </SubmitButton>
       </QuestionContainer>
@@ -80,19 +83,6 @@ const AnswerContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   margin: 20px 0;
-`;
-
-const AnswerCard = styled.View`
-  width: 45%;
-  background-color: ${colors.lightPurple};
-  border-radius: 10px;
-  padding: 20px 5px;
-  margin: 5px;
-`;
-
-const Answer = styled(SmText)`
-  text-align: center;
-  font-family: ShareTechMono;
 `;
 
 const SubmitButton = styled.TouchableOpacity`
