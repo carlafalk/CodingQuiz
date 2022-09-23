@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
+import Logo from "../Components/Logo";
 import TopSection from "../Components/TopSection";
 import { colors } from "../Styles/Shared";
 
@@ -12,7 +13,7 @@ const AboutScreen = ({ navigation }: Props) => {
   return (
     <Background dark>
       <TopSection title="about" onPress={() => navigation.goBack()} />
-
+      <Logo topMargin={-50} size="medium" />
       <About>
         <Header>About</Header>
         <Description>School project for SUVNET21</Description>
