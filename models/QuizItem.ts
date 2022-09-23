@@ -5,7 +5,7 @@ interface QuizItem {
   category: "react" | "html" | "css" | "javascript" | "typescript";
 }
 
-interface Answer {
+export interface Answer {
   isCorrect: boolean;
   answer: string;
 }
