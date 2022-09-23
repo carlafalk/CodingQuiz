@@ -16,7 +16,7 @@ type Props = NativeStackScreenProps<RootStackParams, "Categories">;
 
 const CategoriesScreen = ({ navigation }: Props) => {
   return (
-    <Background>
+    <Background dark>
       <BackAndTitle>
         <Back activeOpacity={0.8} onPress={() => navigation.goBack()}>
           <Ionicons name="ios-arrow-back" size={45} color="white" />
@@ -71,7 +71,7 @@ const Back = styled.TouchableOpacity`
 
 const TitleText = styled.Text`
   font-family: "ShareTechMono";
-  color: white;
+  color: ${colors.commons.white};
   font-size: 20px;
   text-transform: uppercase;
 `;
