@@ -1,23 +1,30 @@
 import Constants from "expo-constants";
 import React, { useEffect, useState } from "react";
+import { View } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../Styles/Shared";
 
-const TimerBar = () => {
+interface Props {
+  setTimeIsUp: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const TimerBar = ({ setTimeIsUp }: Props) => {
   const [timeLeft, setTimeLeft] = useState(100);
-  const [timeIsUp, setTimeIsUp] = useState(false);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      if (timeLeft > 0) setTimeLeft((prev) => prev - 10);
+    let timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        prev <= 0 && clearInterval(timer);
 
-      if (timeLeft === 0) {
-        setTimeIsUp(true);
-        window.clearInterval(timer);
-      }
+        return prev > 0 ? prev - 10 : 0;
+      });
     }, 1000);
 
-    return () => window.clearInterval(timer);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    timeLeft === 0 && setTimeIsUp(true);
   }, [timeLeft]);
 
   return (
