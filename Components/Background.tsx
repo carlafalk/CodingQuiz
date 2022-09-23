@@ -17,7 +17,7 @@ const Background = ({ children, dark }: Props) => {
 
 export default Background;
 
-const Bg = styled.ImageBackground<{ dark: boolean }>`
+const Bg = styled.ImageBackground`
   flex: 1;
 `;
 
