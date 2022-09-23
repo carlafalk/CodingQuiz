@@ -6,7 +6,6 @@ import { colors } from "../Styles/Shared";
 const TimerBar = () => {
   const [timeLeft, setTimeLeft] = useState(100);
   const [timeIsUp, setTimeIsUp] = useState(false);
-  console.log("TimerBar rendered");
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -22,15 +21,13 @@ const TimerBar = () => {
   }, [timeLeft]);
 
   return (
-    <TimeBarContainer>
-      <TimeBar>
-        <RemainingTimeBar width={timeLeft} />
-        <TimeBarShine />
-        <TimeBarClock>
-          <TimeBarTime>{timeLeft / 10}</TimeBarTime>
-        </TimeBarClock>
-      </TimeBar>
-    </TimeBarContainer>
+    <TimeBar>
+      <RemainingTimeBar width={timeLeft} />
+      <TimeBarShine />
+      <TimeBarClock>
+        <TimeBarTime>{timeLeft / 10}</TimeBarTime>
+      </TimeBarClock>
+    </TimeBar>
   );
 };
 
