@@ -7,6 +7,7 @@ import logo from "../assets/Images/logo.png";
 import Background from "../Components/Background";
 import { colors } from "../Styles/Shared";
 import SettingsScreen from "./Settings";
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 type HomeNavigationProps = NativeStackScreenProps<RootStackParams>;
 
@@ -40,7 +41,7 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   );
 };
 
-export default HomeScreen;
+export default gestureHandlerRootHOC(HomeScreen);
 
 const modalRootStyle = {
   backgroundColor: "rgba(0,0,0,0.5)",
