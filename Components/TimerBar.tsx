@@ -43,7 +43,6 @@ const TimeBarContainer = styled.View`
   align-items: center;
   padding-top: ${Constants.statusBarHeight}px;
   padding: 1px;
-  border: 1px solid black;
 `;
 
 const TimeBar = styled.View`
