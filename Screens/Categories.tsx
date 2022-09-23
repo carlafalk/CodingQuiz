@@ -29,7 +29,12 @@ const CategoriesScreen = ({ navigation }: Props) => {
         </Title>
       </BackAndTitle>
       <ButtonContainer>
-        <CategoryButton title="react" color={colors.categories.react} img={ReactImg} />
+        <CategoryButton
+          title="react"
+          color={colors.categories.react}
+          img={ReactImg}
+          onPress={() => navigation.navigate("Game", { category: "react" })}
+        />
         <CategoryButton title="html" color={colors.categories.html} img={HTMLImg} />
         <CategoryButton title="css" color={colors.categories.css} img={CSSImg} />
         <CategoryButton title="javascript" color={colors.categories.javaScript} img={JSImg} />

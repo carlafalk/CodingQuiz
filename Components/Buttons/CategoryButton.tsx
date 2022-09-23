@@ -5,11 +5,12 @@ interface Props {
   title: string;
   img: React.ReactNode;
   color: string;
+  onPress?: () => void;
 }
 
-const CategoryButton = ({ title, img, color }: Props) => {
+const CategoryButton = ({ title, img, color, onPress }: Props) => {
   return (
-    <Button activeOpacity={0.8} color={color}>
+    <Button activeOpacity={0.8} color={color} onPress={onPress}>
       <CardImage source={img} />
       <Title>{title}</Title>
     </Button>
