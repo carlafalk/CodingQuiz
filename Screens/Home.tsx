@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useRef } from "react";
+import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
@@ -7,9 +8,8 @@ import logo from "../assets/Images/logo.png";
 import Background from "../Components/Background";
 import { colors } from "../Styles/Shared";
 import SettingsScreen from "./Settings";
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
-type HomeNavigationProps = NativeStackScreenProps<RootStackParams>;
+type HomeNavigationProps = NativeStackScreenProps<RootStackParams, "Home">;
 
 const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);

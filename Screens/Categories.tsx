@@ -29,11 +29,26 @@ const CategoriesScreen = ({ navigation }: Props) => {
         </Title>
       </BackAndTitle>
       <ButtonContainer>
-        <CategoryButton title="react" color={colors.categories.react} img={ReactImg} />
-        <CategoryButton title="html" color={colors.categories.html} img={HTMLImg} />
-        <CategoryButton title="css" color={colors.categories.css} img={CSSImg} />
-        <CategoryButton title="javascript" color={colors.categories.javaScript} img={JSImg} />
-        <CategoryButton title="typescript" color={colors.categories.typeScript} img={TSImg} />
+        <CategoryButton
+          title="react"
+          color={colors.categories.react}
+          img={ReactImg}
+          onPress={() => navigation.navigate("Game", { category: "react" })}
+        />
+        <CategoryButton title="html" color={colors.categories.html} img={HTMLImg} onPress={() => navigation.navigate("Game", { category: "html" })} />
+        <CategoryButton title="css" color={colors.categories.css} img={CSSImg} onPress={() => navigation.navigate("Game", { category: "css" })} />
+        <CategoryButton
+          title="javascript"
+          color={colors.categories.javaScript}
+          img={JSImg}
+          onPress={() => navigation.navigate("Game", { category: "javascript" })}
+        />
+        <CategoryButton
+          title="typescript"
+          color={colors.categories.typeScript}
+          img={TSImg}
+          onPress={() => navigation.navigate("Game", { category: "typescript" })}
+        />
       </ButtonContainer>
     </Background>
   );

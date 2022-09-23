@@ -5,6 +5,7 @@ export const colors = {
   lightGreen: "#68E349",
   lightGrey: "#ACACAC",
   mustard: "#FFB100",
+  success: "#009806",
   categories: {
     react: "#2993CF",
     html: "#FF702E",

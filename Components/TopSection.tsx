@@ -5,16 +5,16 @@ import BackButton from "./Buttons/BackButton";
 
 interface Props {
   title: string;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 const TopSection = ({ title, onPress }: Props) => {
   return (
     <Container>
-      <BackButton onPress={() => onPress()} />
-      <Title>
+      {onPress && <BackButton onPress={() => onPress()} />}
+      <TitleConatiner noBackBtn={onPress ? false : true}>
         <TitleText>{title}</TitleText>
-      </Title>
+      </TitleConatiner>
     </Container>
   );
 };
@@ -28,8 +28,8 @@ const Container = styled.View`
   margin: 60px 45px 20% 45px;
 `;
 
-const Title = styled.View`
-  width: 70%;
+const TitleConatiner = styled.View<{ noBackBtn: boolean }>`
+  width: ${(props) => (props.noBackBtn ? "100%" : "70%")};
   padding: 13px 0;
   background-color: ${colors.darkPurple};
   justify-content: center;

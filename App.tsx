@@ -5,6 +5,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect } from "react";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
+import GameScreen from "./Screens/Game";
 import HomeScreen from "./Screens/Home";
 import SettingsScreen from "./Screens/Settings";
 
@@ -13,6 +14,7 @@ export type RootStackParams = {
   About: undefined;
   Categories: undefined;
   Settings: undefined;
+  Game: { category: string };
 };
 
 const RootStack = createNativeStackNavigator<RootStackParams>();
@@ -46,6 +48,7 @@ export default function App() {
         <RootStack.Screen name="About" component={AboutScreen} />
         <RootStack.Screen name="Categories" component={CategoriesScreen} />
         <RootStack.Screen name="Settings" component={SettingsScreen} />
+        <RootStack.Screen name="Game" component={GameScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
