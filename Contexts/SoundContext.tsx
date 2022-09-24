@@ -1,15 +1,16 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { Audio, AVPlaybackSource } from "expo-av";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 interface SoundContextValue {
-  playSound: () => void;
-  muteSound: () => void;
+  playSound: (path: AVPlaybackSource) => void;
+  stopSound: () => void;
 }
 
 const SoundContext = createContext<SoundContextValue>({
   playSound: () => {
     console.warn("this is default provider");
   },
-  muteSound: () => {
+  stopSound: () => {
     console.warn("this is default provider");
   },
 });
@@ -19,16 +20,32 @@ interface Props {
 }
 
 function SoundProvider({ children }: Props) {
-  const playSound = () => {
+  const [sound, setSound] = useState<Audio.Sound>();
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log("Unloading Sound ");
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
+  const playSound = async (filePath: AVPlaybackSource) => {
     //TODO: Play sound
-    console.log("sound is playing");
+    const { sound, status } = await Audio.Sound.createAsync(filePath);
+    console.log(status.isLoaded);
+    setSound(sound);
+
+    await sound.playAsync();
+    console.log("Playing Sound: " + filePath);
   };
 
-  const muteSound = () => {
-    // TODO: Mute sound
+  const stopSound = async () => {
+    //TODO: Stop sound
   };
 
-  return <SoundContext.Provider value={{ playSound, muteSound }}>{children}</SoundContext.Provider>;
+  return <SoundContext.Provider value={{ playSound, stopSound }}>{children}</SoundContext.Provider>;
 }
 
 export const useSound = () => useContext(SoundContext);
