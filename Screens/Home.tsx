@@ -6,8 +6,8 @@ import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
-import { useSound } from "../Contexts/SoundContext";
 import Logo from "../Components/Logo";
+import { useSound } from "../Contexts/SoundContext";
 import { colors } from "../Styles/Shared";
 import SettingsScreen from "./Settings";
 
@@ -16,7 +16,7 @@ type HomeNavigationProps = NativeStackScreenProps<RootStackParams, "Home">;
 const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);
   const HomeScreenMusic = require("../assets/sounds/HomeScreenMusic.mp3");
-  const { playSound } = useSound();
+  const { playSound, toggleSound } = useSound();
 
   const handleOpen = () => {
     modalizeRef.current?.open();
@@ -33,6 +33,7 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
         <HomeScreenButton onPress={() => navigation.navigate("Categories")} title="Play" color={colors.lightGreen} />
         <HomeScreenButton onPress={handleOpen} title="Settings" color={colors.mustard} />
         <HomeScreenButton onPress={() => navigation.navigate("About")} title="About" color={colors.lightPurple} />
+        <HomeScreenButton onPress={() => toggleSound()} title="Mute" color={colors.lightPurple} />
       </ButtonContainer>
       <Modalize ref={modalizeRef} rootStyle={modalRootStyle} modalStyle={modalModalStyle} modalTopOffset={150}>
         <SettingsScreen />
