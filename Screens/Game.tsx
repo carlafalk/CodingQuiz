@@ -22,9 +22,10 @@ const GameScreen = ({ navigation, route }: Props) => {
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
   const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
 
-  const { playSound } = useSound();
+  const gameMusic = require("../assets/sounds/GameMusic.mp3");
 
-  playSound();
+  const { playSound, stopSound } = useSound();
+  console.log("gameScreen re-render");
 
   useEffect(() => {
     const randomQuestions = () => {
@@ -41,6 +42,10 @@ const GameScreen = ({ navigation, route }: Props) => {
       handleSubmit();
     }
   }, [timeIsUp]);
+
+  useEffect(() => {
+    playSound(gameMusic);
+  }, [currentQuestion]);
 
   if (questions.length === 0) return null;
 
