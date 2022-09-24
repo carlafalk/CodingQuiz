@@ -4,8 +4,8 @@ import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
-import logo from "../assets/Images/logo.png";
 import Background from "../Components/Background";
+import Logo from "../Components/Logo";
 import { colors } from "../Styles/Shared";
 import SettingsScreen from "./Settings";
 
@@ -20,9 +20,8 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
 
   return (
     <Background>
-      <LogoContainer>
-        <Logo source={logo} />
-      </LogoContainer>
+      <Logo topMargin={124} size="large" />
+
       <ButtonContainer>
         <PlayButton onPress={() => navigation.navigate("Categories")}>
           <BtnTitle>Play</BtnTitle>
@@ -61,18 +60,18 @@ const BtnTitle = styled.Text`
   font-size: 20px;
 `;
 
-const LogoContainer = styled.View`
-  height: 30%;
-  align-items: center;
-  justify-content: center;
-  margin-top: 124px;
-`;
+// const LogoContainer = styled.View`
+//   height: 30%;
+//   align-items: center;
+//   justify-content: center;
+//   margin-top: 124px;
+// `;
 
-const Logo = styled.Image`
-  height: 80%;
-  width: 80%;
-  resize-mode: contain;
-`;
+// const Logo = styled.Image`
+//   height: 80%;
+//   width: 80%;
+//   resize-mode: contain;
+// `;
 
 const ButtonContainer = styled.View`
   margin-top: 48px;
