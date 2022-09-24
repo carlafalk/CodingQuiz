@@ -74,8 +74,8 @@ const GameScreen = ({ navigation, route }: Props) => {
         <Question>{questions[currentQuestion].question}</Question>
         <Divider style={{ width: "100%" }} />
         <AnswerContainer>
-          {questions[currentQuestion].answers.map((answer) => (
-            <AnswerButton onPress={handlePress} answer={answer} key={answer.answer} selectedAnswer={selectedAnswer} />
+          {questions[currentQuestion].answers.map((answer, index) => (
+            <AnswerButton onPress={handlePress} answer={answer} index={index} key={index} selectedAnswer={selectedAnswer} />
           ))}
         </AnswerContainer>
         <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} />
