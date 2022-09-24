@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import logo from "../assets/Images/logo.png";
 import Background from "../Components/Background";
+import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
 import { colors } from "../Styles/Shared";
 import SettingsScreen from "./Settings";
 
@@ -24,15 +25,9 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
         <Logo source={logo} />
       </LogoContainer>
       <ButtonContainer>
-        <PlayButton onPress={() => navigation.navigate("Categories")}>
-          <BtnTitle>Play</BtnTitle>
-        </PlayButton>
-        <SettingsButton onPress={handleOpen}>
-          <BtnTitle>Settings</BtnTitle>
-        </SettingsButton>
-        <AboutButton onPress={() => navigation.navigate("About")}>
-          <BtnTitle>About</BtnTitle>
-        </AboutButton>
+        <HomeScreenButton onPress={() => navigation.navigate("Categories")} title="Play" color={colors.lightGreen} />
+        <HomeScreenButton onPress={handleOpen} title="Settings" color={colors.mustard} />
+        <HomeScreenButton onPress={() => navigation.navigate("About")} title="About" color={colors.lightPurple} />
       </ButtonContainer>
       <Modalize ref={modalizeRef} rootStyle={modalRootStyle} modalStyle={modalModalStyle} modalTopOffset={150}>
         <SettingsScreen />
@@ -54,13 +49,6 @@ const modalModalStyle = {
   flex: 1,
 };
 
-const BtnTitle = styled.Text`
-  font-family: ShareTechMono;
-  text-transform: uppercase;
-  color: ${colors.darkPurple};
-  font-size: 20px;
-`;
-
 const LogoContainer = styled.View`
   height: 30%;
   align-items: center;
@@ -76,39 +64,4 @@ const Logo = styled.Image`
 
 const ButtonContainer = styled.View`
   margin-top: 48px;
-`;
-
-const PlayButton = styled.TouchableOpacity`
-  justify-content: center;
-  align-items: center;
-  background-color: ${colors.lightGreen};
-  border-radius: 14px;
-  margin: 0 100px;
-  margin-bottom: 24px;
-  elevation: 8;
-  padding: 18px 0px;
-`;
-
-const SettingsButton = styled.TouchableOpacity`
-  justify-content: center;
-  align-items: center;
-  background-color: ${colors.mustard};
-  border-radius: 14px;
-  margin: 0 100px;
-  margin-bottom: 24px;
-  elevation: 8;
-  shadowcolor: #171717;
-  padding: 18px 0px;
-`;
-
-const AboutButton = styled.TouchableOpacity`
-  justify-content: center;
-  align-items: center;
-  background-color: ${colors.lightPurple};
-  border-radius: 14px;
-  margin-bottom: 24px;
-  margin: 0 100px;
-  elevation: 8;
-  shadowcolor: #171717;
-  padding: 18px 0px;
 `;
