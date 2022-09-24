@@ -8,13 +8,14 @@ interface Props {
   answer: Answer;
   onPress: (answer: Answer) => void;
   selectedAnswer: Answer | null;
+  index: number;
 }
-const AnswerButton = ({ answer, onPress, selectedAnswer }: Props) => {
+const AnswerButton = ({ answer, onPress, selectedAnswer, index }: Props) => {
   function handlePress() {
     onPress(answer);
   }
   return (
-    <Button onPress={handlePress} selected={selectedAnswer} this={answer}>
+    <Button onPress={handlePress} selectedAnswer={selectedAnswer} thisAnswer={answer} index={index}>
       <AnswerText>{answer.answer}</AnswerText>
     </Button>
   );
@@ -22,13 +23,16 @@ const AnswerButton = ({ answer, onPress, selectedAnswer }: Props) => {
 
 export default AnswerButton;
 
-const Button = styled.TouchableOpacity<{ selected: Answer | null; this: Answer }>`
+const Button = styled.TouchableOpacity<{ selectedAnswer: Answer | null; thisAnswer: Answer; index: number }>`
   width: 45%;
-  background-color: ${colors.lightPurple};
+  ${(props) => props.index === 0 && `background-color: ${colors.anwserButtons.purple}`}
+  ${(props) => props.index === 1 && `background-color: ${colors.anwserButtons.green}`}
+  ${(props) => props.index === 2 && `background-color: ${colors.anwserButtons.orange}`}
+  ${(props) => props.index === 3 && `background-color: ${colors.anwserButtons.blue}`}
   border-radius: 10px;
   padding: 20px 5px;
   margin: 5px;
-  border: ${(props) => (props.selected === props.this ? `3px solid ${colors.commons.black}` : "none")};
+  border: ${(props) => (props.selectedAnswer === props.thisAnswer ? `3px solid ${colors.commons.black}` : "none")};
   box-sizing: border-box;
 `;
 

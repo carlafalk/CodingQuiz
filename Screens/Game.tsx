@@ -20,6 +20,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
   const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
+  const [points, setPoints] = useState<number>(0);
 
   useEffect(() => {
     const randomQuestions = () => {
@@ -43,18 +44,26 @@ const GameScreen = ({ navigation, route }: Props) => {
     setSelectedAnswer(answer);
   }
 
+  function handleAnswer() {
+    if (selectedAnswer) {
+      selectedAnswer.isCorrect && setPoints((prev) => prev + 1);
+    }
+  }
+
   function handleSubmit() {
     console.log("Submittar");
     // if selectedAnswer.correct, setPoints prev + 1 pts
     // if !selecteAnser, submit
     // if selectedAsnwer.false, 0pts
     if (currentQuestion !== questions.length - 1) {
+      handleAnswer();
       setTimeIsUp(false);
       setCurrentQuestion((prev) => prev + 1);
       setSelectedAnswer(null);
     } else {
       // handle game over
-      console.log("Game over!");
+      console.log(`Game over! You scored ${points} / ${questions.length}`);
+      setTimeIsUp(true);
     }
   }
 
@@ -65,8 +74,8 @@ const GameScreen = ({ navigation, route }: Props) => {
         <Question>{questions[currentQuestion].question}</Question>
         <Divider style={{ width: "100%" }} />
         <AnswerContainer>
-          {questions[currentQuestion].answers.map((answer) => (
-            <AnswerButton onPress={handlePress} answer={answer} key={answer.answer} selectedAnswer={selectedAnswer} />
+          {questions[currentQuestion].answers.map((answer, index) => (
+            <AnswerButton onPress={handlePress} answer={answer} index={index} key={index} selectedAnswer={selectedAnswer} />
           ))}
         </AnswerContainer>
         <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} />

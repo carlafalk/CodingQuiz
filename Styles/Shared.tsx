@@ -13,6 +13,12 @@ export const colors = {
     javaScript: "#FFBE17",
     typeScript: "#0754A8",
   },
+  anwserButtons: {
+    purple: "#674C7D",
+    green: "#4A9500",
+    orange: "#8F5627",
+    blue: "#0754A8",
+  },
   commons: {
     white: "#FFFFFF",
     black: "#000000",
