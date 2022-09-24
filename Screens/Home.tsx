@@ -22,7 +22,6 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   return (
     <Background>
       <Logo size="large" topMargin={124} />
-
       <ButtonContainer>
         <HomeScreenButton onPress={() => navigation.navigate("Categories")} title="Play" color={colors.lightGreen} />
         <HomeScreenButton onPress={handleOpen} title="Settings" color={colors.mustard} />
@@ -47,19 +46,6 @@ const modalModalStyle = {
   borderRadius: 20,
   flex: 1,
 };
-
-// const LogoContainer = styled.View`
-//   height: 30%;
-//   align-items: center;
-//   justify-content: center;
-//   margin-top: 124px;
-// `;
-
-// const Logo = styled.Image`
-//   height: 80%;
-//   width: 80%;
-//   resize-mode: contain;
-// `;
 
 const ButtonContainer = styled.View`
   margin-top: 48px;
