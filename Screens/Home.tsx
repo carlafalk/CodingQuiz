@@ -1,11 +1,12 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
+import { useSound } from "../Contexts/SoundContext";
 import Logo from "../Components/Logo";
 import { colors } from "../Styles/Shared";
 import SettingsScreen from "./Settings";
@@ -14,10 +15,16 @@ type HomeNavigationProps = NativeStackScreenProps<RootStackParams, "Home">;
 
 const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);
+  const HomeScreenMusic = require("../assets/sounds/HomeScreenMusic.mp3");
+  const { playSound } = useSound();
 
   const handleOpen = () => {
     modalizeRef.current?.open();
   };
+
+  useEffect(() => {
+    playSound(HomeScreenMusic);
+  }, [navigation]);
 
   return (
     <Background>

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect } from "react";
+import SoundProvider from "./Contexts/SoundContext";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
 import GameScreen from "./Screens/Game";
@@ -43,14 +44,16 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer onReady={onLayoutRootView}>
-      <RootStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, animation: "fade" }}>
-        <RootStack.Screen name="Home" component={HomeScreen} />
-        <RootStack.Screen name="About" component={AboutScreen} />
-        <RootStack.Screen name="Categories" component={CategoriesScreen} />
-        <RootStack.Screen name="Settings" component={SettingsScreen} />
-        <RootStack.Screen name="Game" component={GameScreen} />
-      </RootStack.Navigator>
-    </NavigationContainer>
+    <SoundProvider>
+      <NavigationContainer onReady={onLayoutRootView}>
+        <RootStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, animation: "fade" }}>
+          <RootStack.Screen name="Home" component={HomeScreen} />
+          <RootStack.Screen name="About" component={AboutScreen} />
+          <RootStack.Screen name="Categories" component={CategoriesScreen} />
+          <RootStack.Screen name="Settings" component={SettingsScreen} />
+          <RootStack.Screen name="Game" component={GameScreen} />
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </SoundProvider>
   );
 }
