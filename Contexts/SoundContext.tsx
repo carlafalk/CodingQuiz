@@ -1,16 +1,16 @@
-import { Audio, AVPlaybackSource } from "expo-av";
+import { Audio, AVPlaybackSource, AVPlaybackStatus } from "expo-av";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 interface SoundContextValue {
   playSound: (path: AVPlaybackSource) => void;
-  stopSound: () => void;
+  toggleSound: () => void;
 }
 
 const SoundContext = createContext<SoundContextValue>({
   playSound: () => {
     console.warn("this is default provider");
   },
-  stopSound: () => {
+  toggleSound: () => {
     console.warn("this is default provider");
   },
 });
@@ -21,31 +21,35 @@ interface Props {
 
 function SoundProvider({ children }: Props) {
   const [sound, setSound] = useState<Audio.Sound>();
+  const [soundStatus, setSoundStatus] = useState<AVPlaybackStatus>();
+  const [isMuted, setIsMuted] = useState<boolean>(false);
 
   useEffect(() => {
     return sound
       ? () => {
-          console.log("Unloading Sound ");
           sound.unloadAsync();
+          console.log("Unloading Sound ");
         }
       : undefined;
   }, [sound]);
 
   const playSound = async (filePath: AVPlaybackSource) => {
-    //TODO: Play sound
-    const { sound, status } = await Audio.Sound.createAsync(filePath);
-    console.log(status.isLoaded);
-    setSound(sound);
+    if (!isMuted) {
+      const { sound, status } = await Audio.Sound.createAsync(filePath);
 
-    await sound.playAsync();
-    console.log("Playing Sound: " + filePath);
+      setSound(sound);
+
+      await sound.playAsync();
+    }
   };
 
-  const stopSound = async () => {
+  const toggleSound = async () => {
     //TODO: Stop sound
+    !isMuted ? sound && setSoundStatus(await sound.setIsMutedAsync(true)) : sound && setSoundStatus(await sound.setIsMutedAsync(false));
+    setIsMuted(!isMuted);
   };
 
-  return <SoundContext.Provider value={{ playSound, stopSound }}>{children}</SoundContext.Provider>;
+  return <SoundContext.Provider value={{ playSound, toggleSound }}>{children}</SoundContext.Provider>;
 }
 
 export const useSound = () => useContext(SoundContext);
