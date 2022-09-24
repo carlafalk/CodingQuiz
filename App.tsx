@@ -7,6 +7,7 @@ import SoundProvider from "./Contexts/SoundContext";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
 import GameScreen from "./Screens/Game";
+import GameOverScreen from "./Screens/GameOver";
 import HomeScreen from "./Screens/Home";
 import SettingsScreen from "./Screens/Settings";
 
@@ -52,6 +53,7 @@ export default function App() {
           <RootStack.Screen name="Categories" component={CategoriesScreen} />
           <RootStack.Screen name="Settings" component={SettingsScreen} />
           <RootStack.Screen name="Game" component={GameScreen} />
+          <RootStack.Screen name="GameOver" component={GameOverScreen} />
         </RootStack.Navigator>
       </NavigationContainer>
     </SoundProvider>
