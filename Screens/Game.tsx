@@ -46,14 +46,16 @@ const GameScreen = ({ navigation, route }: Props) => {
   function handleSubmit() {
     console.log("Submittar");
     // if selectedAnswer.correct, setPoints prev + 1 pts
-    //if !selecteAnser, submit
-    //if selectedAsnwer.false, 0pts
-    // currentquestion prev +1
-    //if currentQuestion === questions.length -1 navigate("gameoverscreenorsomething")
-
-    setTimeIsUp(false);
-    setCurrentQuestion((prev) => prev + 1);
-    setSelectedAnswer(null);
+    // if !selecteAnser, submit
+    // if selectedAsnwer.false, 0pts
+    if (currentQuestion !== questions.length - 1) {
+      setTimeIsUp(false);
+      setCurrentQuestion((prev) => prev + 1);
+      setSelectedAnswer(null);
+    } else {
+      // handle game over
+      console.log("Game over!");
+    }
   }
 
   return (
