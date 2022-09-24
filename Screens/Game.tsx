@@ -25,7 +25,7 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   const gameMusic = require("../assets/sounds/GameMusic.mp3");
 
-  const { playSound, stopSound } = useSound();
+  const { playSound } = useSound();
   console.log("gameScreen re-render");
 
   useEffect(() => {
