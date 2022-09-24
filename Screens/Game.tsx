@@ -7,6 +7,7 @@ import AnswerButton from "../Components/Buttons/AnswerButton";
 import Logo from "../Components/Logo";
 import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
+import { useSound } from "../Contexts/SoundContext";
 import Items from "../data/quizItemData";
 import QuizItem, { Answer } from "../models/QuizItem";
 import { colors } from "../Styles/Shared";
@@ -20,6 +21,10 @@ const GameScreen = ({ navigation, route }: Props) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
   const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
+
+  const { playSound } = useSound();
+
+  playSound();
 
   useEffect(() => {
     const randomQuestions = () => {
