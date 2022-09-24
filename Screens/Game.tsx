@@ -61,7 +61,7 @@ const GameScreen = ({ navigation, route }: Props) => {
       setCurrentQuestion((prev) => prev + 1);
       setSelectedAnswer(null);
     } else {
-      // handle game over
+      navigation.navigate("GameOver", { points: points, category: route.params.category });
       console.log(`Game over! You scored ${points} / ${questions.length}`);
       setTimeIsUp(true);
     }
