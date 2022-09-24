@@ -1,14 +1,15 @@
 import Constants from "expo-constants";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
 import styled from "styled-components/native";
+import QuizItem from "../models/QuizItem";
 import { colors } from "../Styles/Shared";
 
 interface Props {
   setTimeIsUp: React.Dispatch<React.SetStateAction<boolean>>;
+  currentQuestion: number;
 }
 
-const TimerBar = ({ setTimeIsUp }: Props) => {
+const TimerBar = ({ setTimeIsUp, currentQuestion }: Props) => {
   const [timeLeft, setTimeLeft] = useState(100);
 
   useEffect(() => {
@@ -22,6 +23,10 @@ const TimerBar = ({ setTimeIsUp }: Props) => {
 
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    setTimeLeft(100);
+  }, [currentQuestion]);
 
   useEffect(() => {
     timeLeft === 0 && setTimeIsUp(true);
@@ -39,15 +44,6 @@ const TimerBar = ({ setTimeIsUp }: Props) => {
 };
 
 export default TimerBar;
-
-const TimeBarContainer = styled.View`
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: ${Constants.statusBarHeight}px;
-  padding: 1px;
-`;
 
 const TimeBar = styled.View`
   justify-content: center;
