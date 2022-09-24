@@ -10,8 +10,6 @@ interface Props {
   selectedAnswer: Answer | null;
 }
 const AnswerButton = ({ answer, onPress, selectedAnswer }: Props) => {
-  console.log("selected i button:");
-  console.log({ selectedAnswer });
   function handlePress() {
     onPress(answer);
   }

@@ -1,23 +1,35 @@
 import Constants from "expo-constants";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
+import QuizItem from "../models/QuizItem";
 import { colors } from "../Styles/Shared";
 
-const TimerBar = () => {
+interface Props {
+  setTimeIsUp: React.Dispatch<React.SetStateAction<boolean>>;
+  currentQuestion: number;
+}
+
+const TimerBar = ({ setTimeIsUp, currentQuestion }: Props) => {
   const [timeLeft, setTimeLeft] = useState(100);
-  const [timeIsUp, setTimeIsUp] = useState(false);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      if (timeLeft > 0) setTimeLeft((prev) => prev - 10);
+    let timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        prev <= 0 && clearInterval(timer);
 
-      if (timeLeft === 0) {
-        setTimeIsUp(true);
-        window.clearInterval(timer);
-      }
+        return prev > 0 ? prev - 10 : 0;
+      });
     }, 1000);
 
-    return () => window.clearInterval(timer);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    setTimeLeft(100);
+  }, [currentQuestion]);
+
+  useEffect(() => {
+    timeLeft === 0 && setTimeIsUp(true);
   }, [timeLeft]);
 
   return (
@@ -32,15 +44,6 @@ const TimerBar = () => {
 };
 
 export default TimerBar;
-
-const TimeBarContainer = styled.View`
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: ${Constants.statusBarHeight}px;
-  padding: 1px;
-`;
 
 const TimeBar = styled.View`
   justify-content: center;

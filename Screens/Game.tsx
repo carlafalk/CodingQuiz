@@ -17,10 +17,10 @@ type Props = NativeStackScreenProps<RootStackParams, "Game">;
 
 const GameScreen = ({ navigation, route }: Props) => {
   const [questions, setQuestions] = useState<QuizItem[]>([]);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
+  const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
 
-  console.log(selectedAnswer);
   useEffect(() => {
     const randomQuestions = () => {
       const filteredQuestions = Items.filter((item) => item.category === route.params.category);
@@ -31,6 +31,12 @@ const GameScreen = ({ navigation, route }: Props) => {
     setQuestions(randomQuestions());
   }, []);
 
+  useEffect(() => {
+    if (timeIsUp) {
+      handleSubmit();
+    }
+  }, [timeIsUp]);
+
   if (questions.length === 0) return null;
 
   function handlePress(answer: Answer) {
@@ -38,22 +44,30 @@ const GameScreen = ({ navigation, route }: Props) => {
   }
 
   function handleSubmit() {
-    if (selectedAnswer?.isCorrect) {
-    }
+    console.log("Submittar");
+    // if selectedAnswer.correct, setPoints prev + 1 pts
+    //if !selecteAnser, submit
+    //if selectedAsnwer.false, 0pts
+    // currentquestion prev +1
+    //if currentQuestion === questions.length -1 navigate("gameoverscreenorsomething")
+
+    setTimeIsUp(false);
+    setCurrentQuestion((prev) => prev + 1);
+    setSelectedAnswer(null);
   }
 
   return (
     <Background dark>
       <TopSection title={route.params.category} />
       <QuestionContainer>
-        <Question>{questions[0].question}</Question>
+        <Question>{questions[currentQuestion].question}</Question>
         <Divider style={{ width: "100%" }} />
         <AnswerContainer>
-          {questions[0].answers.map((answer) => (
+          {questions[currentQuestion].answers.map((answer) => (
             <AnswerButton onPress={handlePress} answer={answer} key={answer.answer} selectedAnswer={selectedAnswer} />
           ))}
         </AnswerContainer>
-        <TimerBar />
+        <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} />
         <SubmitButton onPress={handleSubmit} disabled={!selectedAnswer ? true : false}>
           <SubmitText>submit</SubmitText>
         </SubmitButton>
