@@ -2,6 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import SettingItem from "../Components/Settings/SettingItem";
+import { useSound } from "../contexts/SoundContext";
 // import { useSettings } from "../contexts/SettingContext";
 import { useTheme } from "../contexts/ThemeContext";
 import settingsData from "../data/settingsData";
@@ -13,12 +14,13 @@ const SettingsScreen = () => {
   const categories = settingsData.filter((x, i) => settingsData.findIndex((y) => x.category === y.category) === i).map((x) => x.category);
 
   const { themeColors, toggleTheme } = useTheme();
+  const { toggleMuteMusic, toggleMuteButtonSound } = useSound();
   // const { toggleHapticSetting, toggleVibrationSetting, toggleMusicSetting, toggleEffectsSetting } = useSettings();
 
   function handleToggle(item: SettingModel) {
     if (item.title === "Dark Mode") toggleTheme();
-    // if (item.title === "Music") toggleMusicSetting();
-    // if (item.title === "Effects") toggleEffectsSetting();
+    if (item.title === "Music") toggleMuteMusic();
+    if (item.title === "Effects") toggleMuteButtonSound();
     // if (item.title === "Haptics") toggleHapticSetting();
     // if (item.title === "Vibration") toggleVibrationSetting();
   }
