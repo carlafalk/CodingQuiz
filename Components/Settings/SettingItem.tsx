@@ -8,29 +8,25 @@ import { FlexBox } from "../../Styles/views";
 
 interface Props {
   item: SettingModel;
-  handleToggle: () => void;
+  handleToggle: (value: boolean, item: SettingModel) => void;
+  setToggleValue: (item: SettingModel) => boolean;
 }
-const SettingItem = ({ item, handleToggle }: Props) => {
+const SettingItem = ({ item, handleToggle, setToggleValue }: Props) => {
   const [isEnabled, setIsEnabled] = useState(item.isEnabled);
   const { themeColors } = useTheme();
-  const toggleSwitch = () => {
-    setIsEnabled((previousState) => !previousState);
-    handleToggle();
-  };
-
   return (
     <FlexBox>
       <View>
-        <MdText style={{color: themeColors.commons.white}}>{item.title}</MdText>
-        <SmText style={{color: themeColors.commons.white}}>{item.desc}</SmText>
+        <MdText style={{ color: themeColors.commons.white }}>{item.title}</MdText>
+        <SmText style={{ color: themeColors.commons.white }}>{item.desc}</SmText>
       </View>
       <View>
         <Switch
           trackColor={{ false: colors.lightGrey, true: colors.lightGreen }}
           thumbColor={isEnabled ? "#fff" : colors.deepPurple}
           ios_backgroundColor={colors.deepPurple}
-          onValueChange={toggleSwitch}
-          value={isEnabled}
+          onValueChange={(value) => handleToggle(value, item)}
+          value={setToggleValue(item)}
         />
       </View>
     </FlexBox>
