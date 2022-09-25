@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useRef } from "react";
+import { Pressable, Text } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import styled from "styled-components/native";
@@ -7,17 +8,24 @@ import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
 import Logo from "../Components/Logo";
-import { useSound } from "../Contexts/SoundContext";
-import { colors } from "../Styles/Shared";
+import { useSound } from "../contexts/SoundContext";
+import { useTheme } from "../contexts/ThemeContext";
 import SettingsScreen from "./Settings";
 
 type HomeNavigationProps = NativeStackScreenProps<RootStackParams, "Home">;
 
 const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);
+  const { isDarkTheme, toggleTheme, themeColors } = useTheme();
   const HomeScreenMusic = require("../assets/sounds/HomeScreenMusic.mp3");
   // const ButtonEffect = require("../assets/sounds/StandardButtonEffect.mp3");
   const { playSound, toggleMuteMusic, toggleMuteButtonSound } = useSound();
+
+  // Temp const
+  // const handleToggle = () => {
+  //   toggleTheme();
+  //   console.log(isDarkTheme ? "Switched to dark" : "Switched to light");
+  // };
 
   const handleOpen = () => {
     modalizeRef.current?.open();
@@ -30,22 +38,17 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   return (
     <Background>
       <Logo size="large" topMargin={124} />
+      {/* TEMP BUTTON */}
+{/*       
+      <Pressable onPress={handleToggle}>
+        <Text style={{ padding: 10, color: themeColors.commons.black, backgroundColor: themeColors.commons.white }}>
+          {isDarkTheme ? "Switch to light" : "Switch to dark"}
+        </Text>
+      </Pressable> */}
       <ButtonContainer>
-        <HomeScreenButton
-          onPress={() => {
-            navigation.navigate("Categories");
-          }}
-          title="Play"
-          color={colors.lightGreen}
-        />
-        <HomeScreenButton onPress={handleOpen} title="Settings" color={colors.mustard} />
-        <HomeScreenButton
-          onPress={() => {
-            navigation.navigate("About");
-          }}
-          title="About"
-          color={colors.lightPurple}
-        />
+        <HomeScreenButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
+        <HomeScreenButton onPress={handleOpen} title="Settings" color={themeColors.mustard} />
+        <HomeScreenButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} />
         <HomeScreenButton
           onPress={() => {
             toggleMuteMusic();
@@ -61,7 +64,7 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
           color={colors.categories.javaScript}
         />
       </ButtonContainer>
-      <Modalize ref={modalizeRef} rootStyle={modalRootStyle} modalStyle={modalModalStyle} modalTopOffset={150}>
+      <Modalize ref={modalizeRef} rootStyle={modalRootStyle} modalStyle={{backgroundColor: themeColors.deepPurple, ...modalModalStyle}} modalTopOffset={150}>
         <SettingsScreen />
       </Modalize>
     </Background>
@@ -75,7 +78,6 @@ const modalRootStyle = {
 };
 
 const modalModalStyle = {
-  backgroundColor: "#2A242F",
   padding: 20,
   borderRadius: 20,
   flex: 1,

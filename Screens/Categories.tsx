@@ -10,11 +10,12 @@ import TSImg from "../assets/languageIcons/typescript.png";
 import Background from "../Components/Background";
 import BackButton from "../Components/Buttons/BackButton";
 import CategoryButton from "../Components/Buttons/CategoryButton";
-import { colors } from "../Styles/Shared";
+import { useTheme } from "../contexts/ThemeContext";
 
 type Props = NativeStackScreenProps<RootStackParams, "Categories">;
 
 const CategoriesScreen = ({ navigation }: Props) => {
+  const { themeColors } = useTheme();
   return (
     <Background dark>
       <BackAndTitle>
@@ -24,28 +25,28 @@ const CategoriesScreen = ({ navigation }: Props) => {
           }}
         />
 
-        <Title>
-          <TitleText>choose a category</TitleText>
+        <Title bg={themeColors.darkPurple}>
+          <TitleText color={themeColors.commons.white}>choose a category</TitleText>
         </Title>
       </BackAndTitle>
       <ButtonContainer>
         <CategoryButton
           title="react"
-          color={colors.categories.react}
+          color={themeColors.categories.react}
           img={ReactImg}
           onPress={() => navigation.navigate("Game", { category: "react" })}
         />
-        <CategoryButton title="html" color={colors.categories.html} img={HTMLImg} onPress={() => navigation.navigate("Game", { category: "html" })} />
-        <CategoryButton title="css" color={colors.categories.css} img={CSSImg} onPress={() => navigation.navigate("Game", { category: "css" })} />
+        <CategoryButton title="html" color={themeColors.categories.html} img={HTMLImg} onPress={() => navigation.navigate("Game", { category: "html" })} />
+        <CategoryButton title="css" color={themeColors.categories.css} img={CSSImg} onPress={() => navigation.navigate("Game", { category: "css" })} />
         <CategoryButton
           title="javascript"
-          color={colors.categories.javaScript}
+          color={themeColors.categories.javaScript}
           img={JSImg}
           onPress={() => navigation.navigate("Game", { category: "javascript" })}
         />
         <CategoryButton
           title="typescript"
-          color={colors.categories.typeScript}
+          color={themeColors.categories.typeScript}
           img={TSImg}
           onPress={() => navigation.navigate("Game", { category: "typescript" })}
         />
@@ -67,19 +68,19 @@ const BackAndTitle = styled.View`
   margin: 60px 45px 20% 45px;
 `;
 
-const Title = styled.View`
+const Title = styled.View<{bg: string}>`
   width: 70%;
   padding: 13px 0;
-  background-color: ${colors.darkPurple};
+  background-color: ${props => props.bg};
   justify-content: center;
   align-items: center;
   border-radius: 15px;
   elevation: 8;
 `;
 
-const TitleText = styled.Text`
+const TitleText = styled.Text<{color: string}>`
   font-family: "ShareTechMono";
-  color: ${colors.commons.white};
+  color: ${props => props.color};
   font-size: 20px;
   text-transform: uppercase;
 `;
