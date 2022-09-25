@@ -16,7 +16,8 @@ type HomeNavigationProps = NativeStackScreenProps<RootStackParams, "Home">;
 const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);
   const HomeScreenMusic = require("../assets/sounds/HomeScreenMusic.mp3");
-  const { playSound, toggleSound } = useSound();
+  // const ButtonEffect = require("../assets/sounds/StandardButtonEffect.mp3");
+  const { playSound, toggleMuteMusic, toggleMuteButtonSound } = useSound();
 
   const handleOpen = () => {
     modalizeRef.current?.open();
@@ -30,10 +31,35 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
     <Background>
       <Logo size="large" topMargin={124} />
       <ButtonContainer>
-        <HomeScreenButton onPress={() => navigation.navigate("Categories")} title="Play" color={colors.lightGreen} />
+        <HomeScreenButton
+          onPress={() => {
+            navigation.navigate("Categories");
+          }}
+          title="Play"
+          color={colors.lightGreen}
+        />
         <HomeScreenButton onPress={handleOpen} title="Settings" color={colors.mustard} />
-        <HomeScreenButton onPress={() => navigation.navigate("About")} title="About" color={colors.lightPurple} />
-        <HomeScreenButton onPress={() => toggleSound()} title="Mute" color={colors.lightPurple} />
+        <HomeScreenButton
+          onPress={() => {
+            navigation.navigate("About");
+          }}
+          title="About"
+          color={colors.lightPurple}
+        />
+        <HomeScreenButton
+          onPress={() => {
+            toggleMuteMusic();
+          }}
+          title="mute music"
+          color={colors.categories.javaScript}
+        />
+        <HomeScreenButton
+          onPress={() => {
+            toggleMuteButtonSound();
+          }}
+          title="disable btn sound"
+          color={colors.categories.javaScript}
+        />
       </ButtonContainer>
       <Modalize ref={modalizeRef} rootStyle={modalRootStyle} modalStyle={modalModalStyle} modalTopOffset={150}>
         <SettingsScreen />
