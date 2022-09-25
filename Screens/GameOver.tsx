@@ -12,6 +12,14 @@ import { Divider } from "../Styles/views";
 type Props = NativeStackScreenProps<RootStackParams, "GameOver">;
 
 const GameOverScreen = ({ navigation, route }: Props) => {
+  function getFastestTime() {
+    return route.params.answerTimes.sort((n1, n2) => n1 - n2)[0];
+  }
+  function getSlowestTime() {
+    console.log(route.params.answerTimes.length);
+    return route.params.answerTimes.sort((n1, n2) => n1 - n2)[9];
+  }
+
   return (
     <Background>
       <TopSection title="game over" />
@@ -23,12 +31,12 @@ const GameOverScreen = ({ navigation, route }: Props) => {
         <Divider style={{ width: "85%", verticalPadding: 0 }} />
         <TextBox>
           <StyledText>Fastest answer</StyledText>
-          <StyledText>2.5s</StyledText>
+          <StyledText>{getFastestTime()}s</StyledText>
         </TextBox>
         <Divider style={{ width: "85%" }} />
         <TextBox>
           <StyledText>Slowest answer</StyledText>
-          <StyledText>10s</StyledText>
+          <StyledText>{getSlowestTime()}s</StyledText>
         </TextBox>
       </ScoreBox>
 
@@ -36,7 +44,9 @@ const GameOverScreen = ({ navigation, route }: Props) => {
         <HomeScreenButton
           color={colors.lightGreen}
           title="restart"
-          onPress={() => navigation.navigate("Game", { category: route.params.category })}
+          onPress={() => {
+            navigation.navigate("Game", { category: route.params.category });
+          }}
         />
         <HomeScreenButton
           color={colors.mustard}
