@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { useSound } from "../../Contexts/SoundContext";
+import { useSound } from "../../contexts/SoundContext";
 import { colors } from "../../Styles/Shared";
 
 type Props = {
