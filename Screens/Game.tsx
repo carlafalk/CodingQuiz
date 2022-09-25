@@ -8,7 +8,6 @@ import Logo from "../Components/Logo";
 import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
 import { useSound } from "../contexts/SoundContext";
-import QuizItems from "../data/quizItemData";
 import QuizItem, { Answer } from "../models/QuizItem";
 import { colors } from "../Styles/Shared";
 import { MdText } from "../Styles/texts";
@@ -20,7 +19,7 @@ type Props = NativeStackScreenProps<RootStackParams, "Game">;
 let answerTimes: number[] = [];
 
 const GameScreen = ({ navigation, route }: Props) => {
-  const [questions, setQuestions] = useState<QuizItem[]>([]);
+  const [quizItems, setQuizItems] = useState<QuizItem[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
   const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
@@ -33,7 +32,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   console.log("gameScreen re-render");
 
   useEffect(() => {
-    setQuestions(QuizItemRandomizer(route.params.category, 10));
+    setQuizItems(QuizItemRandomizer(route.params.category, 10));
   }, []);
 
   useEffect(() => {
@@ -46,7 +45,7 @@ const GameScreen = ({ navigation, route }: Props) => {
     playSound(gameMusic);
   }, [currentQuestion]);
 
-  if (questions.length === 0) return null;
+  if (quizItems.length === 0) return null;
 
   function evaluateAnswerTimes() {
     let answerTime = 10 - timeLeft / 10;
@@ -66,7 +65,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   const handleTimeIsUp = () => {
     setTimeIsUp(false);
 
-    currentQuestion !== questions.length - 1
+    currentQuestion !== quizItems.length - 1
       ? setCurrentQuestion((prev) => prev + 1)
       : navigation.navigate("GameOver", { points: points, category: route.params.category, answerTimes: answerTimes });
   };
@@ -76,7 +75,7 @@ const GameScreen = ({ navigation, route }: Props) => {
     // if selectedAnswer.correct, setPoints prev + 1 pts
     // if !selecteAnser, submit
     // if selectedAsnwer.false, 0pts
-    if (currentQuestion !== questions.length - 1) {
+    if (currentQuestion !== quizItems.length - 1) {
       handleAnswer();
       setTimeIsUp(false);
       setCurrentQuestion((prev) => prev + 1);
@@ -94,10 +93,10 @@ const GameScreen = ({ navigation, route }: Props) => {
     <Background dark>
       <TopSection title={route.params.category} />
       <QuestionContainer>
-        <Question>{questions[currentQuestion].question}</Question>
+        <Question>{quizItems[currentQuestion].question}</Question>
         <Divider style={{ width: "100%" }} />
         <AnswerContainer>
-          {questions[currentQuestion].answers.map((answer, index) => (
+          {quizItems[currentQuestion].answers.map((answer, index) => (
             <AnswerButton onPress={handlePress} answer={answer} index={index} key={index} selectedAnswer={selectedAnswer} />
           ))}
         </AnswerContainer>
