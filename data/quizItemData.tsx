@@ -1,6 +1,6 @@
 import QuizItem from "../models/QuizItem";
 
-const Items: QuizItem[] = [
+const QuizItems: QuizItem[] = [
   {
     id: "1",
     question: "What is React?",
@@ -1697,4 +1697,4 @@ const Items: QuizItem[] = [
   },
 ];
 
-export default Items;
+export default QuizItems;
