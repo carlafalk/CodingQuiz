@@ -8,6 +8,10 @@ interface SoundContextValue {
   playButtonEffect: () => void;
   toggleMuteMusic: () => void;
   toggleMuteButtonSound: () => void;
+  setIsButtonSoundMuted: React.Dispatch<React.SetStateAction<boolean>>;
+  isButtonSoundMuted: boolean;
+  setIsMusicMuted: React.Dispatch<React.SetStateAction<boolean>>;
+  isMusicMuted: boolean;
 }
 
 const SoundContext = createContext<SoundContextValue>({
@@ -20,6 +24,10 @@ const SoundContext = createContext<SoundContextValue>({
     console.warn("this is default provider");
   },
   toggleMuteButtonSound: () => console.warn("this is default provider"),
+  setIsButtonSoundMuted: () => {},
+  isButtonSoundMuted: false,
+  setIsMusicMuted: () => {},
+  isMusicMuted: false,
 });
 
 interface Props {
@@ -84,18 +92,28 @@ function SoundProvider({ children }: Props) {
   const toggleMuteMusic = async () => {
     //TODO: Stop sound
     !isMusicMuted ? music && setSoundStatus(await music.setIsMutedAsync(true)) : music && setSoundStatus(await music.setIsMutedAsync(false));
-    setIsMusicMuted(!isMusicMuted);
   };
 
   const toggleMuteButtonSound = async () => {
     !isButtonSoundMuted
       ? buttonEffect && setSoundStatus(await buttonEffect.setIsMutedAsync(true))
       : buttonEffect && setSoundStatus(await buttonEffect.setIsMutedAsync(false));
-    setIsButtonSoundMuted(!isButtonSoundMuted);
   };
 
   return (
-    <SoundContext.Provider value={{ allSounds, playSound, playButtonEffect, toggleMuteMusic, toggleMuteButtonSound }}>
+    <SoundContext.Provider
+      value={{
+        allSounds,
+        playSound,
+        playButtonEffect,
+        toggleMuteMusic,
+        toggleMuteButtonSound,
+        setIsButtonSoundMuted,
+        isButtonSoundMuted,
+        setIsMusicMuted,
+        isMusicMuted,
+      }}
+    >
       {children}
     </SoundContext.Provider>
   );
