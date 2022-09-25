@@ -16,10 +16,8 @@ const GameOverScreen = ({ navigation, route }: Props) => {
     return route.params.answerTimes.sort((n1, n2) => n1 - n2)[0];
   }
   function getSlowestTime() {
-    console.log(route.params.answerTimes.length);
-    return route.params.answerTimes.sort((n1, n2) => n1 - n2)[9];
+    return route.params.answerTimes.sort((n1, n2) => n1 - n2)[route.params.answerTimes.length - 1];
   }
-
   return (
     <Background>
       <TopSection title="game over" />

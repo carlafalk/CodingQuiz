@@ -39,6 +39,7 @@ const GameScreen = ({ navigation, route }: Props) => {
       return shuffledQuestions.slice(0, 10);
     };
     setQuestions(randomQuestions());
+    answerTimes = [];
   }, []);
 
   useEffect(() => {
@@ -48,22 +49,14 @@ const GameScreen = ({ navigation, route }: Props) => {
   }, [timeIsUp]);
 
   useEffect(() => {
-    answerTimes = [];
-  }, []);
-
-  useEffect(() => {
     playSound(gameMusic);
   }, [currentQuestion]);
 
   if (questions.length === 0) return null;
 
   function evaluateAnswerTimes() {
-    if (!timeIsUp) {
-      let answerTime = 10 - timeLeft / 10;
-      answerTimes.push(answerTime);
-    } else {
-      answerTimes.push(10);
-    }
+    let answerTime = 10 - timeLeft / 10;
+    answerTimes.push(answerTime);
   }
 
   function handlePress(answer: Answer) {
@@ -78,7 +71,6 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   const handleTimeIsUp = () => {
     setTimeIsUp(false);
-    evaluateAnswerTimes();
 
     currentQuestion !== questions.length - 1
       ? setCurrentQuestion((prev) => prev + 1)
