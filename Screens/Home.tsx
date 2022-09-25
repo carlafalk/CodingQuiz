@@ -49,6 +49,20 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
         <HomeScreenButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
         <HomeScreenButton onPress={handleOpen} title="Settings" color={themeColors.mustard} />
         <HomeScreenButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} />
+        <HomeScreenButton
+          onPress={() => {
+            toggleMuteMusic();
+          }}
+          title="mute music"
+          color={themeColors.mustard}
+        />
+        <HomeScreenButton
+          onPress={() => {
+            toggleMuteButtonSound();
+          }}
+          title="disable btn sound"
+          color={themeColors.mustard}
+        />
       </ButtonContainer>
       <Modalize
         ref={modalizeRef}
