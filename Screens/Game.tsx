@@ -8,11 +8,12 @@ import Logo from "../Components/Logo";
 import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
 import { useSound } from "../contexts/SoundContext";
-import Items from "../data/quizItemData";
+import QuizItems from "../data/quizItemData";
 import QuizItem, { Answer } from "../models/QuizItem";
 import { colors } from "../Styles/Shared";
 import { MdText } from "../Styles/texts";
 import { Divider } from "../Styles/views";
+import QuizItemRandomizer from "../utils/QuizItemRandomizer";
 
 type Props = NativeStackScreenProps<RootStackParams, "Game">;
 
@@ -32,14 +33,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   console.log("gameScreen re-render");
 
   useEffect(() => {
-    const randomQuestions = () => {
-      const filteredQuestions = Items.filter((item) => item.category === route.params.category);
-      const shuffledQuestions = filteredQuestions.sort(() => 0.5 - Math.random());
-
-      return shuffledQuestions.slice(0, 10);
-    };
-    setQuestions(randomQuestions());
-    answerTimes = [];
+    setQuestions(QuizItemRandomizer(route.params.category, 10));
   }, []);
 
   useEffect(() => {
