@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback, useEffect } from "react";
 import SoundProvider from "./contexts/SoundContext";
+
 import { ThemeProvider } from "./contexts/ThemeContext";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
