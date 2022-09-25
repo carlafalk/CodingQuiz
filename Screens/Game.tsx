@@ -7,7 +7,7 @@ import AnswerButton from "../Components/Buttons/AnswerButton";
 import Logo from "../Components/Logo";
 import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
-import { useSound } from "../Contexts/SoundContext";
+import { useSound } from "../contexts/SoundContext";
 import Items from "../data/quizItemData";
 import QuizItem, { Answer } from "../models/QuizItem";
 import { colors } from "../Styles/Shared";

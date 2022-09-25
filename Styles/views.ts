@@ -1,9 +1,7 @@
 import styled from "styled-components/native";
 
 const Divider = styled.View`
-  border-bottom-color: #fff;
   border-bottom-width: 1px;
-  /* padding: 5px 0; */
 `;
 const FlexBox = styled.View`
   display: flex;
