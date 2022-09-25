@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
+import { useSound } from "../../Contexts/SoundContext";
 import { colors } from "../../Styles/Shared";
 
 type Props = {
@@ -9,8 +10,9 @@ type Props = {
 };
 
 const HomeScreenButton = ({ onPress, title, color }: Props) => {
+  const { playButtonEffect } = useSound();
   return (
-    <Button onPress={onPress} color={color}>
+    <Button android_disableSound={true} onPress={onPress} color={color} onPressIn={() => playButtonEffect()}>
       <BtnTitle>{title}</BtnTitle>
     </Button>
   );
@@ -18,7 +20,7 @@ const HomeScreenButton = ({ onPress, title, color }: Props) => {
 
 export default HomeScreenButton;
 
-const Button = styled.TouchableOpacity<{ color: string }>`
+const Button = styled.Pressable<{ color: string }>`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.color};
