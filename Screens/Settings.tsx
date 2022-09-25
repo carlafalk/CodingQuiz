@@ -16,7 +16,7 @@ const SettingsScreen = () => {
   // const { toggleHapticSetting, toggleVibrationSetting, toggleMusicSetting, toggleEffectsSetting } = useSettings();
 
   function handleToggle(item: SettingModel) {
-    // if (item.title === "Dark Mode") toggleTheme();
+    if (item.title === "Dark Mode") toggleTheme();
     // if (item.title === "Music") toggleMusicSetting();
     // if (item.title === "Effects") toggleEffectsSetting();
     // if (item.title === "Haptics") toggleHapticSetting();
