@@ -40,7 +40,7 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   useEffect(() => {
     if (timeIsUp) {
-      handleSubmit();
+      handleTimeIsUp();
     }
   }, [timeIsUp]);
 
@@ -59,6 +59,13 @@ const GameScreen = ({ navigation, route }: Props) => {
       selectedAnswer.isCorrect && setPoints((prev) => prev + 1);
     }
   }
+
+  const handleTimeIsUp = () => {
+    setTimeIsUp(false);
+    currentQuestion !== questions.length - 1
+      ? setCurrentQuestion((prev) => prev + 1)
+      : navigation.navigate("GameOver", { points: points, category: route.params.category });
+  };
 
   function handleSubmit() {
     console.log("Submittar");
