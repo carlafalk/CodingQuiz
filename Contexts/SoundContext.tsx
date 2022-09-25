@@ -1,18 +1,25 @@
-import { Audio, AVPlaybackSource } from "expo-av";
+import { Audio, AVPlaybackSource, AVPlaybackStatus } from "expo-av";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import AllSounds, { SoundObject } from "../data/soundData";
 
 interface SoundContextValue {
+  allSounds: SoundObject[];
   playSound: (path: AVPlaybackSource) => void;
-  stopSound: () => void;
+  playButtonEffect: () => void;
+  toggleMuteMusic: () => void;
+  toggleMuteButtonSound: () => void;
 }
 
 const SoundContext = createContext<SoundContextValue>({
+  allSounds: [],
   playSound: () => {
     console.warn("this is default provider");
   },
-  stopSound: () => {
+  playButtonEffect: () => console.warn("this is default provider"),
+  toggleMuteMusic: () => {
     console.warn("this is default provider");
   },
+  toggleMuteButtonSound: () => console.warn("this is default provider"),
 });
 
 interface Props {
@@ -20,32 +27,78 @@ interface Props {
 }
 
 function SoundProvider({ children }: Props) {
-  const [sound, setSound] = useState<Audio.Sound>();
+  const [allSounds, setAllSounds] = useState<SoundObject[]>(AllSounds);
+  const [music, setMusic] = useState<Audio.Sound>();
+  const [buttonEffect, setButtonEffect] = useState<Audio.Sound>();
+  const [soundStatus, setSoundStatus] = useState<AVPlaybackStatus>();
+  const [isMusicMuted, setIsMusicMuted] = useState<boolean>(false);
+  const [isButtonSoundMuted, setIsButtonSoundMuted] = useState<boolean>(false);
 
   useEffect(() => {
-    return sound
+    console.log("LOADING ALL SOUNDS");
+    LoadAllSounds();
+  }, []);
+
+  useEffect(() => {
+    return music
       ? () => {
-          console.log("Unloading Sound ");
-          sound.unloadAsync();
+          music.unloadAsync();
         }
       : undefined;
-  }, [sound]);
+  }, [music]);
+
+  useEffect(() => {
+    return buttonEffect
+      ? () => {
+          buttonEffect.unloadAsync();
+        }
+      : undefined;
+  }, [buttonEffect]);
 
   const playSound = async (filePath: AVPlaybackSource) => {
-    //TODO: Play sound
-    const { sound, status } = await Audio.Sound.createAsync(filePath);
-    console.log(status.isLoaded);
-    setSound(sound);
+    if (!isMusicMuted) {
+      const { sound, status } = await Audio.Sound.createAsync(filePath);
 
-    await sound.playAsync();
-    console.log("Playing Sound: " + filePath);
+      setMusic(sound);
+
+      await sound.playAsync();
+    }
   };
 
-  const stopSound = async () => {
+  const LoadAllSounds = async () => {
+    //TODO: find some way to load all sounds at once? :O
+    // const { sound, status } = await Audio.Sound.createAsync(allSounds[1].sound);
+    // setButtonEffect(sound);
+  };
+
+  const playButtonEffect = async () => {
+    // TODO play sound on buttonPress
+
+    if (!isButtonSoundMuted) {
+      const { sound, status } = await Audio.Sound.createAsync(allSounds[1].sound);
+      await sound.playAsync();
+      setButtonEffect(sound);
+    }
+  };
+
+  const toggleMuteMusic = async () => {
     //TODO: Stop sound
+    !isMusicMuted ? music && setSoundStatus(await music.setIsMutedAsync(true)) : music && setSoundStatus(await music.setIsMutedAsync(false));
+    setIsMusicMuted(!isMusicMuted);
   };
 
-  return <SoundContext.Provider value={{ playSound, stopSound }}>{children}</SoundContext.Provider>;
+  const toggleMuteButtonSound = async () => {
+    !isButtonSoundMuted
+      ? buttonEffect && setSoundStatus(await buttonEffect.setIsMutedAsync(true))
+      : buttonEffect && setSoundStatus(await buttonEffect.setIsMutedAsync(false));
+    setIsButtonSoundMuted(!isButtonSoundMuted);
+  };
+
+  return (
+    <SoundContext.Provider value={{ allSounds, playSound, playButtonEffect, toggleMuteMusic, toggleMuteButtonSound }}>
+      {children}
+    </SoundContext.Provider>
+  );
 }
 
 export const useSound = () => useContext(SoundContext);
