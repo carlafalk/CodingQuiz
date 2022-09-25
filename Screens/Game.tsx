@@ -16,12 +16,15 @@ import { Divider } from "../Styles/views";
 
 type Props = NativeStackScreenProps<RootStackParams, "Game">;
 
+let answerTimes: number[] = [];
+
 const GameScreen = ({ navigation, route }: Props) => {
   const [questions, setQuestions] = useState<QuizItem[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
   const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
   const [points, setPoints] = useState<number>(0);
+  const [timeLeft, setTimeLeft] = useState(100);
 
   const gameMusic = require("../assets/sounds/GameMusic.mp3");
 
@@ -45,10 +48,23 @@ const GameScreen = ({ navigation, route }: Props) => {
   }, [timeIsUp]);
 
   useEffect(() => {
+    answerTimes = [];
+  }, []);
+
+  useEffect(() => {
     playSound(gameMusic);
   }, [currentQuestion]);
 
   if (questions.length === 0) return null;
+
+  function evaluateAnswerTimes() {
+    if (!timeIsUp) {
+      let answerTime = 10 - timeLeft / 10;
+      answerTimes.push(answerTime);
+    } else {
+      answerTimes.push(10);
+    }
+  }
 
   function handlePress(answer: Answer) {
     setSelectedAnswer(answer);
@@ -62,13 +78,15 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   const handleTimeIsUp = () => {
     setTimeIsUp(false);
+    evaluateAnswerTimes();
+
     currentQuestion !== questions.length - 1
       ? setCurrentQuestion((prev) => prev + 1)
-      : navigation.navigate("GameOver", { points: points, category: route.params.category });
+      : navigation.navigate("GameOver", { points: points, category: route.params.category, answerTimes: answerTimes });
   };
 
   function handleSubmit() {
-    console.log("Submittar");
+    // console.log("Submittar");
     // if selectedAnswer.correct, setPoints prev + 1 pts
     // if !selecteAnser, submit
     // if selectedAsnwer.false, 0pts
@@ -76,10 +94,12 @@ const GameScreen = ({ navigation, route }: Props) => {
       handleAnswer();
       setTimeIsUp(false);
       setCurrentQuestion((prev) => prev + 1);
+      evaluateAnswerTimes();
       setSelectedAnswer(null);
     } else {
-      navigation.navigate("GameOver", { points: points, category: route.params.category });
-      console.log(`Game over! You scored ${points} / ${questions.length}`);
+      evaluateAnswerTimes();
+      navigation.navigate("GameOver", { points: points, category: route.params.category, answerTimes: answerTimes });
+      // console.log(`Game over! You scored ${points} / ${questions.length}`);
       setTimeIsUp(true);
     }
   }
@@ -95,7 +115,7 @@ const GameScreen = ({ navigation, route }: Props) => {
             <AnswerButton onPress={handlePress} answer={answer} index={index} key={index} selectedAnswer={selectedAnswer} />
           ))}
         </AnswerContainer>
-        <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} />
+        <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} setTimeLeft={setTimeLeft} timeLeft={timeLeft} />
         <SubmitButton onPress={handleSubmit} disabled={!selectedAnswer ? true : false}>
           <SubmitText>submit</SubmitText>
         </SubmitButton>

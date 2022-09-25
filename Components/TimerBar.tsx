@@ -1,17 +1,15 @@
-import Constants from "expo-constants";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
-import QuizItem from "../models/QuizItem";
 import { colors } from "../Styles/Shared";
 
 interface Props {
   setTimeIsUp: React.Dispatch<React.SetStateAction<boolean>>;
+  setTimeLeft: React.Dispatch<React.SetStateAction<number>>;
   currentQuestion: number;
+  timeLeft: number;
 }
 
-const TimerBar = ({ setTimeIsUp, currentQuestion }: Props) => {
-  const [timeLeft, setTimeLeft] = useState(100);
-
+const TimerBar = ({ setTimeIsUp, currentQuestion, setTimeLeft, timeLeft }: Props) => {
   useEffect(() => {
     let timer = setInterval(() => {
       setTimeLeft((prev) => {
