@@ -18,7 +18,8 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);
   const { isDarkTheme, toggleTheme, themeColors } = useTheme();
   const HomeScreenMusic = require("../assets/sounds/HomeScreenMusic.mp3");
-  const { playSound } = useSound();
+  // const ButtonEffect = require("../assets/sounds/StandardButtonEffect.mp3");
+  const { playSound, toggleMuteMusic, toggleMuteButtonSound } = useSound();
 
   // Temp const
   // const handleToggle = () => {
@@ -38,7 +39,7 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
     <Background>
       <Logo size="large" topMargin={124} />
       {/* TEMP BUTTON */}
-{/*       
+      {/*       
       <Pressable onPress={handleToggle}>
         <Text style={{ padding: 10, color: themeColors.commons.black, backgroundColor: themeColors.commons.white }}>
           {isDarkTheme ? "Switch to light" : "Switch to dark"}
@@ -48,8 +49,27 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
         <HomeScreenButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
         <HomeScreenButton onPress={handleOpen} title="Settings" color={themeColors.mustard} />
         <HomeScreenButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} />
+        <HomeScreenButton
+          onPress={() => {
+            toggleMuteMusic();
+          }}
+          title="mute music"
+          color={themeColors.mustard}
+        />
+        <HomeScreenButton
+          onPress={() => {
+            toggleMuteButtonSound();
+          }}
+          title="disable btn sound"
+          color={themeColors.mustard}
+        />
       </ButtonContainer>
-      <Modalize ref={modalizeRef} rootStyle={modalRootStyle} modalStyle={{backgroundColor: themeColors.deepPurple, ...modalModalStyle}} modalTopOffset={150}>
+      <Modalize
+        ref={modalizeRef}
+        rootStyle={modalRootStyle}
+        modalStyle={{ backgroundColor: themeColors.deepPurple, ...modalModalStyle }}
+        modalTopOffset={150}
+      >
         <SettingsScreen />
       </Modalize>
     </Background>

@@ -28,8 +28,8 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   const gameMusic = require("../assets/sounds/GameMusic.mp3");
 
-  const { playSound, stopSound } = useSound();
-  // console.log("gameScreen re-render");
+  const { playSound } = useSound();
+  console.log("gameScreen re-render");
 
   useEffect(() => {
     const randomQuestions = () => {
