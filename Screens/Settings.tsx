@@ -14,16 +14,28 @@ const SettingsScreen = () => {
   const categories = settingsData.filter((x, i) => settingsData.findIndex((y) => x.category === y.category) === i).map((x) => x.category);
 
   const { themeColors, toggleTheme } = useTheme();
-  const { toggleMuteMusic, toggleMuteButtonSound } = useSound();
+  const { toggleMuteMusic, toggleMuteButtonSound, setIsButtonSoundMuted, isButtonSoundMuted, isMusicMuted, setIsMusicMuted } = useSound();
   // const { toggleHapticSetting, toggleVibrationSetting, toggleMusicSetting, toggleEffectsSetting } = useSettings();
 
-  function handleToggle(item: SettingModel) {
-    if (item.title === "Dark Mode") toggleTheme();
-    if (item.title === "Music") toggleMuteMusic();
-    if (item.title === "Effects") toggleMuteButtonSound();
-    // if (item.title === "Haptics") toggleHapticSetting();
-    // if (item.title === "Vibration") toggleVibrationSetting();
+  function handleToggle(item: SettingModel, value: boolean) {
+    if (item.title === "Dark Mode") {
+      toggleTheme();
+    }
+    if (item.title === "Music") {
+      toggleMuteMusic();
+      setIsMusicMuted(!isMusicMuted);
+    }
+    if (item.title === "Effects") {
+      toggleMuteButtonSound();
+      setIsButtonSoundMuted(!isButtonSoundMuted);
+    }
   }
+
+  const getToggleValues = (item: SettingModel) => {
+    if (item.title === "Effects") return isButtonSoundMuted;
+    if (item.title === "Music") return isMusicMuted;
+    return true;
+  };
 
   return (
     <ScrollView>
@@ -37,7 +49,12 @@ const SettingsScreen = () => {
           {settingsData
             .filter((setting) => setting.category === category)
             .map((item) => (
-              <SettingItem key={item.title} item={item} handleToggle={() => handleToggle(item)} />
+              <SettingItem
+                key={item.title}
+                item={item}
+                handleToggle={(value) => handleToggle(item, value)}
+                setToggleValue={() => getToggleValues(item)}
+              />
             ))}
           <Divider style={{ borderBottomColor: "#fff" }} />
         </Container>
