@@ -4,24 +4,21 @@ const CenteredText = styled.Text`
   text-align: center;
 `;
 
-const ColoredText = styled.Text`
-  color: #fff;
-`;
-
-const SmText = styled(ColoredText)`
+const SmText = styled.Text`
   font-size: 14px;
 `;
 
-const MdText = styled(ColoredText)`
+const MdText = styled.Text`
   font-size: 20px;
 `;
 
-const LgText = styled(ColoredText)`
+const LgText = styled.Text`
   font-size: 28px;
 `;
 
-const XlText = styled(ColoredText)`
+const XlText = styled.Text`
   font-size: 32px;
 `;
 
 export { SmText, MdText, LgText, XlText, CenteredText };
+
