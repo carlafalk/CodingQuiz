@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { colors } from "../Styles/Shared";
 
 interface Props {
   setTimeIsUp: React.Dispatch<React.SetStateAction<boolean>>;
-  setTimeLeft: React.Dispatch<React.SetStateAction<number>>;
+  timeLeftRef: React.MutableRefObject<number>;
   currentQuestion: number;
-  timeLeft: number;
 }
 
-const TimerBar = ({ setTimeIsUp, currentQuestion, setTimeLeft, timeLeft }: Props) => {
+const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
+  const [timeLeft, setTimeLeft] = useState(100);
+
   useEffect(() => {
     let timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -27,6 +28,7 @@ const TimerBar = ({ setTimeIsUp, currentQuestion, setTimeLeft, timeLeft }: Props
   }, [currentQuestion]);
 
   useEffect(() => {
+    timeLeftRef.current = timeLeft;
     timeLeft === 0 && setTimeIsUp(true);
   }, [timeLeft]);
 

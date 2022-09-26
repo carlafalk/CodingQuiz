@@ -1,7 +1,8 @@
 import styled from "styled-components/native";
 
-const Divider = styled.View`
+const Divider = styled.View<{ color?: string }>`
   border-bottom-width: 1px;
+  border-bottom-color: ${(props) => props.color};
 `;
 const FlexBox = styled.View`
   display: flex;

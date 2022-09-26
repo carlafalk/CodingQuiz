@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
@@ -8,6 +8,7 @@ import Logo from "../Components/Logo";
 import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
 import { useSound } from "../contexts/SoundContext";
+import { useTheme } from "../contexts/ThemeContext";
 import QuizItem, { Answer } from "../models/QuizItem";
 import { colors } from "../Styles/Shared";
 import { MdText } from "../Styles/texts";
@@ -24,13 +25,17 @@ const GameScreen = ({ navigation, route }: Props) => {
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
   const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
   const [points, setPoints] = useState<number>(0);
-  const [timeLeft, setTimeLeft] = useState(100);
 
-  const gameMusic = require("../assets/sounds/GameMusic.mp3");
-
+  // hooks
+  const timeLeftRef = useRef(100);
   const { playSound } = useSound();
-  console.log("gameScreen re-render");
+  const { themeColors } = useTheme();
 
+  // consts
+  const gameMusic = require("../assets/sounds/GameMusic.mp3");
+  const lastQuestion = currentQuestion === quizItems.length - 1;
+
+  // useEffects
   useEffect(() => {
     setQuizItems(QuizItemRandomizer(route.params.category, 10));
     answerTimes = [];
@@ -46,10 +51,9 @@ const GameScreen = ({ navigation, route }: Props) => {
     playSound(gameMusic);
   }, [currentQuestion]);
 
-  if (quizItems.length === 0) return null;
-
+  // functions
   function evaluateAnswerTimes() {
-    let answerTime = 10 - timeLeft / 10;
+    let answerTime = 10 - timeLeftRef.current / 10;
     answerTimes.push(answerTime);
   }
 
@@ -63,20 +67,18 @@ const GameScreen = ({ navigation, route }: Props) => {
     }
   }
 
-  const handleTimeIsUp = () => {
+  function handleTimeIsUp() {
     setTimeIsUp(false);
+    handleAnswer();
+    lastQuestion ? gameOver() : setCurrentQuestion((prev) => prev + 1);
+  }
 
-    currentQuestion !== quizItems.length - 1
-      ? setCurrentQuestion((prev) => prev + 1)
-      : navigation.navigate("GameOver", { points: points, category: route.params.category, answerTimes: answerTimes });
-  };
+  function gameOver() {
+    navigation.navigate("GameOver", { points: points, answerTimes: answerTimes });
+  }
 
   function handleSubmit() {
-    // console.log("Submittar");
-    // if selectedAnswer.correct, setPoints prev + 1 pts
-    // if !selecteAnser, submit
-    // if selectedAsnwer.false, 0pts
-    if (currentQuestion !== quizItems.length - 1) {
+    if (!lastQuestion) {
       handleAnswer();
       setTimeIsUp(false);
       setCurrentQuestion((prev) => prev + 1);
@@ -84,24 +86,29 @@ const GameScreen = ({ navigation, route }: Props) => {
       setSelectedAnswer(null);
     } else {
       evaluateAnswerTimes();
-      navigation.navigate("GameOver", { points: points, category: route.params.category, answerTimes: answerTimes });
-      // console.log(`Game over! You scored ${points} / ${questions.length}`);
+      gameOver();
       setTimeIsUp(true);
     }
   }
+
+  // return null before useEffect run
+  if (quizItems.length === 0) return null;
 
   return (
     <Background dark>
       <TopSection title={route.params.category} />
       <QuestionContainer>
-        <Question>{quizItems[currentQuestion].question}</Question>
-        <Divider style={{ width: "100%" }} />
+        <Question style={{ color: themeColors.commons.white, marginBottom: 10 }}>{quizItems[currentQuestion].question}</Question>
+        <Divider style={{ width: "100%" }} color={themeColors.commons.white} />
+        <CurrentQuestion style={{ color: themeColors.commons.white }}>
+          {currentQuestion + 1} / {quizItems.length}
+        </CurrentQuestion>
         <AnswerContainer>
           {quizItems[currentQuestion].answers.map((answer, index) => (
             <AnswerButton onPress={handlePress} answer={answer} index={index} key={index} selectedAnswer={selectedAnswer} />
           ))}
         </AnswerContainer>
-        <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} setTimeLeft={setTimeLeft} timeLeft={timeLeft} />
+        <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} timeLeftRef={timeLeftRef} />
         <SubmitButton onPress={handleSubmit} disabled={!selectedAnswer ? true : false}>
           <SubmitText>submit</SubmitText>
         </SubmitButton>
@@ -127,10 +134,16 @@ const Question = styled(MdText)`
   text-align: center;
 `;
 
+const CurrentQuestion = styled(MdText)`
+  margin-top: 10px;
+  font-family: ShareTechMono;
+  text-align: center;
+`;
+
 const AnswerContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 20px 0;
+  margin: 10px 0 20px 0;
 `;
 
 const SubmitButton = styled.TouchableOpacity`
