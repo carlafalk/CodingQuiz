@@ -8,6 +8,7 @@ import Logo from "../Components/Logo";
 import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
 import { useSound } from "../contexts/SoundContext";
+import { useTheme } from "../contexts/ThemeContext";
 import QuizItem, { Answer } from "../models/QuizItem";
 import { colors } from "../Styles/Shared";
 import { MdText } from "../Styles/texts";
@@ -28,6 +29,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   // hooks
   const timeLeftRef = useRef(100);
   const { playSound } = useSound();
+  const { themeColors } = useTheme();
 
   // consts
   const gameMusic = require("../assets/sounds/GameMusic.mp3");
@@ -96,8 +98,11 @@ const GameScreen = ({ navigation, route }: Props) => {
     <Background dark>
       <TopSection title={route.params.category} />
       <QuestionContainer>
-        <Question>{quizItems[currentQuestion].question}</Question>
-        <Divider style={{ width: "100%" }} />
+        <Question style={{ color: themeColors.commons.white, marginBottom: 10 }}>{quizItems[currentQuestion].question}</Question>
+        <Divider style={{ width: "100%" }} color={themeColors.commons.white} />
+        <CurrentQuestion style={{ color: themeColors.commons.white }}>
+          {currentQuestion + 1} / {quizItems.length}
+        </CurrentQuestion>
         <AnswerContainer>
           {quizItems[currentQuestion].answers.map((answer, index) => (
             <AnswerButton onPress={handlePress} answer={answer} index={index} key={index} selectedAnswer={selectedAnswer} />
@@ -129,10 +134,16 @@ const Question = styled(MdText)`
   text-align: center;
 `;
 
+const CurrentQuestion = styled(MdText)`
+  margin-top: 10px;
+  font-family: ShareTechMono;
+  text-align: center;
+`;
+
 const AnswerContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 20px 0;
+  margin: 10px 0 20px 0;
 `;
 
 const SubmitButton = styled.TouchableOpacity`
