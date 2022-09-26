@@ -41,9 +41,9 @@ const GameOverScreen = ({ navigation, route }: Props) => {
       <ButtonBox>
         <HomeScreenButton
           color={colors.lightGreen}
-          title="restart"
+          title="play again"
           onPress={() => {
-            navigation.navigate("Game", { category: route.params.category });
+            navigation.navigate("Categories");
           }}
         />
         <HomeScreenButton
