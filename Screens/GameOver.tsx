@@ -6,12 +6,15 @@ import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
 import Logo from "../Components/Logo";
 import TopSection from "../Components/TopSection";
+import { useTheme } from "../contexts/ThemeContext";
 import { colors } from "../Styles/Shared";
 import { Divider } from "../Styles/views";
 
 type Props = NativeStackScreenProps<RootStackParams, "GameOver">;
 
 const GameOverScreen = ({ navigation, route }: Props) => {
+  const { themeColors } = useTheme();
+
   function getFastestTime() {
     return route.params.answerTimes.sort((n1, n2) => n1 - n2)[0];
   }
@@ -26,12 +29,12 @@ const GameOverScreen = ({ navigation, route }: Props) => {
           <StyledText>Score</StyledText>
           <StyledText>{route.params.points}/10</StyledText>
         </TextBox>
-        <Divider style={{ width: "85%", verticalPadding: 0 }} />
+        <Divider style={{ width: "85%", verticalPadding: 0 }} color={themeColors.commons.white} />
         <TextBox>
           <StyledText>Fastest answer</StyledText>
           <StyledText>{getFastestTime()}s</StyledText>
         </TextBox>
-        <Divider style={{ width: "85%" }} />
+        <Divider style={{ width: "85%" }} color={themeColors.commons.white} />
         <TextBox>
           <StyledText>Slowest answer</StyledText>
           <StyledText>{getSlowestTime()}s</StyledText>
