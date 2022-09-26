@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
@@ -24,7 +24,8 @@ const GameScreen = ({ navigation, route }: Props) => {
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
   const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
   const [points, setPoints] = useState<number>(0);
-  const [timeLeft, setTimeLeft] = useState(100);
+
+  const timeLeftRef = useRef(100);
 
   const gameMusic = require("../assets/sounds/GameMusic.mp3");
 
@@ -49,7 +50,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   if (quizItems.length === 0) return null;
 
   function evaluateAnswerTimes() {
-    let answerTime = 10 - timeLeft / 10;
+    let answerTime = 10 - timeLeftRef.current / 10;
     answerTimes.push(answerTime);
   }
 
@@ -101,7 +102,7 @@ const GameScreen = ({ navigation, route }: Props) => {
             <AnswerButton onPress={handlePress} answer={answer} index={index} key={index} selectedAnswer={selectedAnswer} />
           ))}
         </AnswerContainer>
-        <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} setTimeLeft={setTimeLeft} timeLeft={timeLeft} />
+        <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} timeLeftRef={timeLeftRef} />
         <SubmitButton onPress={handleSubmit} disabled={!selectedAnswer ? true : false}>
           <SubmitText>submit</SubmitText>
         </SubmitButton>
