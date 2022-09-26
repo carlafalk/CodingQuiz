@@ -25,13 +25,15 @@ const GameScreen = ({ navigation, route }: Props) => {
   const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
   const [points, setPoints] = useState<number>(0);
 
+  // hooks
   const timeLeftRef = useRef(100);
-
-  const gameMusic = require("../assets/sounds/GameMusic.mp3");
-
   const { playSound } = useSound();
-  console.log("gameScreen re-render");
 
+  // consts
+  const gameMusic = require("../assets/sounds/GameMusic.mp3");
+  const lastQuestion = currentQuestion === quizItems.length - 1;
+
+  // useEffects
   useEffect(() => {
     setQuizItems(QuizItemRandomizer(route.params.category, 10));
     answerTimes = [];
@@ -47,8 +49,7 @@ const GameScreen = ({ navigation, route }: Props) => {
     playSound(gameMusic);
   }, [currentQuestion]);
 
-  if (quizItems.length === 0) return null;
-
+  // functions
   function evaluateAnswerTimes() {
     let answerTime = 10 - timeLeftRef.current / 10;
     answerTimes.push(answerTime);
@@ -64,20 +65,18 @@ const GameScreen = ({ navigation, route }: Props) => {
     }
   }
 
-  const handleTimeIsUp = () => {
+  function handleTimeIsUp() {
     setTimeIsUp(false);
+    handleAnswer();
+    lastQuestion ? gameOver() : setCurrentQuestion((prev) => prev + 1);
+  }
 
-    currentQuestion !== quizItems.length - 1
-      ? setCurrentQuestion((prev) => prev + 1)
-      : navigation.navigate("GameOver", { points: points, category: route.params.category, answerTimes: answerTimes });
-  };
+  function gameOver() {
+    navigation.navigate("GameOver", { points: points, category: route.params.category, answerTimes: answerTimes });
+  }
 
   function handleSubmit() {
-    // console.log("Submittar");
-    // if selectedAnswer.correct, setPoints prev + 1 pts
-    // if !selecteAnser, submit
-    // if selectedAsnwer.false, 0pts
-    if (currentQuestion !== quizItems.length - 1) {
+    if (!lastQuestion) {
       handleAnswer();
       setTimeIsUp(false);
       setCurrentQuestion((prev) => prev + 1);
@@ -85,11 +84,13 @@ const GameScreen = ({ navigation, route }: Props) => {
       setSelectedAnswer(null);
     } else {
       evaluateAnswerTimes();
-      navigation.navigate("GameOver", { points: points, category: route.params.category, answerTimes: answerTimes });
-      // console.log(`Game over! You scored ${points} / ${questions.length}`);
+      gameOver();
       setTimeIsUp(true);
     }
   }
+
+  // return null before useEffect run
+  if (quizItems.length === 0) return null;
 
   return (
     <Background dark>
