@@ -70,6 +70,7 @@ function SoundProvider({ children }: Props) {
       setMusic(sound);
 
       await sound.playAsync();
+      await sound.setIsLoopingAsync(true);
     }
   };
 
