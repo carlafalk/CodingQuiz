@@ -33,6 +33,7 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   useEffect(() => {
     setQuizItems(QuizItemRandomizer(route.params.category, 10));
+    answerTimes = [];
   }, []);
 
   useEffect(() => {
