@@ -10,6 +10,7 @@ import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
 import GameScreen from "./Screens/Game";
 import GameOverScreen from "./Screens/GameOver";
+import GetReadyScreen from "./Screens/GetReady";
 import HomeScreen from "./Screens/Home";
 import SettingsScreen from "./Screens/Settings";
 
@@ -18,6 +19,7 @@ export type RootStackParams = {
   About: undefined;
   Categories: undefined;
   Settings: undefined;
+  GetReady: { category: string };
   Game: { category: string };
   GameOver: { points: number; category: string; answerTimes: number[] };
 };
@@ -57,6 +59,7 @@ export default function App() {
             <RootStack.Screen name="Settings" component={SettingsScreen} />
             <RootStack.Screen name="Game" component={GameScreen} />
             <RootStack.Screen name="GameOver" component={GameOverScreen} />
+            <RootStack.Screen name="GetReady" component={GetReadyScreen} />
           </RootStack.Navigator>
         </NavigationContainer>
       </SoundProvider>
