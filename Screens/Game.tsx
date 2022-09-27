@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
@@ -9,7 +9,8 @@ import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
-import QuizItem, { Answer } from "../models/QuizItem";
+import { Answer } from "../models/QuizItem";
+import { gameReducer } from "../reducers/gameReducer";
 import { colors } from "../Styles/Shared";
 import { MdText } from "../Styles/texts";
 import { Divider } from "../Styles/views";
@@ -17,14 +18,15 @@ import QuizItemRandomizer from "../utils/QuizItemRandomizer";
 
 type Props = NativeStackScreenProps<RootStackParams, "Game">;
 
-let answerTimes: number[] = [];
-
 const GameScreen = ({ navigation, route }: Props) => {
-  const [quizItems, setQuizItems] = useState<QuizItem[]>([]);
-  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
-  const [timeIsUp, setTimeIsUp] = useState<boolean>(false);
-  const [points, setPoints] = useState<number>(0);
+  const [state, dispatch] = useReducer(gameReducer, {
+    quizItems: [],
+    currentQuestion: 0,
+    selectedAnswer: null,
+    timeIsUp: false,
+    points: 0,
+    answerTimes: [],
+  });
 
   // hooks
   const timeLeftRef = useRef(100);
@@ -33,83 +35,76 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   // consts
   const gameMusic = require("../assets/sounds/GameMusic.mp3");
-  const lastQuestion = currentQuestion === quizItems.length - 1;
+  const lastQuestion = state.currentQuestion === state.quizItems.length - 1;
 
   // useEffects
   useEffect(() => {
-    setQuizItems(QuizItemRandomizer(route.params.category, 10));
-    answerTimes = [];
+    dispatch({ type: "SET_QUIZ_ITEMS", payload: QuizItemRandomizer(route.params.category, 10) });
   }, []);
 
   useEffect(() => {
-    if (timeIsUp) {
-      handleTimeIsUp();
+    if (state.timeIsUp) {
+      handleSubmit();
     }
-  }, [timeIsUp]);
+  }, [state.timeIsUp]);
 
   useEffect(() => {
     playSound(gameMusic);
-  }, [currentQuestion]);
+  }, [state.currentQuestion]);
 
   // functions
   function evaluateAnswerTimes() {
     let answerTime = 10 - timeLeftRef.current / 10;
-    answerTimes.push(answerTime);
+    dispatch({ type: "ADD_ANSWER_TIME", payload: answerTime });
   }
 
   function handlePress(answer: Answer) {
-    setSelectedAnswer(answer);
+    dispatch({ type: "SET_SELECTED_ANSWER", payload: answer });
   }
 
   function handleAnswer() {
-    if (selectedAnswer) {
-      selectedAnswer.isCorrect && setPoints((prev) => prev + 1);
+    if (state.selectedAnswer) {
+      state.selectedAnswer.isCorrect && dispatch({ type: "ADD_POINT" });
     }
   }
 
-  function handleTimeIsUp() {
-    setTimeIsUp(false);
-    handleAnswer();
-    lastQuestion ? gameOver() : setCurrentQuestion((prev) => prev + 1);
-  }
-
   function gameOver() {
-    navigation.navigate("GameOver", { points: points, answerTimes: answerTimes });
+    navigation.navigate("GameOver", { points: state.points, answerTimes: state.answerTimes });
   }
 
   function handleSubmit() {
     if (!lastQuestion) {
       handleAnswer();
-      setTimeIsUp(false);
-      setCurrentQuestion((prev) => prev + 1);
+      dispatch({ type: "SET_TIME_IS_UP_FALSE" });
+      dispatch({ type: "INCREMENT_CURRENT_QUESTION" });
       evaluateAnswerTimes();
-      setSelectedAnswer(null);
+      dispatch({ type: "SET_SELECTED_ANSWER", payload: null });
     } else {
       evaluateAnswerTimes();
       gameOver();
-      setTimeIsUp(true);
+      dispatch({ type: "SET_TIME_IS_UP_TRUE" });
     }
   }
 
   // return null before useEffect run
-  if (quizItems.length === 0) return null;
+  if (state.quizItems.length === 0) return null;
 
   return (
     <Background dark>
       <TopSection title={route.params.category} />
       <QuestionContainer>
-        <Question style={{ color: themeColors.commons.white, marginBottom: 10 }}>{quizItems[currentQuestion].question}</Question>
+        <Question style={{ color: themeColors.commons.white, marginBottom: 10 }}>{state.quizItems[state.currentQuestion].question}</Question>
         <Divider style={{ width: "100%" }} color={themeColors.commons.white} />
         <CurrentQuestion style={{ color: themeColors.commons.white }}>
-          {currentQuestion + 1} / {quizItems.length}
+          {state.currentQuestion + 1} / {state.quizItems.length}
         </CurrentQuestion>
         <AnswerContainer>
-          {quizItems[currentQuestion].answers.map((answer, index) => (
-            <AnswerButton onPress={handlePress} answer={answer} index={index} key={index} selectedAnswer={selectedAnswer} />
+          {state.quizItems[state.currentQuestion].answers.map((answer, index) => (
+            <AnswerButton onPress={handlePress} answer={answer} index={index} key={index} selectedAnswer={state.selectedAnswer} />
           ))}
         </AnswerContainer>
-        <TimerBar setTimeIsUp={setTimeIsUp} currentQuestion={currentQuestion} timeLeftRef={timeLeftRef} />
-        <SubmitButton onPress={handleSubmit} disabled={!selectedAnswer ? true : false}>
+        <TimerBar setTimeIsUp={dispatch} currentQuestion={state.currentQuestion} timeLeftRef={timeLeftRef} />
+        <SubmitButton onPress={handleSubmit} disabled={!state.selectedAnswer ? true : false}>
           <SubmitText>submit</SubmitText>
         </SubmitButton>
       </QuestionContainer>

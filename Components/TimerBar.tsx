@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
+import { KnownAction } from "../reducers/types";
 import { colors } from "../Styles/Shared";
 
 interface Props {
-  setTimeIsUp: React.Dispatch<React.SetStateAction<boolean>>;
+  setTimeIsUp: React.Dispatch<KnownAction>;
   timeLeftRef: React.MutableRefObject<number>;
   currentQuestion: number;
 }
@@ -29,7 +30,7 @@ const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
 
   useEffect(() => {
     timeLeftRef.current = timeLeft;
-    timeLeft === 0 && setTimeIsUp(true);
+    timeLeft === 0 && setTimeIsUp({ type: "SET_TIME_IS_UP_TRUE" });
   }, [timeLeft]);
 
   return (
