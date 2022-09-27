@@ -1,6 +1,7 @@
 import { Audio, AVPlaybackSource, AVPlaybackStatus } from "expo-av";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import AllSounds, { SoundObject } from "../data/soundData";
+import useAsyncStorage from "../hooks/useAsyncStorage";
 
 interface SoundContextValue {
   allSounds: SoundObject[];
@@ -39,7 +40,7 @@ function SoundProvider({ children }: Props) {
   const [music, setMusic] = useState<Audio.Sound>();
   const [buttonEffect, setButtonEffect] = useState<Audio.Sound>();
   const [soundStatus, setSoundStatus] = useState<AVPlaybackStatus>();
-  const [isMusicMuted, setIsMusicMuted] = useState<boolean>(false);
+  const [isMusicMuted, setIsMusicMuted] = useAsyncStorage<boolean>("music-muted", false);
   const [isButtonSoundMuted, setIsButtonSoundMuted] = useState<boolean>(false);
 
   useEffect(() => {
@@ -65,6 +66,7 @@ function SoundProvider({ children }: Props) {
 
   const playSound = async (filePath: AVPlaybackSource) => {
     if (!isMusicMuted) {
+      console.log("first");
       const { sound, status } = await Audio.Sound.createAsync(filePath);
 
       setMusic(sound);
@@ -91,7 +93,16 @@ function SoundProvider({ children }: Props) {
 
   const toggleMuteMusic = async () => {
     //TODO: Stop sound
-    !isMusicMuted ? music && setSoundStatus(await music.setIsMutedAsync(true)) : music && setSoundStatus(await music.setIsMutedAsync(false));
+    if (!isMusicMuted) {
+      setIsMusicMuted(true);
+      music && setSoundStatus(await music.setIsMutedAsync(true));
+    }
+    if (isMusicMuted) {
+      setIsMusicMuted(false);
+      music && setSoundStatus(await music.setIsMutedAsync(false));
+    }
+
+    // !isMusicMuted ? music && setSoundStatus(await music.setIsMutedAsync(true)) : music && setSoundStatus(await music.setIsMutedAsync(false));
   };
 
   const toggleMuteButtonSound = async () => {
