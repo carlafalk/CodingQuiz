@@ -30,7 +30,7 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   // hooks
   const timeLeftRef = useRef(100);
-  const { playSound } = useSound();
+  const { playGameMusic } = useSound();
   const { themeColors } = useTheme();
 
   // consts
@@ -49,7 +49,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   }, [state.timeIsUp]);
 
   useEffect(() => {
-    playSound(gameMusic);
+    playGameMusic();
   }, [state.currentQuestion]);
 
   // functions
