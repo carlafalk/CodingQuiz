@@ -1,11 +1,12 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
 import Logo from "../Components/Logo";
 import TopSection from "../Components/TopSection";
+import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { colors } from "../Styles/Shared";
 import { Divider } from "../Styles/views";
@@ -14,6 +15,11 @@ type Props = NativeStackScreenProps<RootStackParams, "GameOver">;
 
 const GameOverScreen = ({ navigation, route }: Props) => {
   const { themeColors } = useTheme();
+  const { playHomeMusic } = useSound();
+
+  useEffect(() => {
+    playHomeMusic();
+  }, []);
 
   function getFastestTime() {
     return route.params.answerTimes.sort((n1, n2) => n1 - n2)[0];
@@ -21,10 +27,6 @@ const GameOverScreen = ({ navigation, route }: Props) => {
   function getSlowestTime() {
     return route.params.answerTimes.sort((n1, n2) => n1 - n2)[route.params.answerTimes.length - 1];
   }
-
-  //TESTING AsyncStorage
-  // const [highscores, setHigScore] = useAsyncStorage("highscore", getFastestTime());
-  // console.log("HIGHSCORES: " + highscores);
 
   return (
     <Background>

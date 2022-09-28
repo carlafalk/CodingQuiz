@@ -30,11 +30,10 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   // hooks
   const timeLeftRef = useRef(100);
-  const { playSound } = useSound();
+  const { playGameMusic } = useSound();
   const { themeColors } = useTheme();
 
   // consts
-  const gameMusic = require("../assets/sounds/GameMusic.mp3");
   const lastQuestion = state.currentQuestion === state.quizItems.length - 1;
 
   // useEffects
@@ -49,7 +48,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   }, [state.timeIsUp]);
 
   useEffect(() => {
-    playSound(gameMusic);
+    playGameMusic();
   }, [state.currentQuestion]);
 
   // functions

@@ -1,11 +1,12 @@
-import { Audio, AVPlaybackSource, AVPlaybackStatus } from "expo-av";
+import { Audio, AVPlaybackStatus } from "expo-av";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import AllSounds, { SoundObject } from "../data/soundData";
 import useAsyncStorage from "../hooks/useAsyncStorage";
 
 interface SoundContextValue {
   allSounds: SoundObject[];
-  playSound: (path: AVPlaybackSource) => void;
+  playHomeMusic: () => void;
+  playGameMusic: () => void;
   playButtonEffect: () => void;
   toggleMuteMusic: () => void;
   toggleMuteButtonSound: () => void;
@@ -18,7 +19,10 @@ interface SoundContextValue {
 
 const SoundContext = createContext<SoundContextValue>({
   allSounds: [],
-  playSound: () => {
+  playHomeMusic: () => {
+    console.warn("this is default provider");
+  },
+  playGameMusic: () => {
     console.warn("this is default provider");
   },
   playButtonEffect: () => console.warn("this is default provider"),
@@ -66,9 +70,18 @@ function SoundProvider({ children }: Props) {
       : undefined;
   }, [buttonEffect]);
 
-  const playSound = async (filePath: AVPlaybackSource) => {
-    const { sound, status } = await Audio.Sound.createAsync(filePath);
+  const playHomeMusic = async () => {
+    const { sound, status } = await Audio.Sound.createAsync(allSounds[0].sound);
 
+    if (!isMusicMuted) {
+      setMusic(sound);
+      await sound.playAsync();
+      await sound.setIsLoopingAsync(true);
+    }
+  };
+
+  const playGameMusic = async () => {
+    const { sound, status } = await Audio.Sound.createAsync(allSounds[2].sound);
     if (!isMusicMuted) {
       setMusic(sound);
       await sound.playAsync();
@@ -96,11 +109,11 @@ function SoundProvider({ children }: Props) {
     //TODO: Stop sound
     if (!isMusicMuted) {
       setIsMusicMuted(true);
-      music && setSoundStatus(await music.setIsMutedAsync(true));
+      music && (await music.setIsMutedAsync(true));
     }
     if (isMusicMuted) {
       setIsMusicMuted(false);
-      music && setSoundStatus(await music.setIsMutedAsync(false));
+      music && (await music.setIsMutedAsync(false));
     }
 
     // !isMusicMuted ? music && setSoundStatus(await music.setIsMutedAsync(true)) : music && setSoundStatus(await music.setIsMutedAsync(false));
@@ -116,7 +129,8 @@ function SoundProvider({ children }: Props) {
     <SoundContext.Provider
       value={{
         allSounds,
-        playSound,
+        playHomeMusic,
+        playGameMusic,
         playButtonEffect,
         toggleMuteMusic,
         toggleMuteButtonSound,
