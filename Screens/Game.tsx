@@ -60,6 +60,10 @@ const GameScreen = ({ navigation, route }: Props) => {
     }
   }
 
+  function getAnswerTime() {
+    return 10 - timeLeftRef.current / 10;
+  }
+
   function handlePress(answer: Answer) {
     dispatch({ type: "SET_SELECTED_ANSWER", payload: answer });
   }
@@ -68,6 +72,10 @@ const GameScreen = ({ navigation, route }: Props) => {
     if (state.selectedAnswer) {
       state.selectedAnswer.isCorrect && dispatch({ type: "ADD_POINT" });
     }
+    dispatch({
+      type: "ADD_ANSWER_INFO",
+      payload: { question: state.quizItems[state.currentQuestion].question, answer: state.selectedAnswer, answerTime: getAnswerTime() },
+    });
   }
 
   function gameOver() {
