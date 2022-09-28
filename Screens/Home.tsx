@@ -16,22 +16,17 @@ type HomeNavigationProps = NativeStackScreenProps<RootStackParams, "Home">;
 const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);
   const { isDarkTheme, toggleTheme, themeColors } = useTheme();
-  const HomeScreenMusic = require("../assets/sounds/HomeScreenMusic.mp3");
-  const { playSound, toggleMuteMusic, toggleMuteButtonSound, isMusicMuted, isLoaded } = useSound();
-
-  console.log("homescreen re rendered");
+  const { playHomeMusic, isMusicMuted, isLoaded } = useSound();
 
   const handleOpen = () => {
     modalizeRef.current?.open();
   };
 
   useEffect(() => {
-    console.log("useEffect");
     if (isLoaded) {
       console.log(isLoaded);
       if (!isMusicMuted) {
-        console.log("ismUsciMuted");
-        playSound(HomeScreenMusic);
+        playHomeMusic();
       }
     }
   }, [isLoaded, isMusicMuted]);
