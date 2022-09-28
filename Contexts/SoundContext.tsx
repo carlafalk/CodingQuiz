@@ -1,6 +1,7 @@
 import { Audio, AVPlaybackSource, AVPlaybackStatus } from "expo-av";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import AllSounds, { SoundObject } from "../data/soundData";
+import useAsyncStorage from "../hooks/useAsyncStorage";
 
 interface SoundContextValue {
   allSounds: SoundObject[];
@@ -12,6 +13,7 @@ interface SoundContextValue {
   isButtonSoundMuted: boolean;
   setIsMusicMuted: React.Dispatch<React.SetStateAction<boolean>>;
   isMusicMuted: boolean;
+  isLoaded: boolean;
 }
 
 const SoundContext = createContext<SoundContextValue>({
@@ -28,6 +30,7 @@ const SoundContext = createContext<SoundContextValue>({
   isButtonSoundMuted: false,
   setIsMusicMuted: () => {},
   isMusicMuted: false,
+  isLoaded: false,
 });
 
 interface Props {
@@ -39,7 +42,7 @@ function SoundProvider({ children }: Props) {
   const [music, setMusic] = useState<Audio.Sound>();
   const [buttonEffect, setButtonEffect] = useState<Audio.Sound>();
   const [soundStatus, setSoundStatus] = useState<AVPlaybackStatus>();
-  const [isMusicMuted, setIsMusicMuted] = useState<boolean>(false);
+  const [isMusicMuted, setIsMusicMuted, isLoaded] = useAsyncStorage<boolean>("music-muted", false);
   const [isButtonSoundMuted, setIsButtonSoundMuted] = useState<boolean>(false);
 
   useEffect(() => {
@@ -64,11 +67,10 @@ function SoundProvider({ children }: Props) {
   }, [buttonEffect]);
 
   const playSound = async (filePath: AVPlaybackSource) => {
+    const { sound, status } = await Audio.Sound.createAsync(filePath);
+
     if (!isMusicMuted) {
-      const { sound, status } = await Audio.Sound.createAsync(filePath);
-
       setMusic(sound);
-
       await sound.playAsync();
       await sound.setIsLoopingAsync(true);
     }
@@ -92,7 +94,16 @@ function SoundProvider({ children }: Props) {
 
   const toggleMuteMusic = async () => {
     //TODO: Stop sound
-    !isMusicMuted ? music && setSoundStatus(await music.setIsMutedAsync(true)) : music && setSoundStatus(await music.setIsMutedAsync(false));
+    if (!isMusicMuted) {
+      setIsMusicMuted(true);
+      music && setSoundStatus(await music.setIsMutedAsync(true));
+    }
+    if (isMusicMuted) {
+      setIsMusicMuted(false);
+      music && setSoundStatus(await music.setIsMutedAsync(false));
+    }
+
+    // !isMusicMuted ? music && setSoundStatus(await music.setIsMutedAsync(true)) : music && setSoundStatus(await music.setIsMutedAsync(false));
   };
 
   const toggleMuteButtonSound = async () => {
@@ -113,6 +124,7 @@ function SoundProvider({ children }: Props) {
         isButtonSoundMuted,
         setIsMusicMuted,
         isMusicMuted,
+        isLoaded,
       }}
     >
       {children}
