@@ -5,12 +5,18 @@ import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import TopSection from "../Components/TopSection";
+import { useSound } from "../contexts/SoundContext";
 
 type Props = NativeStackScreenProps<RootStackParams, "GetReady">;
 
 const GetReadyScreen = ({ navigation, route }: Props) => {
   const animatedCounter = useRef(new Animated.Value(3)).current;
   const [counter, setCounter] = useState("");
+  const { playGetReadySound } = useSound();
+
+  useEffect(() => {
+    playGetReadySound();
+  }, []);
 
   const animate = () => {
     return Animated.timing(animatedCounter, {
