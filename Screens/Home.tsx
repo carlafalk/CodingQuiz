@@ -17,15 +17,24 @@ const HomeScreen = ({ navigation }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);
   const { isDarkTheme, toggleTheme, themeColors } = useTheme();
   const HomeScreenMusic = require("../assets/sounds/HomeScreenMusic.mp3");
-  const { playSound, toggleMuteMusic, toggleMuteButtonSound } = useSound();
+  const { playSound, toggleMuteMusic, toggleMuteButtonSound, isMusicMuted, isLoaded } = useSound();
+
+  console.log("homescreen re rendered");
 
   const handleOpen = () => {
     modalizeRef.current?.open();
   };
 
   useEffect(() => {
-    playSound(HomeScreenMusic);
-  }, [navigation]);
+    console.log("useEffect");
+    if (isLoaded) {
+      console.log(isLoaded);
+      if (!isMusicMuted) {
+        console.log("ismUsciMuted");
+        playSound(HomeScreenMusic);
+      }
+    }
+  }, [isLoaded, isMusicMuted]);
 
   return (
     <Background>

@@ -21,6 +21,11 @@ const GameOverScreen = ({ navigation, route }: Props) => {
   function getSlowestTime() {
     return route.params.answerTimes.sort((n1, n2) => n1 - n2)[route.params.answerTimes.length - 1];
   }
+
+  //TESTING AsyncStorage
+  // const [highscores, setHigScore] = useAsyncStorage("highscore", getFastestTime());
+  // console.log("HIGHSCORES: " + highscores);
+
   return (
     <Background>
       <TopSection title="game over" />
