@@ -34,7 +34,6 @@ const GameScreen = ({ navigation, route }: Props) => {
   const { themeColors } = useTheme();
 
   // consts
-  const gameMusic = require("../assets/sounds/GameMusic.mp3");
   const lastQuestion = state.currentQuestion === state.quizItems.length - 1;
 
   // useEffects
