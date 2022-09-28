@@ -42,6 +42,11 @@ interface AddAnswerTimeAction {
   payload: number;
 }
 
+interface AddAnswerInfoAction {
+  type: "ADD_ANSWER_INFO";
+  payload: AnswerInfo;
+}
+
 export type KnownAction =
   | SetQuizItemsAction
   | IncrementCurrentQuestionAction
@@ -49,4 +54,5 @@ export type KnownAction =
   | SetTimeIsNotUpAction
   | SetTimeIsUpAction
   | IncrementPointsAction
-  | AddAnswerTimeAction;
+  | AddAnswerTimeAction
+  | AddAnswerInfoAction;
