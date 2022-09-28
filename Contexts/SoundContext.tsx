@@ -47,7 +47,7 @@ function SoundProvider({ children }: Props) {
   const [buttonEffect, setButtonEffect] = useState<Audio.Sound>();
   const [soundStatus, setSoundStatus] = useState<AVPlaybackStatus>();
   const [isMusicMuted, setIsMusicMuted, isLoaded] = useAsyncStorage<boolean>("music-muted", false);
-  const [isButtonSoundMuted, setIsButtonSoundMuted] = useState<boolean>(false);
+  const [isButtonSoundMuted, setIsButtonSoundMuted] = useAsyncStorage<boolean>("button-muted", false);
 
   useEffect(() => {
     console.log("LOADING ALL SOUNDS");
@@ -120,9 +120,7 @@ function SoundProvider({ children }: Props) {
   };
 
   const toggleMuteButtonSound = async () => {
-    !isButtonSoundMuted
-      ? buttonEffect && setSoundStatus(await buttonEffect.setIsMutedAsync(true))
-      : buttonEffect && setSoundStatus(await buttonEffect.setIsMutedAsync(false));
+    !isButtonSoundMuted ? buttonEffect && (await buttonEffect.setIsMutedAsync(true)) : buttonEffect && (await buttonEffect.setIsMutedAsync(false));
   };
 
   return (
