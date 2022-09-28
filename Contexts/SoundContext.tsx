@@ -108,9 +108,11 @@ function SoundProvider({ children }: Props) {
   };
 
   const playGetReadySound = async () => {
-    const { sound } = await Audio.Sound.createAsync(allSounds[3].sound);
-    setMusic(sound);
-    await sound.playAsync();
+    if (!isMusicMuted) {
+      const { sound } = await Audio.Sound.createAsync(allSounds[3].sound);
+      setMusic(sound);
+      await sound.playAsync();
+    }
   };
 
   const toggleMuteMusic = async () => {
