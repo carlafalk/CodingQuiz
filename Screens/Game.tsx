@@ -53,8 +53,10 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   // functions
   function evaluateAnswerTimes() {
-    let answerTime = 10 - timeLeftRef.current / 10;
-    dispatch({ type: "ADD_ANSWER_TIME", payload: answerTime });
+    if (state.selectedAnswer?.isCorrect) {
+      let answerTime = 10 - timeLeftRef.current / 10;
+      dispatch({ type: "ADD_ANSWER_TIME", payload: answerTime });
+    }
   }
 
   function handlePress(answer: Answer) {
@@ -72,14 +74,13 @@ const GameScreen = ({ navigation, route }: Props) => {
   }
 
   function handleSubmit() {
+    handleAnswer();
+    evaluateAnswerTimes();
     if (!lastQuestion) {
-      handleAnswer();
       dispatch({ type: "SET_TIME_IS_UP_FALSE" });
       dispatch({ type: "INCREMENT_CURRENT_QUESTION" });
-      evaluateAnswerTimes();
       dispatch({ type: "SET_SELECTED_ANSWER", payload: null });
     } else {
-      evaluateAnswerTimes();
       gameOver();
       dispatch({ type: "SET_TIME_IS_UP_TRUE" });
     }
