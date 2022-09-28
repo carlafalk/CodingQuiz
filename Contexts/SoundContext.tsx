@@ -13,6 +13,7 @@ interface SoundContextValue {
   isButtonSoundMuted: boolean;
   setIsMusicMuted: React.Dispatch<React.SetStateAction<boolean>>;
   isMusicMuted: boolean;
+  isLoaded: boolean;
 }
 
 const SoundContext = createContext<SoundContextValue>({
@@ -29,6 +30,7 @@ const SoundContext = createContext<SoundContextValue>({
   isButtonSoundMuted: false,
   setIsMusicMuted: () => {},
   isMusicMuted: false,
+  isLoaded: false,
 });
 
 interface Props {
@@ -40,7 +42,7 @@ function SoundProvider({ children }: Props) {
   const [music, setMusic] = useState<Audio.Sound>();
   const [buttonEffect, setButtonEffect] = useState<Audio.Sound>();
   const [soundStatus, setSoundStatus] = useState<AVPlaybackStatus>();
-  const [isMusicMuted, setIsMusicMuted] = useAsyncStorage<boolean>("music-muted", false);
+  const [isMusicMuted, setIsMusicMuted, isLoaded] = useAsyncStorage<boolean>("music-muted", false);
   const [isButtonSoundMuted, setIsButtonSoundMuted] = useState<boolean>(false);
 
   useEffect(() => {
@@ -65,12 +67,10 @@ function SoundProvider({ children }: Props) {
   }, [buttonEffect]);
 
   const playSound = async (filePath: AVPlaybackSource) => {
+    const { sound, status } = await Audio.Sound.createAsync(filePath);
+
     if (!isMusicMuted) {
-      console.log("first");
-      const { sound, status } = await Audio.Sound.createAsync(filePath);
-
       setMusic(sound);
-
       await sound.playAsync();
       await sound.setIsLoopingAsync(true);
     }
@@ -124,6 +124,7 @@ function SoundProvider({ children }: Props) {
         isButtonSoundMuted,
         setIsMusicMuted,
         isMusicMuted,
+        isLoaded,
       }}
     >
       {children}
