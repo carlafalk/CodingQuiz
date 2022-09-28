@@ -1,3 +1,4 @@
+import { AnswerInfo } from "../models/AnswerInfo";
 import QuizItem, { Answer } from "../models/QuizItem";
 
 export interface GameState {
@@ -7,6 +8,7 @@ export interface GameState {
   timeIsUp: boolean;
   points: number;
   answerTimes: number[];
+  answersInfo: AnswerInfo[];
 }
 
 interface SetQuizItemsAction {
