@@ -6,6 +6,7 @@ import React, { useCallback, useEffect } from "react";
 import SoundProvider from "./contexts/SoundContext";
 
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { AnswerInfo } from "./models/AnswerInfo";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
 import GameScreen from "./Screens/Game";
@@ -21,7 +22,7 @@ export type RootStackParams = {
   Settings: undefined;
   GetReady: { category: string };
   Game: { category: string };
-  GameOver: { points: number; answerTimes: number[] };
+  GameOver: { points: number; answerTimes: number[]; answersInfo: AnswerInfo[] };
 };
 
 const RootStack = createNativeStackNavigator<RootStackParams>();
