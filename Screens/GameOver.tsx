@@ -1,5 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
+import { Text } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
@@ -28,6 +30,20 @@ const GameOverScreen = ({ navigation, route }: Props) => {
     return route.params.answerTimes.sort((n1, n2) => n1 - n2)[route.params.answerTimes.length - 1];
   }
 
+  const answerCards = route.params.answersInfo.map((info, index) => (
+    <React.Fragment key={index}>
+      <Text>
+        question {index + 1}: {info.question}
+      </Text>
+      <Text>
+        {info.answer
+          ? `you answered: ${info.answer.answer}, which was ${info.answer.isCorrect ? "corrent" : "incorrect"}`
+          : "you didn't select an answer in time"}
+      </Text>
+      <Text>You answered in {info.answerTime} seconds</Text>
+    </React.Fragment>
+  ));
+
   return (
     <Background>
       <TopSection title="game over" />
@@ -46,6 +62,7 @@ const GameOverScreen = ({ navigation, route }: Props) => {
           <StyledText>Slowest answer</StyledText>
           <StyledText>{getSlowestTime()}s</StyledText>
         </TextBox>
+        <ScrollView>{answerCards}</ScrollView>
       </ScoreBox>
 
       <ButtonBox>
