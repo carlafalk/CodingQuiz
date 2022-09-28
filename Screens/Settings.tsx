@@ -34,7 +34,7 @@ const SettingsScreen = () => {
 
   const getToggleValues = (item: SettingModel) => {
     if (item.title === "Effects") return isButtonSoundMuted;
-    if (item.title === "Music") return isMusicMuted;
+    if (item.title === "Music") return !isMusicMuted;
     return true;
   };
 
