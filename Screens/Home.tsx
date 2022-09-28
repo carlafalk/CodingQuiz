@@ -19,21 +19,22 @@ type HomeNavigationProps = NativeStackScreenProps<RootStackParams, "Home">;
 const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);
   const { isDarkTheme, toggleTheme, themeColors } = useTheme();
-  const HomeScreenMusic = require("../assets/sounds/HomeScreenMusic.mp3");
-  const { playSound, toggleMuteMusic, toggleMuteButtonSound } = useSound();
+  const { playHomeMusic, isMusicMuted, isLoaded } = useSound();
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(route.params.loggedIn || false);
-  console.log("nu är vi här");
 
   const handleOpen = () => {
     modalizeRef.current?.open();
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      playSound(HomeScreenMusic);
+    if (isLoaded) {
+      console.log(isLoaded);
+      if (!isMusicMuted) {
+        playHomeMusic();
+      }
     }
-  }, [navigation]);
+  }, [isLoaded, isMusicMuted]);
 
   useEffect(() => {
     if (!isLoggedIn) {
