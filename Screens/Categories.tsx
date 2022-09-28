@@ -34,21 +34,31 @@ const CategoriesScreen = ({ navigation }: Props) => {
           title="react"
           color={themeColors.categories.react}
           img={ReactImg}
-          onPress={() => navigation.navigate("Game", { category: "react" })}
+          onPress={() => navigation.navigate("GetReady", { category: "react" })}
         />
-        <CategoryButton title="html" color={themeColors.categories.html} img={HTMLImg} onPress={() => navigation.navigate("Game", { category: "html" })} />
-        <CategoryButton title="css" color={themeColors.categories.css} img={CSSImg} onPress={() => navigation.navigate("Game", { category: "css" })} />
+        <CategoryButton
+          title="html"
+          color={themeColors.categories.html}
+          img={HTMLImg}
+          onPress={() => navigation.navigate("GetReady", { category: "html" })}
+        />
+        <CategoryButton
+          title="css"
+          color={themeColors.categories.css}
+          img={CSSImg}
+          onPress={() => navigation.navigate("GetReady", { category: "css" })}
+        />
         <CategoryButton
           title="javascript"
           color={themeColors.categories.javaScript}
           img={JSImg}
-          onPress={() => navigation.navigate("Game", { category: "javascript" })}
+          onPress={() => navigation.navigate("GetReady", { category: "javascript" })}
         />
         <CategoryButton
           title="typescript"
           color={themeColors.categories.typeScript}
           img={TSImg}
-          onPress={() => navigation.navigate("Game", { category: "typescript" })}
+          onPress={() => navigation.navigate("GetReady", { category: "typescript" })}
         />
       </ButtonContainer>
     </Background>
@@ -68,19 +78,19 @@ const BackAndTitle = styled.View`
   margin: 60px 45px 20% 45px;
 `;
 
-const Title = styled.View<{bg: string}>`
+const Title = styled.View<{ bg: string }>`
   width: 70%;
   padding: 13px 0;
-  background-color: ${props => props.bg};
+  background-color: ${(props) => props.bg};
   justify-content: center;
   align-items: center;
   border-radius: 15px;
   elevation: 8;
 `;
 
-const TitleText = styled.Text<{color: string}>`
+const TitleText = styled.Text<{ color: string }>`
   font-family: "ShareTechMono";
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   font-size: 20px;
   text-transform: uppercase;
 `;
