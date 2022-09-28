@@ -8,6 +8,7 @@ interface SoundContextValue {
   playHomeMusic: () => void;
   playGameMusic: () => void;
   playButtonEffect: () => void;
+  playGetReadySound: () => void;
   toggleMuteMusic: () => void;
   toggleMuteButtonSound: () => void;
   setIsButtonSoundMuted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,6 +23,7 @@ const SoundContext = createContext<SoundContextValue>({
   playHomeMusic: () => {
     console.warn("this is default provider");
   },
+  playGetReadySound: () => {},
   playGameMusic: () => {
     console.warn("this is default provider");
   },
@@ -105,6 +107,12 @@ function SoundProvider({ children }: Props) {
     }
   };
 
+  const playGetReadySound = async () => {
+    const { sound } = await Audio.Sound.createAsync(allSounds[3].sound);
+    setMusic(sound);
+    await sound.playAsync();
+  };
+
   const toggleMuteMusic = async () => {
     //TODO: Stop sound
     if (!isMusicMuted) {
@@ -130,6 +138,7 @@ function SoundProvider({ children }: Props) {
         playHomeMusic,
         playGameMusic,
         playButtonEffect,
+        playGetReadySound,
         toggleMuteMusic,
         toggleMuteButtonSound,
         setIsButtonSoundMuted,
