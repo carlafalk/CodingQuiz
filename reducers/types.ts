@@ -1,3 +1,4 @@
+import { AnswerInfo } from "../models/AnswerInfo";
 import QuizItem, { Answer } from "../models/QuizItem";
 
 export interface GameState {
@@ -7,6 +8,7 @@ export interface GameState {
   timeIsUp: boolean;
   points: number;
   answerTimes: number[];
+  gameSession: AnswerInfo[];
 }
 
 interface SetQuizItemsAction {
@@ -40,6 +42,11 @@ interface AddAnswerTimeAction {
   payload: number;
 }
 
+interface AddAnswerInfoAction {
+  type: "ADD_ANSWER_INFO";
+  payload: AnswerInfo;
+}
+
 export type KnownAction =
   | SetQuizItemsAction
   | IncrementCurrentQuestionAction
@@ -47,4 +54,5 @@ export type KnownAction =
   | SetTimeIsNotUpAction
   | SetTimeIsUpAction
   | IncrementPointsAction
-  | AddAnswerTimeAction;
+  | AddAnswerTimeAction
+  | AddAnswerInfoAction;

@@ -26,6 +26,7 @@ const GameScreen = ({ navigation, route }: Props) => {
     timeIsUp: false,
     points: 0,
     answerTimes: [],
+    gameSession: [],
   });
 
   // hooks
@@ -59,6 +60,10 @@ const GameScreen = ({ navigation, route }: Props) => {
     }
   }
 
+  function getAnswerTime() {
+    return 10 - timeLeftRef.current / 10;
+  }
+
   function handlePress(answer: Answer) {
     dispatch({ type: "SET_SELECTED_ANSWER", payload: answer });
   }
@@ -67,10 +72,19 @@ const GameScreen = ({ navigation, route }: Props) => {
     if (state.selectedAnswer) {
       state.selectedAnswer.isCorrect && dispatch({ type: "ADD_POINT" });
     }
+    dispatch({
+      type: "ADD_ANSWER_INFO",
+      payload: { question: state.quizItems[state.currentQuestion].question, answer: state.selectedAnswer, answerTime: getAnswerTime() },
+    });
   }
 
   function gameOver() {
-    navigation.navigate("GameOver", { points: state.points, answerTimes: state.answerTimes });
+    navigation.navigate("GameOver", {
+      points: state.points,
+      answerTimes: state.answerTimes,
+      gameSession: state.gameSession,
+      category: route.params.category,
+    });
   }
 
   function handleSubmit() {

@@ -7,6 +7,7 @@ import HapticsProvider from "./contexts/HapticsContext";
 import SoundProvider from "./contexts/SoundContext";
 
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { AnswerInfo } from "./models/AnswerInfo";
 import { User } from "./models/User";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
@@ -27,7 +28,7 @@ export type RootStackParams = {
   Settings: undefined;
   GetReady: { category: string };
   Game: { category: string };
-  GameOver: { points: number; answerTimes: number[] };
+  GameOver: { points: number; answerTimes: number[]; gameSession: AnswerInfo[]; category: string };
 };
 
 const RootStack = createNativeStackNavigator<RootStackParams>();

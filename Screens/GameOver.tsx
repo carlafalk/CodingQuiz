@@ -1,10 +1,13 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Modal } from "react-native";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
+import GameSession from "../Components/GameSession";
 import Logo from "../Components/Logo";
+import STMText from "../Components/Texts/ShareTechMonoText";
 import TopSection from "../Components/TopSection";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
@@ -14,6 +17,7 @@ import { Divider } from "../Styles/views";
 type Props = NativeStackScreenProps<RootStackParams, "GameOver">;
 
 const GameOverScreen = ({ navigation, route }: Props) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
 
@@ -30,6 +34,17 @@ const GameOverScreen = ({ navigation, route }: Props) => {
 
   return (
     <Background>
+      <Modal
+        statusBarTranslucent={true}
+        animationType="fade"
+        transparent={true}
+        visible={modalIsOpen}
+        onRequestClose={() => {
+          setModalIsOpen(false);
+        }}
+      >
+        <GameSession gameSession={route.params.gameSession} closeModal={setModalIsOpen} category={route.params.category} />
+      </Modal>
       <TopSection title="game over" />
       <ScoreBox>
         <TextBox>
@@ -46,6 +61,11 @@ const GameOverScreen = ({ navigation, route }: Props) => {
           <StyledText>Slowest answer</StyledText>
           <StyledText>{getSlowestTime()}s</StyledText>
         </TextBox>
+        <StatsButton onPress={() => setModalIsOpen(true)} color={themeColors.lightPurple}>
+          <STMText uppercase size={20}>
+            show more stats
+          </STMText>
+        </StatsButton>
       </ScoreBox>
 
       <ButtonBox>
@@ -96,4 +116,11 @@ const StyledText = styled.Text`
   font-family: ShareTechMono;
   color: white;
   font-size: 20px;
+`;
+
+const StatsButton = styled.TouchableOpacity<{ color: string }>`
+  background-color: ${({ color }) => color};
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
 `;
