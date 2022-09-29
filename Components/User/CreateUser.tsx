@@ -2,8 +2,10 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
-import { useTheme } from "../contexts/ThemeContext";
-import { colorsModel } from "../models/ColorsModel";
+import { useTheme } from "../../contexts/ThemeContext";
+import { colorsModel } from "../../models/ColorsModel";
+import AvatarCreator from "./AvatarCreator";
+import UserForm from "./UserForm";
 
 interface Props {
   handleClose: () => void;
@@ -11,7 +13,6 @@ interface Props {
 
 const CreateUser = ({ handleClose }: Props) => {
   const { themeColors } = useTheme();
-  const [text, onChangeText] = React.useState("");
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 10, backgroundColor: "#00000090" }}>
@@ -24,7 +25,10 @@ const CreateUser = ({ handleClose }: Props) => {
         </Header>
         <View style={{ width: "100%", padding: 30 }}>
           <StyledText themeColors={themeColors}>Pick a username</StyledText>
-          <Input themeColors={themeColors} onChangeText={onChangeText} value={text} placeholder="Textsdasd" />
+          <UserForm />
+          <View style={{ width: "100%" }}>
+            <AvatarCreator />
+          </View>
         </View>
         <TouchableOpacity style={{ padding: 20, marginVertical: 40, backgroundColor: "orange", width: "50%", borderRadius: 10 }}>
           <Text style={{ color: "white", textAlign: "center" }}>Submit</Text>
@@ -35,16 +39,6 @@ const CreateUser = ({ handleClose }: Props) => {
 };
 
 export default CreateUser;
-
-const Input = styled.TextInput<{
-  themeColors: colorsModel;
-}>`
-  color: ${(props) => props.themeColors.commons.white};
-  height: 40px;
-  border: 1px solid ${(props) => props.themeColors.commons.white};
-  padding: 10px;
-  margin: 10px 0;
-`;
 
 const Header = styled.View<{
   themeColors: colorsModel;
