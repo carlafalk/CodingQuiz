@@ -79,7 +79,12 @@ const GameScreen = ({ navigation, route }: Props) => {
   }
 
   function gameOver() {
-    navigation.navigate("GameOver", { points: state.points, answerTimes: state.answerTimes, answersInfo: state.gameSession });
+    navigation.navigate("GameOver", {
+      points: state.points,
+      answerTimes: state.answerTimes,
+      gameSession: state.gameSession,
+      category: route.params.category,
+    });
   }
 
   function handleSubmit() {
