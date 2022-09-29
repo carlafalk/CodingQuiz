@@ -26,7 +26,7 @@ const GameScreen = ({ navigation, route }: Props) => {
     timeIsUp: false,
     points: 0,
     answerTimes: [],
-    answersInfo: [],
+    gameSession: [],
   });
 
   // hooks
@@ -79,7 +79,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   }
 
   function gameOver() {
-    navigation.navigate("GameOver", { points: state.points, answerTimes: state.answerTimes, answersInfo: state.answersInfo });
+    navigation.navigate("GameOver", { points: state.points, answerTimes: state.answerTimes, answersInfo: state.gameSession });
   }
 
   function handleSubmit() {

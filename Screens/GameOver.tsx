@@ -30,7 +30,7 @@ const GameOverScreen = ({ navigation, route }: Props) => {
     return route.params.answerTimes.sort((n1, n2) => n1 - n2)[route.params.answerTimes.length - 1];
   }
 
-  const answerCards = route.params.answersInfo.map((info, index) => <AnswerCard key={index} answerInfo={info} questionNr={index + 1} />);
+  const answerCards = route.params.gameSession.map((info, index) => <AnswerCard key={index} answerInfo={info} questionNr={index + 1} />);
 
   return (
     <Background>

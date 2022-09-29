@@ -8,7 +8,7 @@ export interface GameState {
   timeIsUp: boolean;
   points: number;
   answerTimes: number[];
-  answersInfo: AnswerInfo[];
+  gameSession: AnswerInfo[];
 }
 
 interface SetQuizItemsAction {

@@ -24,7 +24,7 @@ export function gameReducer(state: GameState, action: KnownAction) {
       return { ...state, answerTimes: [...state.answerTimes, action.payload] };
     }
     case "ADD_ANSWER_INFO": {
-      return { ...state, answersInfo: [...state.answersInfo, action.payload] };
+      return { ...state, answersInfo: [...state.gameSession, action.payload] };
     }
   }
 }
