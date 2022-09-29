@@ -30,7 +30,7 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   // hooks
   const timeLeftRef = useRef(100);
-  const { playGameMusic } = useSound();
+  const { playGameMusic, playSubmitSound } = useSound();
   const { themeColors } = useTheme();
 
   // consts
@@ -74,9 +74,10 @@ const GameScreen = ({ navigation, route }: Props) => {
   }
 
   function handleSubmit() {
-    handleAnswer();
     evaluateAnswerTimes();
+    playSubmitSound();
     if (!lastQuestion) {
+      handleAnswer();
       dispatch({ type: "SET_TIME_IS_UP_FALSE" });
       dispatch({ type: "INCREMENT_CURRENT_QUESTION" });
       dispatch({ type: "SET_SELECTED_ANSWER", payload: null });
