@@ -2,7 +2,7 @@
   "expo": {
     "name": "CodingQuiz",
     "slug": "codingquiz",
-    "owner": "osci-the-orca",
+    "owner": "localhost-bois",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
