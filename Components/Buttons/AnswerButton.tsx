@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
+import { useSound } from "../../contexts/SoundContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import { Answer } from "../../models/QuizItem";
 import { colors } from "../../Styles/Shared";
@@ -13,9 +14,11 @@ interface Props {
 }
 const AnswerButton = ({ answer, onPress, selectedAnswer, index }: Props) => {
   const { themeColors } = useTheme();
+  const { playAnswerSound } = useSound();
 
   function handlePress() {
     onPress(answer);
+    playAnswerSound();
   }
   return (
     <Button onPress={handlePress} index={index} themeColors={themeColors} selectedAnswer={selectedAnswer} thisAnswer={answer}>

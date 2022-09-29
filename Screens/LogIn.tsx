@@ -6,7 +6,6 @@ import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
 import Logo from "../Components/Logo";
-import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { User } from "../models/User";
 import CreateUserModal from "./CreateUserModal";
@@ -17,7 +16,6 @@ type Props = NativeStackScreenProps<RootStackParams, "LogIn">;
 const LogInScreen = ({ navigation }: Props) => {
   const { isDarkTheme, toggleTheme, themeColors } = useTheme();
   const HomeScreenMusic = require("../assets/sounds/HomeScreenMusic.mp3");
-  const { playSound, toggleMuteMusic, toggleMuteButtonSound } = useSound();
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
   const [isLoggedIn, setLoggedIn] = useState(false);
