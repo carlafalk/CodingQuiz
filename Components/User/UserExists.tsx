@@ -2,17 +2,17 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
-import { useTheme } from "../contexts/ThemeContext";
-import Users from "../data/userData";
-import { colorsModel } from "../models/ColorsModel";
-import { User } from "../models/User";
+import { useTheme } from "../../contexts/ThemeContext";
+import Users from "../../data/userData";
+import { colorsModel } from "../../models/ColorsModel";
+import { User } from "../../models/User";
 
 interface Props {
   handleClose: () => void;
   handleLogIn: (user: User) => void;
 }
 
-const UserExistModal = ({ handleClose, handleLogIn }: Props) => {
+const UserExists = ({ handleClose, handleLogIn }: Props) => {
   const { themeColors } = useTheme();
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 10, backgroundColor: "#00000090" }}>
@@ -45,7 +45,7 @@ const UserExistModal = ({ handleClose, handleLogIn }: Props) => {
   );
 };
 
-export default UserExistModal;
+export default UserExists;
 
 const UserButton = styled.TouchableOpacity<{
   themeColors: colorsModel;
