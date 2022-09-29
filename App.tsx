@@ -28,7 +28,7 @@ export type RootStackParams = {
   Settings: undefined;
   GetReady: { category: string };
   Game: { category: string };
-  GameOver: { points: number; answerTimes: number[]; gameSession: AnswerInfo[] };
+  GameOver: { points: number; answerTimes: number[]; gameSession: AnswerInfo[]; category: string };
 };
 
 const RootStack = createNativeStackNavigator<RootStackParams>();
