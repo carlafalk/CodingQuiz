@@ -2,10 +2,10 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
-import AvatarCreator from "../Components/User/AvatarCreator";
-import UserForm from "../Components/User/UserForm";
-import { useTheme } from "../contexts/ThemeContext";
-import { colorsModel } from "../models/ColorsModel";
+import { useTheme } from "../../contexts/ThemeContext";
+import { colorsModel } from "../../models/ColorsModel";
+import AvatarCreator from "./AvatarCreator";
+import UserForm from "./UserForm";
 
 interface Props {
   handleClose: () => void;
@@ -13,7 +13,6 @@ interface Props {
 
 const CreateUser = ({ handleClose }: Props) => {
   const { themeColors } = useTheme();
-  
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 10, backgroundColor: "#00000090" }}>

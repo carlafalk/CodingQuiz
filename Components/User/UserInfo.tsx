@@ -2,9 +2,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
-import { useTheme } from "../contexts/ThemeContext";
-import { colorsModel } from "../models/ColorsModel";
-import { User } from "../models/User";
+import { useTheme } from "../../contexts/ThemeContext";
+import { colorsModel } from "../../models/ColorsModel";
+import { User } from "../../models/User";
 
 interface Props {
   handleClose: () => void;
