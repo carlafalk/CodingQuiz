@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
+import { useHaptics } from "../../contexts/HapticsContext";
 import { useSound } from "../../contexts/SoundContext";
 import { colors } from "../../Styles/Shared";
 
@@ -11,8 +12,17 @@ type Props = {
 
 const HomeScreenButton = ({ onPress, title, color }: Props) => {
   const { playButtonEffect } = useSound();
+  const { standardButtonHaptics } = useHaptics();
   return (
-    <Button android_disableSound={true} onPress={onPress} color={color} onPressIn={() => playButtonEffect()}>
+    <Button
+      android_disableSound={true}
+      onPress={onPress}
+      color={color}
+      onPressIn={() => {
+        playButtonEffect();
+        standardButtonHaptics();
+      }}
+    >
       <BtnTitle>{title}</BtnTitle>
     </Button>
   );
