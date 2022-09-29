@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import styled from "styled-components/native";
+import { useSound } from "../../contexts/SoundContext";
 
 interface Props {
   title: string;
@@ -9,8 +10,9 @@ interface Props {
 }
 
 const CategoryButton = ({ title, img, color, onPress }: Props) => {
+  const { playButtonEffect } = useSound();
   return (
-    <Button activeOpacity={0.8} color={color} onPress={onPress}>
+    <Button activeOpacity={0.8} color={color} onPress={onPress} onPressIn={() => playButtonEffect()}>
       <CardImage source={img} />
       <Title>{title}</Title>
     </Button>

@@ -7,6 +7,8 @@ interface SoundContextValue {
   allSounds: SoundObject[];
   playHomeMusic: () => void;
   playGameMusic: () => void;
+  playSubmitSound: () => void;
+  playAnswerSound: () => void;
   playButtonEffect: () => void;
   playGetReadySound: () => void;
   toggleMuteMusic: () => void;
@@ -28,6 +30,8 @@ const SoundContext = createContext<SoundContextValue>({
     console.warn("this is default provider");
   },
   playButtonEffect: () => console.warn("this is default provider"),
+  playSubmitSound: () => {},
+  playAnswerSound: () => {},
   toggleMuteMusic: () => {
     console.warn("this is default provider");
   },
@@ -115,6 +119,22 @@ function SoundProvider({ children }: Props) {
     }
   };
 
+  const playSubmitSound = async () => {
+    if (!isButtonSoundMuted) {
+      const { sound } = await Audio.Sound.createAsync(allSounds[5].sound);
+      setButtonEffect(sound);
+      await sound.playAsync();
+    }
+  };
+
+  const playAnswerSound = async () => {
+    if (!isButtonSoundMuted) {
+      const { sound } = await Audio.Sound.createAsync(allSounds[4].sound);
+      setButtonEffect(sound);
+      await sound.playAsync();
+    }
+  };
+
   const toggleMuteMusic = async () => {
     //TODO: Stop sound
     if (!isMusicMuted) {
@@ -144,6 +164,8 @@ function SoundProvider({ children }: Props) {
         toggleMuteMusic,
         toggleMuteButtonSound,
         setIsButtonSoundMuted,
+        playSubmitSound,
+        playAnswerSound,
         isButtonSoundMuted,
         setIsMusicMuted,
         isMusicMuted,

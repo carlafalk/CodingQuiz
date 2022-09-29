@@ -31,7 +31,7 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   // hooks
   const timeLeftRef = useRef(100);
-  const { playGameMusic } = useSound();
+  const { playGameMusic, playSubmitSound } = useSound();
   const { themeColors } = useTheme();
 
   // consts
@@ -90,6 +90,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   function handleSubmit() {
     handleAnswer();
     evaluateAnswerTimes();
+    playSubmitSound();
     if (!lastQuestion) {
       dispatch({ type: "SET_TIME_IS_UP_FALSE" });
       dispatch({ type: "INCREMENT_CURRENT_QUESTION" });
@@ -155,7 +156,7 @@ const AnswerContainer = styled.View`
   margin: 10px 0 20px 0;
 `;
 
-const SubmitButton = styled.TouchableOpacity`
+const SubmitButton = styled.Pressable`
   background-color: ${colors.success};
   align-items: center;
   border-radius: 15px;
