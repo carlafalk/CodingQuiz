@@ -9,10 +9,10 @@ import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
 import Logo from "../Components/Logo";
+import UserInfo from "../Components/User/UserInfo";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
 import SettingsScreen from "./Settings";
-import UserInfo from "./UserInfo";
 
 type HomeNavigationProps = NativeStackScreenProps<RootStackParams, "Home">;
 
