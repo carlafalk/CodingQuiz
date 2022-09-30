@@ -1,40 +1,50 @@
-import { createContext, ReactNode, useContext } from "react";
-import { BigHead } from "react-native-bigheads";
+import { createContext, ReactNode, useContext, useEffect } from "react";
+import { defaultAvatar } from "../data/avatarData";
 import useAsyncStorage from "../hooks/useAsyncStorage";
 import { User } from "../models/User";
 
 interface UserContext {
-  addUser: () => void;
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  createUser: (user: User) => void;
   editUser: () => void;
+  users: User[];
 }
 
 const UserContext = createContext<UserContext>({
-  addUser: () => {
-    console.log("Added user");
+  setUsers: () => {
+    console.warn("No provider found.");
+  },
+  createUser: () => {
+    console.warn("No provider found.");
   },
   editUser: () => {
-    console.log("Edited user");
+    console.warn("No provider found.");
   },
+  users: [],
 });
 
 interface Props {
   children: ReactNode;
 }
 
-const guest = {
+const guest: User = {
   username: "guest123",
-  avatar: BigHead,
+  avatar: defaultAvatar,
 };
 
 function UserProvider({ children }: Props) {
-  const [user, setUser, isLoaded] = useAsyncStorage<User>("user", guest);
-  const addUser = () => {
-    console.log("Added user");
+  const [users, setUsers, isLoaded] = useAsyncStorage<User[]>("newUsers", [guest]);
+
+  const createUser = (user: User) => {
+    const usersCopy = [...users];
+    usersCopy.push(user);
+    setUsers(usersCopy);
   };
+
   const editUser = () => {
-    console.log("Added user");
+    console.log("edit user");
   };
-  return <UserContext.Provider value={{ addUser, editUser }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ editUser, setUsers, users, createUser }}>{children}</UserContext.Provider>;
 }
 
 export const useUser = () => useContext(UserContext);
