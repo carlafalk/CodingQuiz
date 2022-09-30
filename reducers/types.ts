@@ -6,8 +6,6 @@ export interface GameState {
   currentQuestion: number;
   selectedAnswer: Answer | null;
   timeIsUp: boolean;
-  points: number;
-  answerTimes: number[];
   gameSession: AnswerInfo[];
 }
 
@@ -33,15 +31,6 @@ interface SetTimeIsUpAction {
   type: "SET_TIME_IS_UP_TRUE";
 }
 
-interface IncrementPointsAction {
-  type: "ADD_POINT";
-}
-
-interface AddAnswerTimeAction {
-  type: "ADD_ANSWER_TIME";
-  payload: number;
-}
-
 interface AddAnswerInfoAction {
   type: "ADD_ANSWER_INFO";
   payload: AnswerInfo;
@@ -53,6 +42,4 @@ export type KnownAction =
   | SetSelectedAnswerAction
   | SetTimeIsNotUpAction
   | SetTimeIsUpAction
-  | IncrementPointsAction
-  | AddAnswerTimeAction
   | AddAnswerInfoAction;

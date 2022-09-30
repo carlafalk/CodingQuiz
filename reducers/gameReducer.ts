@@ -17,12 +17,6 @@ export function gameReducer(state: GameState, action: KnownAction) {
     case "SET_TIME_IS_UP_TRUE": {
       return { ...state, timeIsUp: true };
     }
-    case "ADD_POINT": {
-      return { ...state, points: state.points + 1 };
-    }
-    case "ADD_ANSWER_TIME": {
-      return { ...state, answerTimes: [...state.answerTimes, action.payload] };
-    }
     case "ADD_ANSWER_INFO": {
       return { ...state, gameSession: [...state.gameSession, action.payload] };
     }
