@@ -7,6 +7,7 @@ import HapticsProvider from "./contexts/HapticsContext";
 import SoundProvider from "./contexts/SoundContext";
 
 import { ThemeProvider } from "./contexts/ThemeContext";
+import UserProvider from "./contexts/UserContext";
 import { AnswerInfo } from "./models/AnswerInfo";
 import { User } from "./models/User";
 import AboutScreen from "./Screens/About";
@@ -56,23 +57,25 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider>
-      <HapticsProvider>
-        <SoundProvider>
-          <NavigationContainer onReady={onLayoutRootView}>
-            <RootStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, animation: "fade" }}>
-              <RootStack.Screen name="Home" component={HomeScreen} initialParams={{ loggedIn: false, user: undefined }} />
-              <RootStack.Screen name="About" component={AboutScreen} />
-              <RootStack.Screen name="LogIn" component={LogInScreen} />
-              <RootStack.Screen name="Categories" component={CategoriesScreen} />
-              <RootStack.Screen name="Settings" component={SettingsScreen} />
-              <RootStack.Screen name="Game" component={GameScreen} />
-              <RootStack.Screen name="GameOver" component={GameOverScreen} />
-              <RootStack.Screen name="GetReady" component={GetReadyScreen} />
-            </RootStack.Navigator>
-          </NavigationContainer>
-        </SoundProvider>
-      </HapticsProvider>
-    </ThemeProvider>
+    <UserProvider>
+      <ThemeProvider>
+        <HapticsProvider>
+          <SoundProvider>
+            <NavigationContainer onReady={onLayoutRootView}>
+              <RootStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, animation: "fade" }}>
+                <RootStack.Screen name="Home" component={HomeScreen} initialParams={{ loggedIn: false, user: undefined }} />
+                <RootStack.Screen name="About" component={AboutScreen} />
+                <RootStack.Screen name="LogIn" component={LogInScreen} />
+                <RootStack.Screen name="Categories" component={CategoriesScreen} />
+                <RootStack.Screen name="Settings" component={SettingsScreen} />
+                <RootStack.Screen name="Game" component={GameScreen} />
+                <RootStack.Screen name="GameOver" component={GameOverScreen} />
+                <RootStack.Screen name="GetReady" component={GetReadyScreen} />
+              </RootStack.Navigator>
+            </NavigationContainer>
+          </SoundProvider>
+        </HapticsProvider>
+      </ThemeProvider>
+    </UserProvider>
   );
 }
