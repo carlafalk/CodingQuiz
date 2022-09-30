@@ -1,18 +1,23 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { AvatarProps } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
+import { useUser } from "../../contexts/UserContext";
+import { defaultAvatar } from "../../data/avatarData";
 import { colorsModel } from "../../models/ColorsModel";
 import AvatarCreator from "./AvatarCreator";
-import UserForm from "./UserForm";
 
 interface Props {
   handleClose: () => void;
 }
 
 const CreateUser = ({ handleClose }: Props) => {
+  const [username, setUsername] = useState("");
   const { themeColors } = useTheme();
+  const { createUser } = useUser();
+  const avatarRef = useRef<AvatarProps>(defaultAvatar);
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 10, backgroundColor: "#00000090" }}>
@@ -23,14 +28,24 @@ const CreateUser = ({ handleClose }: Props) => {
           </TouchableOpacity>
           <StyledText themeColors={themeColors}>Create user</StyledText>
         </Header>
-        <View style={{ width: "100%", padding: 30 }}>
+        <View style={{ padding: 30 }}>
           <StyledText themeColors={themeColors}>Pick a username</StyledText>
-          <UserForm />
-          <View style={{ width: "100%" }}>
-            <AvatarCreator />
+          <View>
+            <Input onChangeText={setUsername} themeColors={themeColors} value={username} />
           </View>
+
+          <AvatarCreator avatarRef={avatarRef} />
         </View>
-        <TouchableOpacity style={{ padding: 20, marginVertical: 40, backgroundColor: "orange", width: "50%", borderRadius: 10 }}>
+        <TouchableOpacity
+          style={{ padding: 20, marginVertical: 40, backgroundColor: "orange", width: "50%", borderRadius: 10 }}
+          onPress={() => {
+            createUser({
+              username: username,
+              avatar: avatarRef.current.valueOf(),
+            });
+            handleClose();
+          }}
+        >
           <Text style={{ color: "white", textAlign: "center" }}>Submit</Text>
         </TouchableOpacity>
       </View>
@@ -56,4 +71,14 @@ const StyledText = styled.Text<{
   themeColors: colorsModel;
 }>`
   color: ${(props) => props.themeColors.commons.white};
+`;
+
+const Input = styled.TextInput<{
+  themeColors: colorsModel;
+}>`
+  color: ${(props) => props.themeColors.commons.white};
+  height: 40px;
+  border: 1px solid ${(props) => props.themeColors.commons.white};
+  padding: 10px;
+  margin: 10px 0;
 `;
