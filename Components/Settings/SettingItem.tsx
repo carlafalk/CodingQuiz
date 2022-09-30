@@ -23,7 +23,7 @@ const SettingItem = ({ item, handleToggle, setToggleValue }: Props) => {
       <View>
         <Switch
           trackColor={{ false: colors.lightGrey, true: colors.lightGreen }}
-          thumbColor={isEnabled ? "#fff" : colors.deepPurple}
+          thumbColor={"#fff"}
           ios_backgroundColor={colors.deepPurple}
           onValueChange={(value) => handleToggle(value, item)}
           value={setToggleValue(item)}
