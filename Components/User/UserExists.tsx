@@ -1,9 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
+import { BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
-import Users from "../../data/userData";
+import { useUser } from "../../contexts/UserContext";
 import { colorsModel } from "../../models/ColorsModel";
 import { User } from "../../models/User";
 
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const UserExists = ({ handleClose, handleLogIn }: Props) => {
+  const { users } = useUser();
   const { themeColors } = useTheme();
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 10, backgroundColor: "#00000090" }}>
@@ -25,13 +27,13 @@ const UserExists = ({ handleClose, handleLogIn }: Props) => {
         </Header>
         <View style={{ width: "100%", padding: 20 }}>
           <InfoText themeColors={themeColors}>
-            {Users.length > 1 ? "There's multiple users on your phone. Which would you like to log into?" : `Welcome ${Users[0].username}!`}
+            {users.length > 1 ? "There's multiple users on your phone. Which would you like to log into?" : `Welcome ${users[0].username}!`}
           </InfoText>
-          {Users.map((user) => (
+          {users.map((user) => (
             <View key={user.username} style={{ padding: 5, alignItems: "center" }}>
               <UserButton onPress={() => handleLogIn(user)} themeColors={themeColors}>
                 <ButtonEffect themeColors={themeColors} />
-                <AvatarImage source={user.avatar} />
+                <BigHead {...user.avatar} size={75} />
                 <StyledText themeColors={themeColors} style={{ textAlign: "center" }}>
                   {user.username}
                 </StyledText>
