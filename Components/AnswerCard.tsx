@@ -40,7 +40,7 @@ const AnswerCard = ({ answerInfo, questionNr, categoryColor }: Props) => {
         </STMText>
       </SectionContainer>
       <Divider color={themeColors.commons.white} />
-      {answerInfo.answer && (
+      {answerInfo.answer && answerInfo.answer.isCorrect && (
         <SectionContainer>
           <MaterialIcons name="timer" size={40} color={themeColors.mustard} />
           <STMText size={18} styles={{ marginHorizontal: 10 }}>

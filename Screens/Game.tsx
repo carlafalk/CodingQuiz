@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
@@ -19,13 +19,12 @@ import QuizItemRandomizer from "../utils/QuizItemRandomizer";
 type Props = NativeStackScreenProps<RootStackParams, "Game">;
 
 const GameScreen = ({ navigation, route }: Props) => {
+  const [gameIsOver, setGameIsOver] = useState(false);
   const [state, dispatch] = useReducer(gameReducer, {
     quizItems: [],
     currentQuestion: 0,
     selectedAnswer: null,
     timeIsUp: false,
-    points: 0,
-    answerTimes: [],
     gameSession: [],
   });
 
@@ -43,7 +42,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (state.timeIsUp) {
+    if (state.timeIsUp && !gameIsOver) {
       handleSubmit();
     }
   }, [state.timeIsUp]);
@@ -52,16 +51,18 @@ const GameScreen = ({ navigation, route }: Props) => {
     playGameMusic();
   }, [state.currentQuestion]);
 
-  // functions
-  function evaluateAnswerTimes() {
-    if (state.selectedAnswer?.isCorrect) {
-      let answerTime = 10 - timeLeftRef.current / 10;
-      dispatch({ type: "ADD_ANSWER_TIME", payload: answerTime });
+  useEffect(() => {
+    if (gameIsOver) {
+      gameOver();
     }
-  }
+  }, [gameIsOver]);
+
+  // functions
 
   function getAnswerTime() {
-    return 10 - timeLeftRef.current / 10;
+    if (state.selectedAnswer) {
+      return 10 - timeLeftRef.current / 10;
+    } else return -1;
   }
 
   function handlePress(answer: Answer) {
@@ -69,9 +70,6 @@ const GameScreen = ({ navigation, route }: Props) => {
   }
 
   function handleAnswer() {
-    if (state.selectedAnswer) {
-      state.selectedAnswer.isCorrect && dispatch({ type: "ADD_POINT" });
-    }
     dispatch({
       type: "ADD_ANSWER_INFO",
       payload: { question: state.quizItems[state.currentQuestion].question, answer: state.selectedAnswer, answerTime: getAnswerTime() },
@@ -80,8 +78,6 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   function gameOver() {
     navigation.navigate("GameOver", {
-      points: state.points,
-      answerTimes: state.answerTimes,
       gameSession: state.gameSession,
       category: route.params.category,
     });
@@ -89,15 +85,14 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   function handleSubmit() {
     handleAnswer();
-    evaluateAnswerTimes();
     playSubmitSound();
     if (!lastQuestion) {
       dispatch({ type: "SET_TIME_IS_UP_FALSE" });
       dispatch({ type: "INCREMENT_CURRENT_QUESTION" });
       dispatch({ type: "SET_SELECTED_ANSWER", payload: null });
     } else {
-      gameOver();
       dispatch({ type: "SET_TIME_IS_UP_TRUE" });
+      setGameIsOver(true);
     }
   }
 
