@@ -20,16 +20,28 @@ const GameOverScreen = ({ navigation, route }: Props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
+  const [answerTimes, setAnswerTimes] = useState<number[]>([]);
 
   useEffect(() => {
     playHomeMusic();
+    extractAnswerTimes();
   }, []);
 
+  function extractAnswerTimes() {
+    let times: number[] = [];
+    route.params.gameSession
+      .filter((question) => question.answer?.isCorrect)
+      .forEach((question) => {
+        times.push(question.answerTime);
+      });
+    setAnswerTimes(times);
+  }
+
   function getFastestTime() {
-    return route.params.answerTimes.sort((n1, n2) => n1 - n2)[0];
+    return answerTimes.sort((n1, n2) => n1 - n2)[0];
   }
   function getSlowestTime() {
-    return route.params.answerTimes.sort((n1, n2) => n1 - n2)[route.params.answerTimes.length - 1];
+    return answerTimes.sort((n1, n2) => n1 - n2)[answerTimes.length - 1];
   }
 
   return (
@@ -49,18 +61,22 @@ const GameOverScreen = ({ navigation, route }: Props) => {
       <ScoreBox>
         <TextBox>
           <StyledText>Score</StyledText>
-          <StyledText>{route.params.points}/10</StyledText>
+          <StyledText>{route.params.gameSession.filter((question) => question.answer?.isCorrect).length}/10</StyledText>
         </TextBox>
         <Divider style={{ width: "85%", verticalPadding: 0 }} color={themeColors.commons.white} />
-        <TextBox>
-          <StyledText>Fastest answer</StyledText>
-          <StyledText>{getFastestTime()}s</StyledText>
-        </TextBox>
-        <Divider style={{ width: "85%" }} color={themeColors.commons.white} />
-        <TextBox>
-          <StyledText>Slowest answer</StyledText>
-          <StyledText>{getSlowestTime()}s</StyledText>
-        </TextBox>
+        {answerTimes.length !== 0 && (
+          <>
+            <TextBox>
+              <StyledText>Fastest answer</StyledText>
+              <StyledText>{getFastestTime()}s</StyledText>
+            </TextBox>
+            <Divider style={{ width: "85%" }} color={themeColors.commons.white} />
+            <TextBox>
+              <StyledText>Slowest answer</StyledText>
+              <StyledText>{getSlowestTime()}s</StyledText>
+            </TextBox>
+          </>
+        )}
         <StatsButton onPress={() => setModalIsOpen(true)} color={themeColors.lightPurple}>
           <STMText uppercase size={20}>
             show more stats
