@@ -1,22 +1,22 @@
+import { BigHead } from "react-native-bigheads";
 import { User } from "../models/User";
-import Avatars from "./avatarData";
 
 const Users: User[] = [
   {
     username: "oscinator",
-    avatar: Avatars[0],
+    avatar: BigHead,
   },
   {
     username: "alejandro",
-    avatar: Avatars[1],
+    avatar: BigHead,
   },
   {
     username: "Carla",
-    avatar: Avatars[2],
+    avatar: BigHead,
   },
   {
     username: "Zommy",
-    avatar: Avatars[3],
+    avatar: BigHead,
   },
 ];
 
