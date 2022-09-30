@@ -61,11 +61,11 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
           navigation.navigate("LogIn");
           setIsLoggedIn(false);
         }}
-        style={{ marginTop: 120, right: 60, position: "absolute" }}
+        style={{ marginTop: 120, right: 60, position: "absolute", zIndex: 999 }}
       >
         <FontAwesome name="user-circle-o" size={24} color={themeColors.lightGrey} />
       </Pressable>
-      <Pressable onPress={() => setModalVisible(true)} style={{ marginTop: 120, right: 20, position: "absolute" }}>
+      <Pressable onPress={() => setModalVisible(true)} style={{ marginTop: 120, right: 20, position: "absolute", zIndex: 999 }}>
         <FontAwesome name="user-circle-o" size={24} color={themeColors.lightGrey} />
       </Pressable>
       <Logo size="large" topMargin={120} />
