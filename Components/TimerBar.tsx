@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
+import { useTheme } from "../contexts/ThemeContext";
+import { colorsModel } from "../models/ColorsModel";
 import { KnownAction } from "../reducers/types";
-import { colors } from "../Styles/Shared";
 
 interface Props {
   setTimeIsUp: React.Dispatch<KnownAction>;
@@ -11,6 +12,7 @@ interface Props {
 
 const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
   const [timeLeft, setTimeLeft] = useState(100);
+  const { themeColors } = useTheme();
 
   useEffect(() => {
     let timer = setInterval(() => {
@@ -35,10 +37,10 @@ const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
 
   return (
     <TimeBar>
-      <RemainingTimeBar width={timeLeft} />
-      <TimeBarShine />
-      <TimeBarClock>
-        <TimeBarTime>{timeLeft / 10}</TimeBarTime>
+      <RemainingTimeBar themeColors={themeColors} width={timeLeft} />
+      <TimeBarShine themeColors={themeColors} />
+      <TimeBarClock themeColors={themeColors}>
+        <TimeBarTime themeColors={themeColors}>{timeLeft / 10}</TimeBarTime>
       </TimeBarClock>
     </TimeBar>
   );
@@ -55,8 +57,8 @@ const TimeBar = styled.View`
   border: 2px solid black;
 `;
 
-const RemainingTimeBar = styled.View<{ width: number }>`
-  background-color: ${colors.lightGreen};
+const RemainingTimeBar = styled.View<{ width: number; themeColors: colorsModel }>`
+  background-color: ${({ themeColors }) => themeColors.lightGreen};
   border-radius: 8px;
   width: ${(props) => props.width}%;
   position: absolute;
@@ -66,7 +68,7 @@ const RemainingTimeBar = styled.View<{ width: number }>`
   bottom: 0;
 `;
 
-const TimeBarShine = styled.View`
+const TimeBarShine = styled.View<{ themeColors: colorsModel }>`
   top: 1px;
   height: 10px;
   width: 98%;
@@ -76,7 +78,7 @@ const TimeBarShine = styled.View`
   border-bottom-right-radius: 4px;
 `;
 
-const TimeBarClock = styled.View`
+const TimeBarClock = styled.View<{ themeColors: colorsModel }>`
   position: absolute;
   justify-content: center;
   align-items: center;
@@ -84,14 +86,14 @@ const TimeBarClock = styled.View`
   right: 5px;
   height: 60px;
   width: 60px;
-  background-color: ${colors.lightPurple};
-  border: 5px solid ${colors.mustard};
+  background-color: ${({ themeColors }) => themeColors.lightPurple};
+  border: 5px solid ${({ themeColors }) => themeColors.mustard};
   border-radius: 50px;
   elevation: 8;
 `;
 
-const TimeBarTime = styled.Text`
+const TimeBarTime = styled.Text<{ themeColors: colorsModel }>`
   font-family: "ShareTechMono";
   font-size: 20px;
-  color: ${colors.lightGreen};
+  color: ${({ themeColors }) => themeColors.lightGreen};
 `;

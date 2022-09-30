@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Switch, View } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { SettingModel } from "../../models/SettingModel";
-import { colors } from "../../Styles/Shared";
 import { MdText, SmText } from "../../Styles/texts";
 import { FlexBox } from "../../Styles/views";
 
@@ -22,9 +21,9 @@ const SettingItem = ({ item, handleToggle, setToggleValue }: Props) => {
       </View>
       <View>
         <Switch
-          trackColor={{ false: colors.lightGrey, true: colors.lightGreen }}
-          thumbColor={isEnabled ? "#fff" : colors.deepPurple}
-          ios_backgroundColor={colors.deepPurple}
+          trackColor={{ false: themeColors.lightGrey, true: themeColors.lightGreen }}
+          thumbColor={"#fff"}
+          ios_backgroundColor={themeColors.deepPurple}
           onValueChange={(value) => handleToggle(value, item)}
           value={setToggleValue(item)}
         />

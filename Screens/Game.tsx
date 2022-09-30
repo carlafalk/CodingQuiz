@@ -9,9 +9,9 @@ import TimerBar from "../Components/TimerBar";
 import TopSection from "../Components/TopSection";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
+import { colorsModel } from "../models/ColorsModel";
 import { Answer } from "../models/QuizItem";
 import { gameReducer } from "../reducers/gameReducer";
-import { colors } from "../Styles/Shared";
 import { MdText } from "../Styles/texts";
 import { Divider } from "../Styles/views";
 import QuizItemRandomizer from "../utils/QuizItemRandomizer";
@@ -102,7 +102,7 @@ const GameScreen = ({ navigation, route }: Props) => {
   return (
     <Background dark>
       <TopSection title={route.params.category} />
-      <QuestionContainer>
+      <QuestionContainer themeColors={themeColors}>
         <Question style={{ color: themeColors.commons.white, marginBottom: 10 }}>{state.quizItems[state.currentQuestion].question}</Question>
         <Divider style={{ width: "100%" }} color={themeColors.commons.white} />
         <CurrentQuestion style={{ color: themeColors.commons.white }}>
@@ -114,8 +114,8 @@ const GameScreen = ({ navigation, route }: Props) => {
           ))}
         </AnswerContainer>
         <TimerBar setTimeIsUp={dispatch} currentQuestion={state.currentQuestion} timeLeftRef={timeLeftRef} />
-        <SubmitButton onPress={handleSubmit} disabled={!state.selectedAnswer ? true : false}>
-          <SubmitText>submit</SubmitText>
+        <SubmitButton themeColors={themeColors} onPress={handleSubmit} disabled={!state.selectedAnswer ? true : false}>
+          <SubmitText themeColors={themeColors}>submit</SubmitText>
         </SubmitButton>
       </QuestionContainer>
       <Logo topMargin={20} size="small" />
@@ -125,8 +125,8 @@ const GameScreen = ({ navigation, route }: Props) => {
 
 export default GameScreen;
 
-const QuestionContainer = styled.View`
-  background-color: ${colors.deepPurple};
+const QuestionContainer = styled.View<{ themeColors: colorsModel }>`
+  background-color: ${({ themeColors }) => themeColors.deepPurple};
   border-radius: 15px;
   padding: 15px;
   margin: 0 10px;
@@ -151,8 +151,8 @@ const AnswerContainer = styled.View`
   margin: 10px 0 20px 0;
 `;
 
-const SubmitButton = styled.Pressable`
-  background-color: ${colors.success};
+const SubmitButton = styled.Pressable<{ themeColors: colorsModel }>`
+  background-color: ${({ themeColors }) => themeColors.success};
   align-items: center;
   border-radius: 15px;
   width: 50%;
@@ -160,9 +160,9 @@ const SubmitButton = styled.Pressable`
   margin-top: 20px;
 `;
 
-const SubmitText = styled.Text`
+const SubmitText = styled.Text<{ themeColors: colorsModel }>`
   text-transform: uppercase;
-  color: ${colors.commons.white};
+  color: ${({ themeColors }) => themeColors.commons.white};
   font-family: ShareTechMono;
   font-size: 15px;
 `;
