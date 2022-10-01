@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { useTheme } from "../contexts/ThemeContext";
 import { colorsModel } from "../models/ColorsModel";
 import { KnownAction } from "../reducers/types";
+import STMText from "./Texts/ShareTechMonoText";
 
 interface Props {
   setTimeIsUp: React.Dispatch<KnownAction>;
@@ -40,7 +41,7 @@ const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
       <RemainingTimeBar themeColors={themeColors} width={timeLeft} />
       <TimeBarShine themeColors={themeColors} />
       <TimeBarClock themeColors={themeColors}>
-        <TimeBarTime themeColors={themeColors}>{timeLeft / 10}</TimeBarTime>
+        <TimeBarTime size={20} themeColors={themeColors}>{timeLeft / 10}</TimeBarTime>
       </TimeBarClock>
     </TimeBar>
   );
@@ -92,8 +93,6 @@ const TimeBarClock = styled.View<{ themeColors: colorsModel }>`
   elevation: 8;
 `;
 
-const TimeBarTime = styled.Text<{ themeColors: colorsModel }>`
-  font-family: "ShareTechMono";
-  font-size: 20px;
+const TimeBarTime = styled(STMText)<{ themeColors: colorsModel }>`
   color: ${({ themeColors }) => themeColors.lightGreen};
 `;

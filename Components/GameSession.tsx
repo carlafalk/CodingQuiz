@@ -90,9 +90,7 @@ const ModalHeader = styled.View<{ categoryColor: string }>`
 `;
 
 const CloseButton = styled.TouchableOpacity`
-  /* position: absolute;
-  top: 5px;
-  right: 20px; */
+
 `;
 
 const CategoryImage = styled.Image`

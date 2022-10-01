@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { useTheme } from "../contexts/ThemeContext";
 import { colorsModel } from "../models/ColorsModel";
 import BackButton from "./Buttons/BackButton";
+import STMText from "./Texts/ShareTechMonoText";
 
 interface Props {
   title: string;
@@ -15,7 +16,9 @@ const TopSection = ({ title, onPress }: Props) => {
     <Container>
       {onPress && <BackButton onPress={() => onPress()} />}
       <TitleConatiner themeColors={themeColors} noBackBtn={onPress ? false : true}>
-        <TitleText>{title}</TitleText>
+        <TitleText size={20} uppercase>
+          {title}
+        </TitleText>
       </TitleConatiner>
     </Container>
   );
@@ -40,9 +43,4 @@ const TitleConatiner = styled.View<{ noBackBtn: boolean; themeColors: colorsMode
   elevation: 8;
 `;
 
-const TitleText = styled.Text`
-  font-family: "ShareTechMono";
-  color: white;
-  font-size: 20px;
-  text-transform: uppercase;
-`;
+const TitleText = styled(STMText)``;

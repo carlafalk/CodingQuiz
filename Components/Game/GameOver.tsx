@@ -62,20 +62,20 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
       <TopSection title="game over" />
       <ScoreBox themeColors={themeColors}>
         <TextBox>
-          <StyledText>Score</StyledText>
-          <StyledText>{gameSession.filter((question) => question.answer?.isCorrect).length}/10</StyledText>
+          <STMText size={20}>Score</STMText>
+          <STMText size={20}>{gameSession.filter((question) => question.answer?.isCorrect).length}/10</STMText>
         </TextBox>
         <Divider style={{ width: "85%", verticalPadding: 0 }} color={themeColors.commons.white} />
         {answerTimes.length !== 0 && (
           <>
             <TextBox>
-              <StyledText>Fastest answer</StyledText>
-              <StyledText>{getFastestTime()}s</StyledText>
+              <STMText size={20}>Fastest answer</STMText>
+              <STMText size={20}>{getFastestTime()}s</STMText>
             </TextBox>
             <Divider style={{ width: "85%" }} color={themeColors.commons.white} />
             <TextBox>
-              <StyledText>Slowest answer</StyledText>
-              <StyledText>{getSlowestTime()}s</StyledText>
+              <STMText size={20}>Slowest answer</STMText>
+              <STMText size={20}>{getSlowestTime()}s</STMText>
             </TextBox>
           </>
         )}
@@ -117,13 +117,6 @@ const TextBox = styled.View`
   width: 85%;
   padding: 15px 0;
 `;
-
-const StyledText = styled.Text`
-  font-family: ShareTechMono;
-  color: white;
-  font-size: 20px;
-`;
-
 const StatsButton = styled.TouchableOpacity<{ color: string }>`
   background-color: ${({ color }) => color};
   padding: 10px;
