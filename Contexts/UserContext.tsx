@@ -8,9 +8,11 @@ interface UserContext {
   createUser: (user: User) => void;
   editUser: () => void;
   users: User[];
+  deleteUser: (user: User) => void;
 }
 
 const UserContext = createContext<UserContext>({
+  users: [],
   setUsers: () => {
     console.warn("No provider found.");
   },
@@ -20,7 +22,9 @@ const UserContext = createContext<UserContext>({
   editUser: () => {
     console.warn("No provider found.");
   },
-  users: [],
+  deleteUser: (user: User) => {
+    "no provider found.";
+  },
 });
 
 interface Props {
@@ -44,7 +48,18 @@ function UserProvider({ children }: Props) {
   const editUser = () => {
     console.log("edit user");
   };
-  return <UserContext.Provider value={{ editUser, setUsers, users, createUser }}>{children}</UserContext.Provider>;
+
+  const deleteUser = (user: User) => {
+    //ToDO Delete user from asyncStorage.
+    const userIndex = users.findIndex((x) => x.username === user.username);
+    if (userIndex !== -1) {
+      const usersCopy = [...users];
+      usersCopy.splice(userIndex, 1);
+      setUsers(usersCopy);
+    }
+  };
+
+  return <UserContext.Provider value={{ editUser, setUsers, users, createUser, deleteUser }}>{children}</UserContext.Provider>;
 }
 
 export const useUser = () => useContext(UserContext);
