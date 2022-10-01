@@ -1,8 +1,6 @@
 {
   "expo": {
     "name": "CodingQuiz",
-    "slug": "codingquiz",
-    "owner": "localhost-bois",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,8 +11,7 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/620d7340-5abd-46c9-bff6-95efc19b5c1a"
+      "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
       "**/*"
@@ -30,14 +27,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "620d7340-5abd-46c9-bff6-95efc19b5c1a"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
     }
+   
   }
 }
