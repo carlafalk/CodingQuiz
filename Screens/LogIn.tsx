@@ -6,7 +6,7 @@ import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
 import Logo from "../Components/Logo";
-import QuizModal from "../Components/QuizModal";
+import QuizModal from "../Components/Modal/QuizModal";
 import CreateUser from "../Components/User/CreateUser";
 import UserExists from "../Components/User/UserExists";
 import { useTheme } from "../contexts/ThemeContext";

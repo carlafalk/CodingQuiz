@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
 import { AvatarProps, BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { avatarProps, avatarPropsArray, defaultAvatar } from "../../data/avatarData";

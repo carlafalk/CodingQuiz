@@ -4,7 +4,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import SettingItem from "../Components/Settings/SettingItem";
 import { useHaptics } from "../contexts/HapticsContext";
 import { useSound } from "../contexts/SoundContext";
-// import { useSettings } from "../contexts/SettingContext";
 import { useTheme } from "../contexts/ThemeContext";
 import settingsData from "../data/settingsData";
 import { SettingModel } from "../models/SettingModel";
@@ -17,7 +16,6 @@ const SettingsScreen = () => {
   const { themeColors, isDarkTheme, toggleThemeIsDisabled } = useTheme();
   const { toggleMuteMusic, toggleMuteButtonSound, setIsButtonSoundMuted, isButtonSoundMuted, isMusicMuted, setIsMusicMuted } = useSound();
   const { setIsHapticsDisabled, isHapticsDisabled, toggleHapticsIsDisabled } = useHaptics();
-  // const { toggleHapticSetting, toggleVibrationSetting, toggleMusicSetting, toggleEffectsSetting } = useSettings();
 
   function handleToggle(item: SettingModel, value: boolean) {
     if (item.title === "Dark Mode") {

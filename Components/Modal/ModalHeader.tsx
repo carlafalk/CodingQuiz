@@ -1,9 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import styled from "styled-components/native";
-import { useTheme } from "../contexts/ThemeContext";
-import { colorsModel } from "../models/ColorsModel";
-import STMText from "./Texts/ShareTechMonoText";
+import { useTheme } from "../../contexts/ThemeContext";
+import { colorsModel } from "../../models/ColorsModel";
+import STMText from "../Texts/ShareTechMonoText";
 
 interface Props {
   title: string;

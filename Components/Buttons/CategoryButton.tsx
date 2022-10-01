@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import { useSound } from "../../contexts/SoundContext";
 import STMText from "../Texts/ShareTechMonoText";

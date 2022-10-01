@@ -13,7 +13,7 @@ import { Divider } from "../../Styles/views";
 import HomeScreenButton from "../Buttons/HomeScreenButton";
 import GameSession from "../GameSession";
 import Logo from "../Logo";
-import QuizModal from "../QuizModal";
+import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
 import TopSection from "../TopSection";
 
