@@ -5,16 +5,12 @@ import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback, useEffect } from "react";
 import HapticsProvider from "./contexts/HapticsContext";
 import SoundProvider from "./contexts/SoundContext";
-
 import { ThemeProvider } from "./contexts/ThemeContext";
 import UserProvider from "./contexts/UserContext";
-import { AnswerInfo } from "./models/AnswerInfo";
 import { User } from "./models/User";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
 import GameScreen from "./Screens/Game";
-import GameOverScreen from "./Screens/GameOver";
-import GetReadyScreen from "./Screens/GetReady";
 import HomeScreen from "./Screens/Home";
 import LogInScreen from "./Screens/LogIn";
 import SettingsScreen from "./Screens/Settings";
@@ -27,9 +23,7 @@ export type RootStackParams = {
   User: undefined;
   Categories: undefined;
   Settings: undefined;
-  GetReady: { category: string };
   Game: { category: string };
-  GameOver: { gameSession: AnswerInfo[]; category: string };
 };
 
 const RootStack = createNativeStackNavigator<RootStackParams>();
@@ -69,8 +63,6 @@ export default function App() {
                 <RootStack.Screen name="Categories" component={CategoriesScreen} />
                 <RootStack.Screen name="Settings" component={SettingsScreen} />
                 <RootStack.Screen name="Game" component={GameScreen} />
-                <RootStack.Screen name="GameOver" component={GameOverScreen} />
-                <RootStack.Screen name="GetReady" component={GetReadyScreen} />
               </RootStack.Navigator>
             </NavigationContainer>
           </SoundProvider>
