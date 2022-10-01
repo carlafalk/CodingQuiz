@@ -1,8 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
+import { useUser } from "../../contexts/UserContext";
 import { colorsModel } from "../../models/ColorsModel";
 import { User } from "../../models/User";
 
@@ -13,6 +14,7 @@ interface Props {
 
 const UserInfo = ({ handleClose, user }: Props) => {
   const { themeColors } = useTheme();
+  const { deleteUser } = useUser();
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 10, backgroundColor: "#00000090" }}>
       <View style={{ width: "100%", alignItems: "center", backgroundColor: themeColors.deepPurple, borderRadius: 10 }}>
@@ -26,6 +28,14 @@ const UserInfo = ({ handleClose, user }: Props) => {
           <InfoText themeColors={themeColors}>{user.username}</InfoText>
           <AvatarImage source={user.avatar} />
         </View>
+        <Pressable
+          onPress={() => {
+            handleClose();
+            deleteUser(user);
+          }}
+        >
+          <Text>Delete</Text>
+        </Pressable>
       </View>
     </View>
   );
