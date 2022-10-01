@@ -19,6 +19,15 @@ const CreateUser = ({ handleClose }: Props) => {
   const { createUser } = useUser();
   const avatarRef = useRef<AvatarProps>(defaultAvatar);
 
+  const handleCreateUser = () => {
+    createUser({
+      username: username,
+      avatar: avatarRef.current.valueOf(),
+    });
+
+    handleClose();
+  };
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 10, backgroundColor: "#00000090" }}>
       <View style={{ width: "100%", alignItems: "center", backgroundColor: themeColors.deepPurple, borderRadius: 10 }}>
@@ -38,13 +47,7 @@ const CreateUser = ({ handleClose }: Props) => {
         </View>
         <TouchableOpacity
           style={{ padding: 20, marginVertical: 40, backgroundColor: "orange", width: "50%", borderRadius: 10 }}
-          onPress={() => {
-            createUser({
-              username: username,
-              avatar: avatarRef.current.valueOf(),
-            });
-            handleClose();
-          }}
+          onPress={handleCreateUser}
         >
           <Text style={{ color: "white", textAlign: "center" }}>Submit</Text>
         </TouchableOpacity>
