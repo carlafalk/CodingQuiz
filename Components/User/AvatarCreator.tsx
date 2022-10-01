@@ -1,25 +1,23 @@
-import { Octicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { AvatarProps, BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
-import { useTheme } from "../../contexts/ThemeContext";
-import { avatarProps, avatarPropsArray, defaultAvatar, mapAvatarValues } from "../../data/avatarData";
-import { LgText, MdText } from "../../Styles/texts";
+import { avatarProps, avatarPropsArray, defaultAvatar } from "../../data/avatarData";
+import InfoSelector from "./InfoSelector";
 
 interface Props {
-  avatarRef: React.MutableRefObject<AvatarProps>
+  avatarRef: React.MutableRefObject<AvatarProps>;
 }
 
 const AvatarCreator = ({ avatarRef }: Props) => {
   const [selectedProp, setSelectedProp] = useState<keyof AvatarProps>("accessory");
   const [avatar, setAvatar] = useState<AvatarProps>(defaultAvatar);
   const [selectedValue, setSelectedValue] = useState<any>(avatar[selectedProp]);
-  const { themeColors } = useTheme();
 
   useEffect(() => {
     avatarRef.current = avatar;
-  }, [avatar])
+  }, [avatar]);
+
   useEffect(() => {
     setAvatarPropValue();
   }, [selectedValue]);
@@ -75,92 +73,21 @@ const AvatarCreator = ({ avatarRef }: Props) => {
 
   return (
     <>
-      <View style={{ alignItems: "center" }}>
-        <View>
-          <BigHead {...avatar} />
-        </View>
-
-        <AvatarInfoContainer>
-          <ArrowButton onPress={decrementProp}>
-            <Octicons name="chevron-left" size={32} color={themeColors.commons.white} />
-          </ArrowButton>
-          <AvatarInfo
-            onTouchStart={(e: any) => (e.touchX = e.nativeEvent.pageX)}
-
-            onTouchMove={(e: any) => {
-              if (e.touchX - e.nativeEvent.pageX > 20) {
-                setTimeout(() => {
-                  incrementProp();
-                }, 250);
-              }
-
-              if (e.touchX - e.nativeEvent.pageX < 20) {
-                setTimeout(() => {
-                  decrementProp();
-                }, 250);
-              }
-            }}
-          >
-            <LgText style={{ color: themeColors.commons.white, textAlign: "center" }}>{mapAvatarValues[selectedProp.toString()]}</LgText>
-          </AvatarInfo>
-          <ArrowButton onPress={incrementProp}>
-            <Octicons name="chevron-right" size={32} color={themeColors.commons.white} />
-          </ArrowButton>
-        </AvatarInfoContainer>
-        <AvatarInfoContainer>
-          <ArrowButton onPress={decrementIndexOfValuePropArray}>
-            <Octicons name="chevron-left" size={24} color={themeColors.commons.white} />
-          </ArrowButton>
-          <AvatarSmallInfo
-            onTouchStart={(e: any) => (e.touchX = e.nativeEvent.pageX)}
-
-            onTouchMove={(e: any) => {
-              if (e.touchX - e.nativeEvent.pageX > 20) {
-                setTimeout(() => {
-                  incrementIndexOfValuePropArray();
-                }, 250);
-              }
-
-              if (e.touchX - e.nativeEvent.pageX < 20) {
-                setTimeout(() => {
-                  decrementIndexOfValuePropArray();
-                }, 250);
-              }
-            }}
-          >
-            <MdText style={{ color: themeColors.commons.white, textAlign: "center" }}>{selectedValue}</MdText>
-          </AvatarSmallInfo>
-          <ArrowButton onPress={incrementIndexOfValuePropArray}>
-            <Octicons name="chevron-right" size={24} color={themeColors.commons.white} />
-          </ArrowButton>
-        </AvatarInfoContainer>
-      </View>
+      <Container>
+        <BigHead {...avatar} />
+        <InfoSelector size="regular" decrement={decrementProp} increment={incrementProp} selectedProp={selectedProp} />
+        <InfoSelector
+          size="small"
+          decrement={decrementIndexOfValuePropArray}
+          increment={incrementIndexOfValuePropArray}
+          selectedValue={selectedValue}
+        />
+      </Container>
     </>
   );
 };
 
-const AvatarInfoContainer = styled.View`
-  padding: 0 10px;
+const Container = styled.View`
   align-items: center;
-  border-radius: 10px;
-  border-color: #eeeeee32;
-  border-width: 1px;
-  flex-direction: row;
-  margin: 10px 0;
 `;
-
-const ArrowButton = styled.TouchableOpacity`
-  padding: 10px;
-  width: 10%;
-`;
-
-const AvatarInfo = styled.View`
-  width: 80%;
-`;
-
-const AvatarSmallInfo = styled.View`
-  padding: 10px;
-  width: 75%;
-`;
-
 export default AvatarCreator;
