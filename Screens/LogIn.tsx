@@ -20,7 +20,7 @@ const LogInScreen = ({ navigation }: Props) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
 
-  const { createUser, loginUser, currentUser } = useUser();
+  const { createUser, loginUser, currentUser, users } = useUser();
 
   const randomGuestNumber = Math.floor(Math.random() * 9999);
   const guestUser = {
@@ -81,7 +81,9 @@ const LogInScreen = ({ navigation }: Props) => {
         </View>
         <Logo size="large" topMargin={120} />
         <ButtonContainer>
+          {users.length > 0 && 
           <HomeScreenButton onPress={() => setLoginModalVisible(true)} title="Log in" color={themeColors.lightGreen} />
+          }
           <HomeScreenButton onPress={handleCreateUser} title="Create User" color={themeColors.mustard} />
           <Text style={{ textAlign: "center", color: themeColors.commons.white, paddingBottom: 20 }}>or</Text>
           <HomeScreenButton onPress={handlePlayAsGuest} title="Play as guest" color={themeColors.categories.css} />

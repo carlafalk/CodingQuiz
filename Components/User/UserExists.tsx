@@ -36,7 +36,7 @@ const UserExists = ({ handleClose, handleLogIn }: Props) => {
         </Header>
         <View style={{ width: "100%", padding: 20 }}>
           <InfoText themeColors={themeColors}>
-            {users.length > 1 ? "There's multiple users on your phone. Which would you like to log into?" : "Welcome!"}
+            {users.length > 1 ? "There's multiple users on your phone. Which would you like to log into?" : `Welcome ${users[0].username}!`}
           </InfoText>
           <ScrollView style={{ height: "80%" }}>
             {users.map((user) => (
