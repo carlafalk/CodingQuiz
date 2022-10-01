@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "react-native";
 import styled from "styled-components/native";
+import CSSImg from "../../assets/languageIcons/css-3.png";
+import HTMLImg from "../../assets/languageIcons/html-5.png";
+import JSImg from "../../assets/languageIcons/js.png";
+import ReactImg from "../../assets/languageIcons/react.png";
+import TSImg from "../../assets/languageIcons/typescript.png";
 import { useSound } from "../../contexts/SoundContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import { AnswerInfo } from "../../models/AnswerInfo";
@@ -9,6 +13,7 @@ import { Divider } from "../../Styles/views";
 import HomeScreenButton from "../Buttons/HomeScreenButton";
 import GameSession from "../GameSession";
 import Logo from "../Logo";
+import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
 import TopSection from "../TopSection";
 
@@ -24,6 +29,26 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
   const [answerTimes, setAnswerTimes] = useState<number[]>([]);
+
+  let categoryImg = "";
+  let categoryColor: string = "";
+
+  if (category === "html") {
+    categoryImg = HTMLImg;
+    categoryColor = themeColors.categories.html;
+  } else if (category === "css") {
+    categoryImg = CSSImg;
+    categoryColor = themeColors.categories.css;
+  } else if (category === "react") {
+    categoryImg = ReactImg;
+    categoryColor = themeColors.categories.react;
+  } else if (category === "javascript") {
+    categoryImg = JSImg;
+    categoryColor = themeColors.categories.javaScript;
+  } else if (category === "typescript") {
+    categoryImg = TSImg;
+    categoryColor = themeColors.categories.typeScript;
+  }
 
   useEffect(() => {
     playHomeMusic();
@@ -48,17 +73,16 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
   }
   return (
     <>
-      <Modal
-        statusBarTranslucent={true}
-        animationType="fade"
-        transparent={true}
-        visible={modalIsOpen}
-        onRequestClose={() => {
-          setModalIsOpen(false);
-        }}
+      <QuizModal
+        show={modalIsOpen}
+        closeModal={() => setModalIsOpen(false)}
+        title={"Game Statistics"}
+        headerColor={categoryColor}
+        headerImg={categoryImg}
       >
-        <GameSession gameSession={gameSession} closeModal={setModalIsOpen} category={category} />
-      </Modal>
+        <GameSession gameSession={gameSession} categoryColor={categoryColor} />
+      </QuizModal>
+
       <TopSection title="game over" />
       <ScoreBox themeColors={themeColors}>
         <TextBox>

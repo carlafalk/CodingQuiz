@@ -41,7 +41,9 @@ const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
       <RemainingTimeBar themeColors={themeColors} width={timeLeft} />
       <TimeBarShine themeColors={themeColors} />
       <TimeBarClock themeColors={themeColors}>
-        <TimeBarTime size={20} themeColors={themeColors}>{timeLeft / 10}</TimeBarTime>
+        <TimeBarTime size={20} themeColors={themeColors}>
+          {timeLeft / 10}
+        </TimeBarTime>
       </TimeBarClock>
     </TimeBar>
   );
