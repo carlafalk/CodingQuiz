@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 import { useHaptics } from "../../contexts/HapticsContext";
 import { useSound } from "../../contexts/SoundContext";
 import { useTheme } from "../../contexts/ThemeContext";
-import { colorsModel } from "../../models/ColorsModel";
 import STMText from "../Texts/ShareTechMonoText";
 
 type Props = {
@@ -26,7 +25,7 @@ const HomeScreenButton = ({ onPress, title, color }: Props) => {
         standardButtonHaptics();
       }}
     >
-      <BtnTitle themeColors={themeColors} size={20} uppercase>
+      <BtnTitle styles={{ color: themeColors.darkPurple }} size={20} uppercase>
         {title}
       </BtnTitle>
     </Button>
@@ -43,9 +42,7 @@ const Button = styled.Pressable<{ color: string }>`
   margin: 0 100px;
   margin-bottom: 24px;
   elevation: 8;
-  padding: 18px 0px;
+  padding: 18px;
 `;
 
-const BtnTitle = styled(STMText)<{ themeColors: colorsModel }>`
-  color: ${({ themeColors }) => themeColors.darkPurple};
-`;
+const BtnTitle = styled(STMText)``;
