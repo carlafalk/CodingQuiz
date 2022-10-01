@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import Logo from "../Components/Logo";
+import STMText from "../Components/Texts/ShareTechMonoText";
 import TopSection from "../Components/TopSection";
 import { useTheme } from "../contexts/ThemeContext";
 import { colorsModel } from "../models/ColorsModel";
@@ -20,7 +21,9 @@ const AboutScreen = ({ navigation }: Props) => {
       <Logo topMargin={-50} size="medium" />
       <About themeColors={themeColors}>
         <HeaderContainer>
-          <Header themeColors={themeColors}>About</Header>
+          <Header size={30} uppercase>
+            About
+          </Header>
           <AntDesign
             name="github"
             size={30}
@@ -29,15 +32,15 @@ const AboutScreen = ({ navigation }: Props) => {
             style={{ position: "absolute", right: 0 }}
           />
         </HeaderContainer>
-        <Description themeColors={themeColors}>School project for SUVNET21</Description>
-        <Description style={{ marginBottom: 40 }} themeColors={themeColors}>
+        <Description size={15}>School project for SUVNET21</Description>
+        <Description size={15} styles={{ marginBottom: 40 }}>
           Written in React Native
         </Description>
-        <Creators themeColors={themeColors}>Made by</Creators>
-        <Creators themeColors={themeColors}>Tommy</Creators>
-        <Creators themeColors={themeColors}>Oscar</Creators>
-        <Creators themeColors={themeColors}>Carl</Creators>
-        <Creators themeColors={themeColors}>Alex</Creators>
+        <Creators size={20}>Made by</Creators>
+        <Creators size={20}>Tommy</Creators>
+        <Creators size={20}>Oscar</Creators>
+        <Creators size={20}>Carl</Creators>
+        <Creators size={20}>Alex</Creators>
       </About>
     </Background>
   );
@@ -60,23 +63,11 @@ const About = styled.View<{ themeColors: colorsModel }>`
   elevation: 8;
 `;
 
-const Header = styled.Text<{ themeColors: colorsModel }>`
+const Header = styled(STMText)`
   flex-direction: row;
-  font-size: 30px;
-  font-family: ShareTechMono;
-  color: ${({ themeColors }) => themeColors.commons.white};
   margin-bottom: 60px;
-  text-transform: uppercase;
 `;
 
-const Description = styled.Text<{ themeColors: colorsModel }>`
-  font-size: 15px;
-  font-family: ShareTechMono;
-  color: ${({ themeColors }) => themeColors.commons.white};
-`;
+const Description = styled(STMText)``;
 
-const Creators = styled.Text<{ themeColors: colorsModel }>`
-  font-size: 20px;
-  font-family: ShareTechMono;
-  color: ${({ themeColors }) => themeColors.commons.white};
-`;
+const Creators = styled(STMText)``;
