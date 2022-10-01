@@ -58,7 +58,7 @@ const GameOverScreen = ({ navigation, route }: Props) => {
         <GameSession gameSession={route.params.gameSession} closeModal={setModalIsOpen} category={route.params.category} />
       </Modal>
       <TopSection title="game over" />
-      <ScoreBox>
+      <ScoreBox themeColors={themeColors}>
         <TextBox>
           <StyledText>Score</StyledText>
           <StyledText>{route.params.gameSession.filter((question) => question.answer?.isCorrect).length}/10</StyledText>
