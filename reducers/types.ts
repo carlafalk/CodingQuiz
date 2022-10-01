@@ -36,10 +36,15 @@ interface AddAnswerInfoAction {
   payload: AnswerInfo;
 }
 
+interface DeselectAnswerAction {
+  type: "DESELECT_ANSWER";
+}
+
 export type KnownAction =
   | SetQuizItemsAction
   | IncrementCurrentQuestionAction
   | SetSelectedAnswerAction
   | SetTimeIsNotUpAction
   | SetTimeIsUpAction
-  | AddAnswerInfoAction;
+  | AddAnswerInfoAction
+  | DeselectAnswerAction;
