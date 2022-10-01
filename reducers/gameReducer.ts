@@ -20,5 +20,8 @@ export function gameReducer(state: GameState, action: KnownAction) {
     case "ADD_ANSWER_INFO": {
       return { ...state, gameSession: [...state.gameSession, action.payload] };
     }
+    case "DESELECT_ANSWER": {
+      return { ...state, selectedAnswer: null };
+    }
   }
 }

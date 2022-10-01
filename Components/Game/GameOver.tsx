@@ -1,22 +1,25 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-native";
 import styled from "styled-components/native";
-import { RootStackParams } from "../App";
-import Background from "../Components/Background";
-import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
-import GameSession from "../Components/GameSession";
-import Logo from "../Components/Logo";
-import STMText from "../Components/Texts/ShareTechMonoText";
-import TopSection from "../Components/TopSection";
-import { useSound } from "../contexts/SoundContext";
-import { useTheme } from "../contexts/ThemeContext";
-import { colorsModel } from "../models/ColorsModel";
-import { Divider } from "../Styles/views";
+import { useSound } from "../../contexts/SoundContext";
+import { useTheme } from "../../contexts/ThemeContext";
+import { AnswerInfo } from "../../models/AnswerInfo";
+import { colorsModel } from "../../models/ColorsModel";
+import { Divider } from "../../Styles/views";
+import HomeScreenButton from "../Buttons/HomeScreenButton";
+import GameSession from "../GameSession";
+import Logo from "../Logo";
+import STMText from "../Texts/ShareTechMonoText";
+import TopSection from "../TopSection";
 
-type Props = NativeStackScreenProps<RootStackParams, "GameOver">;
+interface Props {
+  gameSession: AnswerInfo[];
+  category: string;
+  handlePressHome: () => void;
+  handlePressPlayAgain: () => void;
+}
 
-const GameOverScreen = ({ navigation, route }: Props) => {
+const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain }: Props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
@@ -29,7 +32,7 @@ const GameOverScreen = ({ navigation, route }: Props) => {
 
   function extractAnswerTimes() {
     let times: number[] = [];
-    route.params.gameSession
+    gameSession
       .filter((question) => question.answer?.isCorrect)
       .forEach((question) => {
         times.push(question.answerTime);
@@ -43,9 +46,8 @@ const GameOverScreen = ({ navigation, route }: Props) => {
   function getSlowestTime() {
     return answerTimes.sort((n1, n2) => n1 - n2)[answerTimes.length - 1];
   }
-
   return (
-    <Background>
+    <>
       <Modal
         statusBarTranslucent={true}
         animationType="fade"
@@ -55,13 +57,13 @@ const GameOverScreen = ({ navigation, route }: Props) => {
           setModalIsOpen(false);
         }}
       >
-        <GameSession gameSession={route.params.gameSession} closeModal={setModalIsOpen} category={route.params.category} />
+        <GameSession gameSession={gameSession} closeModal={setModalIsOpen} category={category} />
       </Modal>
       <TopSection title="game over" />
       <ScoreBox themeColors={themeColors}>
         <TextBox>
           <StyledText>Score</StyledText>
-          <StyledText>{route.params.gameSession.filter((question) => question.answer?.isCorrect).length}/10</StyledText>
+          <StyledText>{gameSession.filter((question) => question.answer?.isCorrect).length}/10</StyledText>
         </TextBox>
         <Divider style={{ width: "85%", verticalPadding: 0 }} color={themeColors.commons.white} />
         {answerTimes.length !== 0 && (
@@ -85,27 +87,15 @@ const GameOverScreen = ({ navigation, route }: Props) => {
       </ScoreBox>
 
       <ButtonBox>
-        <HomeScreenButton
-          color={themeColors.lightGreen}
-          title="play again"
-          onPress={() => {
-            navigation.navigate("Categories");
-          }}
-        />
-        <HomeScreenButton
-          color={themeColors.mustard}
-          title="main menu"
-          onPress={() => {
-            navigation.navigate("Home");
-          }}
-        />
+        <HomeScreenButton color={themeColors.lightGreen} title="play again" onPress={handlePressPlayAgain} />
+        <HomeScreenButton color={themeColors.mustard} title="main menu" onPress={handlePressHome} />
       </ButtonBox>
       <Logo topMargin={30} size="small" />
-    </Background>
+    </>
   );
 };
 
-export default GameOverScreen;
+export default GameOver;
 
 const ScoreBox = styled.View<{ themeColors: colorsModel }>`
   background-color: ${({ themeColors }) => themeColors.deepPurple};
