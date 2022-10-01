@@ -1,3 +1,4 @@
+import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, Platform, Text } from "react-native";
@@ -49,14 +50,28 @@ const LogInScreen = ({ navigation }: Props) => {
     loginUser(guestUser);
   };
 
+  const createUserHeaderImg = <FontAwesome5 name="user-plus" size={30} color={themeColors.commons.white} />;
+  const logInHeaderImg = <MaterialCommunityIcons name="login" size={30} color={themeColors.commons.white} />;
+
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <Background>
-        <QuizModal show={createUserModalVisible} closeModal={() => setCreateUserModalVisible(false)} title={"create user"}>
+        <QuizModal
+          show={createUserModalVisible}
+          closeModal={() => setCreateUserModalVisible(false)}
+          title={"create user"}
+          headerImg={createUserHeaderImg}
+        >
           <CreateUser handleClose={() => setCreateUserModalVisible(false)} />
         </QuizModal>
 
-        <QuizModal show={loginModalVisible} closeModal={() => setLoginModalVisible(false)} title={"choose user"} modalHeight={"85%"}>
+        <QuizModal
+          show={loginModalVisible}
+          closeModal={() => setLoginModalVisible(false)}
+          title={"choose user"}
+          modalHeight={"85%"}
+          headerImg={logInHeaderImg}
+        >
           <UserExists handleLogIn={handleLogIn} />
         </QuizModal>
 

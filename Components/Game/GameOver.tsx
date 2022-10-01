@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Image } from "react-native";
 import styled from "styled-components/native";
 import CSSImg from "../../assets/languageIcons/css-3.png";
 import HTMLImg from "../../assets/languageIcons/html-5.png";
@@ -30,7 +31,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
   const { playHomeMusic } = useSound();
   const [answerTimes, setAnswerTimes] = useState<number[]>([]);
 
-  let categoryImg = "";
+  let categoryImg = HTMLImg;
   let categoryColor: string = "";
 
   if (category === "html") {
@@ -49,6 +50,8 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
     categoryImg = TSImg;
     categoryColor = themeColors.categories.typeScript;
   }
+
+  const headerImg = <Image source={categoryImg} style={{ width: 40, height: 40 }} />;
 
   useEffect(() => {
     playHomeMusic();
@@ -78,7 +81,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
         closeModal={() => setModalIsOpen(false)}
         title={"Game Statistics"}
         headerColor={categoryColor}
-        headerImg={categoryImg}
+        headerImg={headerImg}
       >
         <GameSession gameSession={gameSession} categoryColor={categoryColor} />
       </QuizModal>

@@ -9,7 +9,7 @@ interface Props {
   title: string;
   closeModal: () => void;
   headerColor?: string;
-  headerImg?: string;
+  headerImg?: JSX.Element;
 }
 
 const ModalHeader = ({ title, closeModal, headerColor, headerImg }: Props) => {
@@ -17,7 +17,7 @@ const ModalHeader = ({ title, closeModal, headerColor, headerImg }: Props) => {
 
   return (
     <Header backgroundColor={headerColor} themeColors={themeColors}>
-      {headerImg && <CategoryImage source={headerImg} />}
+      {headerImg && headerImg}
       <STMText size={25} center styles={{ flex: 1 }} uppercase>
         {title}
       </STMText>
@@ -36,10 +36,5 @@ const Header = styled.View<{ backgroundColor: string; themeColors: colorsModel }
 `;
 
 const CloseButton = styled.TouchableOpacity``;
-
-const CategoryImage = styled.Image`
-  height: 40px;
-  width: 40px;
-`;
 
 export default ModalHeader;
