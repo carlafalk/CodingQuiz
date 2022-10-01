@@ -34,31 +34,31 @@ const CategoriesScreen = ({ navigation }: Props) => {
           title="react"
           color={themeColors.categories.react}
           img={ReactImg}
-          onPress={() => navigation.navigate("GetReady", { category: "react" })}
+          onPress={() => navigation.navigate("Game", { category: "react" })}
         />
         <CategoryButton
           title="html"
           color={themeColors.categories.html}
           img={HTMLImg}
-          onPress={() => navigation.navigate("GetReady", { category: "html" })}
+          onPress={() => navigation.navigate("Game", { category: "html" })}
         />
         <CategoryButton
           title="css"
           color={themeColors.categories.css}
           img={CSSImg}
-          onPress={() => navigation.navigate("GetReady", { category: "css" })}
+          onPress={() => navigation.navigate("Game", { category: "css" })}
         />
         <CategoryButton
           title="javascript"
           color={themeColors.categories.javaScript}
           img={JSImg}
-          onPress={() => navigation.navigate("GetReady", { category: "javascript" })}
+          onPress={() => navigation.navigate("Game", { category: "javascript" })}
         />
         <CategoryButton
           title="typescript"
           color={themeColors.categories.typeScript}
           img={TSImg}
-          onPress={() => navigation.navigate("GetReady", { category: "typescript" })}
+          onPress={() => navigation.navigate("Game", { category: "typescript" })}
         />
       </ButtonContainer>
     </Background>
