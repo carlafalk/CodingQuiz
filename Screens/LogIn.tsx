@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, Modal, Platform, Text, View } from "react-native";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
@@ -16,15 +16,36 @@ import { User } from "../models/User";
 type Props = NativeStackScreenProps<RootStackParams, "LogIn">;
 
 const LogInScreen = ({ navigation }: Props) => {
-  const { isDarkTheme, toggleTheme, themeColors } = useTheme();
+  const { themeColors } = useTheme();
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const { createUser } = useUser();
+
+  const { createUser, loginUser, currentUser } = useUser();
+
   const randomGuestNumber = Math.floor(Math.random() * 9999);
   const guestUser = {
     username: "guest#" + randomGuestNumber,
     avatar: defaultAvatar,
+  };
+
+  useEffect(() => {
+    currentUser ? navigation.navigate("Home") : navigation.navigate("LogIn");
+  }, [currentUser]);
+
+  const handleLogIn = (user: User) => {
+    if (user) {
+      loginUser(user);
+      setLoginModalVisible(false);
+    }
+  };
+
+  const handleCreateUser = () => {
+    setCreateUserModalVisible(true);
+  };
+
+  const handlePlayAsGuest = () => {
+    createUser(guestUser);
+    loginUser(guestUser);
   };
 
   return (
@@ -55,31 +76,15 @@ const LogInScreen = ({ navigation }: Props) => {
               setLoginModalVisible(!loginModalVisible);
             }}
           >
-            <UserExists
-              handleClose={() => {
-                setLoginModalVisible(false);
-              }}
-              handleLogIn={(user: User) => {
-                setLoggedIn(true);
-                setLoginModalVisible(false);
-                navigation.navigate("Home", { loggedIn: true, user: user });
-              }}
-            />
+            <UserExists handleClose={() => setLoginModalVisible(false)} handleLogIn={handleLogIn} />
           </Modal>
         </View>
         <Logo size="large" topMargin={120} />
         <ButtonContainer>
           <HomeScreenButton onPress={() => setLoginModalVisible(true)} title="Log in" color={themeColors.lightGreen} />
-          <HomeScreenButton onPress={() => setCreateUserModalVisible(true)} title="Create User" color={themeColors.mustard} />
+          <HomeScreenButton onPress={handleCreateUser} title="Create User" color={themeColors.mustard} />
           <Text style={{ textAlign: "center", color: themeColors.commons.white, paddingBottom: 20 }}>or</Text>
-          <HomeScreenButton
-            onPress={() => {
-              createUser(guestUser);
-              navigation.navigate("Home", { loggedIn: true, user: guestUser });
-            }}
-            title="Play as guest"
-            color={themeColors.categories.css}
-          />
+          <HomeScreenButton onPress={handlePlayAsGuest} title="Play as guest" color={themeColors.categories.css} />
         </ButtonContainer>
       </Background>
     </KeyboardAvoidingView>

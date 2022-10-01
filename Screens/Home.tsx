@@ -12,16 +12,19 @@ import Logo from "../Components/Logo";
 import UserInfo from "../Components/User/UserInfo";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
+import { useUser } from "../contexts/UserContext";
+import { User } from "../models/User";
 import SettingsScreen from "./Settings";
 
 type HomeNavigationProps = NativeStackScreenProps<RootStackParams, "Home">;
 
 const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
   const modalizeRef = useRef<Modalize>(null);
-  const { isDarkTheme, toggleTheme, themeColors } = useTheme();
+  const { themeColors } = useTheme();
   const { playHomeMusic, isMusicMuted, isLoaded } = useSound();
   const [modalVisible, setModalVisible] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(route.params.loggedIn || false);
+
+  const { currentUser, logOutUser } = useUser();
 
   const handleOpen = () => {
     modalizeRef.current?.open();
@@ -29,7 +32,6 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
 
   useEffect(() => {
     if (isLoaded) {
-      console.log(isLoaded);
       if (!isMusicMuted) {
         playHomeMusic();
       }
@@ -37,10 +39,13 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
   }, [isLoaded, isMusicMuted]);
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigation.navigate("LogIn");
-    }
-  }, [isLoggedIn]);
+    !currentUser && navigation.navigate("LogIn");
+  }, [currentUser]);
+
+  const handleLogOut = () => {
+    logOutUser();
+  };
+
   return (
     <Background>
       <View>
@@ -53,18 +58,14 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
             setModalVisible(!modalVisible);
           }}
         >
-          <UserInfo handleClose={() => setModalVisible(false)} user={route.params.user} />
+          <UserInfo handleClose={() => setModalVisible(false)} user={currentUser ? currentUser : ({} as User)} />
         </Modal>
       </View>
-      <Pressable
-        onPress={() => {
-          navigation.navigate("LogIn");
-          setIsLoggedIn(false);
-        }}
-        style={{ marginTop: 120, right: 60, position: "absolute", zIndex: 999 }}
-      >
+      {/* logoutbutton */}
+      <Pressable onPress={() => handleLogOut()} style={{ marginTop: 120, right: 60, position: "absolute", zIndex: 999 }}>
         <FontAwesome name="user-circle-o" size={24} color={themeColors.lightGrey} />
       </Pressable>
+      {/* UserInfo */}
       <Pressable onPress={() => setModalVisible(true)} style={{ marginTop: 120, right: 20, position: "absolute", zIndex: 999 }}>
         <FontAwesome name="user-circle-o" size={24} color={themeColors.lightGrey} />
       </Pressable>
