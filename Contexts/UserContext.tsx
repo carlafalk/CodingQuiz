@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import { defaultAvatar } from "../data/avatarData";
 import useAsyncStorage from "../hooks/useAsyncStorage";
 import { User } from "../models/User";
@@ -36,7 +36,7 @@ const guest: User = {
 
 function UserProvider({ children }: Props) {
   const [users, setUsers, isLoaded] = useAsyncStorage<User[]>("newUsers", [guest]);
-  const [currentUser, setCurrentUser] = useState<User>();
+  const [currentUser, setCurrentUser] = useAsyncStorage<User | undefined>("current-user-test", undefined);
 
   const loginUser = (user: User) => {
     if (user) {
