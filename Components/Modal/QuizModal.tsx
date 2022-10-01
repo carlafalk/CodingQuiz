@@ -10,7 +10,7 @@ interface Props {
   children: ReactNode;
   headerColor?: string;
   modalHeight?: string;
-  headerImg?: string;
+  headerImg?: JSX.Element;
 }
 
 const QuizModal = ({ show, closeModal, title, headerColor, children, modalHeight, headerImg }: Props) => {

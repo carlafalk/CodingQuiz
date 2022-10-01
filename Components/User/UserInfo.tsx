@@ -1,6 +1,5 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
@@ -19,56 +18,48 @@ const UserInfo = ({ handleClose, user }: Props) => {
   const { themeColors } = useTheme();
   const { deleteUser, currentUser } = useUser();
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 10, backgroundColor: "#00000090" }}>
-      <View style={{ width: "100%", backgroundColor: themeColors.deepPurple, borderRadius: 10 }}>
-        <Header themeColors={themeColors}>
-          <TouchableOpacity style={{ position: "absolute", top: "50%", right: 20 }} onPress={handleClose}>
-            <MaterialIcons name="close" size={32} color={themeColors.commons.white} />
-          </TouchableOpacity>
-          <StyledText themeColors={themeColors}>Selected user</StyledText>
-        </Header>
-        <View style={{ flexDirection: "row", margin: 12 }}>
-          <View style={{ flex: 1, backgroundColor: "blue", alignItems: "center", justifyContent: "center", padding: 8 }}>
-            <BigHead {...user.avatar} size={100} />
-            <InfoText themeColors={themeColors}>{user.username}</InfoText>
-          </View>
-          <View style={{ backgroundColor: "green", flex: 2, padding: 12 }}>
-            <STMText size={16} center uppercase>
-              stats
+    <>
+      <View style={{ flexDirection: "row", margin: 12 }}>
+        <View style={{ flex: 1, backgroundColor: "blue", alignItems: "center", justifyContent: "center", padding: 8 }}>
+          <BigHead {...user.avatar} size={100} />
+          <InfoText themeColors={themeColors}>{user.username}</InfoText>
+        </View>
+        <View style={{ backgroundColor: "green", flex: 2, padding: 12 }}>
+          <STMText size={16} center uppercase>
+            stats
+          </STMText>
+          <View style={{ backgroundColor: "teal" }}>
+            <STMText size={14} styles={{ padding: 4 }}>
+              Stat 1:
             </STMText>
-            <View style={{ backgroundColor: "teal" }}>
-              <STMText size={14} styles={{ padding: 4 }}>
-                Stat 1:
-              </STMText>
-              <STMText size={14} styles={{ padding: 4 }}>
-                Stat 2:
-              </STMText>
-              <STMText size={14} styles={{ padding: 4 }}>
-                Stat 3:
-              </STMText>
-            </View>
+            <STMText size={14} styles={{ padding: 4 }}>
+              Stat 2:
+            </STMText>
+            <STMText size={14} styles={{ padding: 4 }}>
+              Stat 3:
+            </STMText>
           </View>
         </View>
-        <ButtonContainer>
-          <ModalStandardButton
-            onPress={() => {
-              handleClose();
-              deleteUser(user);
-            }}
-            title="Delete"
-            color={themeColors.mustard}
-          />
-          <ModalStandardButton
-            onPress={() => {
-              handleClose();
-              console.log("edit user");
-            }}
-            title="Edit"
-            color={themeColors.mustard}
-          />
-        </ButtonContainer>
       </View>
-    </View>
+      <ButtonContainer>
+        <ModalStandardButton
+          onPress={() => {
+            handleClose();
+            deleteUser(user);
+          }}
+          title="Delete"
+          color={themeColors.mustard}
+        />
+        <ModalStandardButton
+          onPress={() => {
+            handleClose();
+            console.log("edit user");
+          }}
+          title="Edit"
+          color={themeColors.mustard}
+        />
+      </ButtonContainer>
+    </>
   );
 };
 

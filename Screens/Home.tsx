@@ -1,7 +1,8 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, Pressable, View } from "react-native";
+import { Pressable } from "react-native";
+import { BigHead } from "react-native-bigheads";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import styled from "styled-components/native";
@@ -9,6 +10,7 @@ import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
 import Logo from "../Components/Logo";
+import QuizModal from "../Components/Modal/QuizModal";
 import UserInfo from "../Components/User/UserInfo";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
@@ -46,21 +48,13 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
     logOutUser();
   };
 
+  const headerImg = <BigHead {...currentUser?.avatar} size={40} />;
+
   return (
     <Background>
-      <View>
-        <Modal
-          statusBarTranslucent={true}
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <UserInfo handleClose={() => setModalVisible(false)} user={currentUser ? currentUser : ({} as User)} />
-        </Modal>
-      </View>
+      <QuizModal show={modalVisible} closeModal={() => setModalVisible(false)} title={"selected user"} headerImg={headerImg}>
+        <UserInfo handleClose={() => setModalVisible(false)} user={currentUser ? currentUser : ({} as User)} />
+      </QuizModal>
       {/* logoutbutton */}
       <Pressable onPress={() => handleLogOut()} style={{ marginTop: 120, right: 60, position: "absolute", zIndex: 999 }}>
         <FontAwesome name="user-circle-o" size={24} color={themeColors.lightGrey} />

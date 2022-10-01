@@ -11,7 +11,7 @@ interface Props {
   closeModal: () => void;
   title: string;
   headerColor?: string;
-  headerImg?: string;
+  headerImg?: JSX.Element;
 }
 
 const ModalContainer = ({ height, children, closeModal, title, headerColor, headerImg }: Props) => {
