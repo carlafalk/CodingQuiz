@@ -19,7 +19,7 @@ interface Props {
   handlePressPlayAgain: () => void;
 }
 
-const GameOverTest = ({ gameSession, category, handlePressHome, handlePressPlayAgain }: Props) => {
+const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain }: Props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
@@ -95,7 +95,7 @@ const GameOverTest = ({ gameSession, category, handlePressHome, handlePressPlayA
   );
 };
 
-export default GameOverTest;
+export default GameOver;
 
 const ScoreBox = styled.View<{ themeColors: colorsModel }>`
   background-color: ${({ themeColors }) => themeColors.deepPurple};

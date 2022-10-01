@@ -21,7 +21,7 @@ interface Props {
   setGameSession: React.Dispatch<React.SetStateAction<AnswerInfo[]>>;
 }
 
-const GameTest = ({ category, gameIsOver, setGameIsOver, setGameSession }: Props) => {
+const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession }: Props) => {
   const [state, dispatch] = useReducer(gameReducer, {
     quizItems: [],
     currentQuestion: 0,
@@ -120,7 +120,7 @@ const GameTest = ({ category, gameIsOver, setGameIsOver, setGameSession }: Props
   );
 };
 
-export default GameTest;
+export default RunGame;
 
 const QuestionContainer = styled.View<{ themeColors: colorsModel }>`
   background-color: ${({ themeColors }) => themeColors.deepPurple};

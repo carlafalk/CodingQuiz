@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import CountDown from "../Components/Game/CountDown";
-import GameOverTest from "../Components/Game/GameOverTest";
-import GameTest from "../Components/Game/GameTest";
+import GameOver from "../Components/Game/GameOver";
+import RunGame from "../Components/Game/RunGame";
 import { AnswerInfo } from "../models/AnswerInfo";
 
 type Props = NativeStackScreenProps<RootStackParams, "Game">;
@@ -29,9 +29,9 @@ const GameScreen = ({ navigation, route }: Props) => {
       {countingDown ? (
         <CountDown setCountingDown={setCountingDown} />
       ) : !gameIsOver ? (
-        <GameTest category={route.params.category} gameIsOver={gameIsOver} setGameIsOver={setGameIsOver} setGameSession={setGameSession} />
+        <RunGame category={route.params.category} gameIsOver={gameIsOver} setGameIsOver={setGameIsOver} setGameSession={setGameSession} />
       ) : (
-        <GameOverTest
+        <GameOver
           gameSession={gameSession}
           category={route.params.category}
           handlePressHome={handlePressHome}
