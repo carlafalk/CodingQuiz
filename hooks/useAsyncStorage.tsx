@@ -23,7 +23,12 @@ const useAsyncStorage = <T,>(key: string, initialValue: T) => {
   async function updateStorage(newValue: T) {
     setState(newValue);
     const stringifiedValue = JSON.stringify(newValue);
-    await AsyncStorage.setItem(key, stringifiedValue);
+
+    if (newValue === undefined) {
+      AsyncStorage.removeItem(key);
+    } else {
+      await AsyncStorage.setItem(key, stringifiedValue);
+    }
   }
 
   useEffect(() => {
