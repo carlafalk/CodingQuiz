@@ -2,7 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import styled from "styled-components/native";
 import { useSound } from "../../contexts/SoundContext";
-import { colors } from "../../Styles/Shared";
+import { useTheme } from "../../contexts/ThemeContext";
+import { colorsModel } from "../../models/ColorsModel";
 
 interface Props {
   onPress: () => void;
@@ -10,16 +11,17 @@ interface Props {
 
 const BackButton = ({ onPress }: Props) => {
   const { playButtonEffect } = useSound();
+  const { themeColors } = useTheme();
   return (
-    <Button android_disableSound={true} onPress={() => onPress()} onPressIn={() => playButtonEffect()}>
+    <Button themeColors={themeColors} android_disableSound={true} onPress={() => onPress()} onPressIn={() => playButtonEffect()}>
       <Ionicons name="ios-arrow-back" size={45} color="white" />
     </Button>
   );
 };
 
-const Button = styled.Pressable`
+const Button = styled.Pressable<{ themeColors: colorsModel }>`
   width: 20%;
-  background-color: ${colors.darkPurple};
+  background-color: ${({ themeColors }) => themeColors.darkPurple};
   margin-right: auto;
   justify-content: center;
   align-items: center;
