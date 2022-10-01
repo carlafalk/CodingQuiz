@@ -1,14 +1,14 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext } from "react";
+import useAsyncStorage from "../hooks/useAsyncStorage";
 import { colorsModel } from "../models/ColorsModel";
-
 interface ThemeContext {
-  toggleTheme: () => void;
+  toggleThemeIsDisabled: () => void;
   isDarkTheme: boolean;
   themeColors: colorsModel;
 }
 
 export const ThemeContext = createContext<ThemeContext>({
-  toggleTheme: () => {},
+  toggleThemeIsDisabled: () => {},
   isDarkTheme: false,
   themeColors: {} as colorsModel,
 });
@@ -18,9 +18,9 @@ interface Props {
 }
 
 export const ThemeProvider = ({ children }: Props) => {
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const [isDarkTheme, setIsDarkTheme] = useAsyncStorage<boolean>("darkMode", true);
 
-  const toggleTheme = () => {
+  const toggleThemeIsDisabled = () => {
     setIsDarkTheme(!isDarkTheme);
   };
 
@@ -50,7 +50,7 @@ export const ThemeProvider = ({ children }: Props) => {
       black: isDarkTheme ? "#000000" : "#FFFFFF",
     },
   };
-  return <ThemeContext.Provider value={{ isDarkTheme, toggleTheme, themeColors }}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={{ isDarkTheme, toggleThemeIsDisabled, themeColors }}>{children}</ThemeContext.Provider>;
 };
 
 export const useTheme = () => useContext(ThemeContext);

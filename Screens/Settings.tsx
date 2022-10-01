@@ -14,14 +14,14 @@ import { Container, Divider } from "../Styles/views";
 const SettingsScreen = () => {
   const categories = settingsData.filter((x, i) => settingsData.findIndex((y) => x.category === y.category) === i).map((x) => x.category);
 
-  const { themeColors, toggleTheme } = useTheme();
+  const { themeColors, isDarkTheme, toggleThemeIsDisabled } = useTheme();
   const { toggleMuteMusic, toggleMuteButtonSound, setIsButtonSoundMuted, isButtonSoundMuted, isMusicMuted, setIsMusicMuted } = useSound();
   const { setIsHapticsDisabled, isHapticsDisabled, toggleHapticsIsDisabled } = useHaptics();
   // const { toggleHapticSetting, toggleVibrationSetting, toggleMusicSetting, toggleEffectsSetting } = useSettings();
 
   function handleToggle(item: SettingModel, value: boolean) {
     if (item.title === "Dark Mode") {
-      toggleTheme();
+      toggleThemeIsDisabled();
     }
     if (item.title === "Music") {
       toggleMuteMusic();
@@ -36,6 +36,7 @@ const SettingsScreen = () => {
   }
 
   const getToggleValues = (item: SettingModel) => {
+    if (item.title === "Dark Mode") return isDarkTheme;
     if (item.title === "Effects") return !isButtonSoundMuted;
     if (item.title === "Music") return !isMusicMuted;
     if (item.title === "Haptics") return !isHapticsDisabled;
