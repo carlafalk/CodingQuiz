@@ -1,12 +1,15 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { AvatarProps } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
 import { defaultAvatar } from "../../data/avatarData";
 import { colorsModel } from "../../models/ColorsModel";
+import HomeScreenButton from "../Buttons/HomeScreenButton";
+import ModalBackground from "../ModalBackground";
+import STMText from "../Texts/ShareTechMonoText";
 import AvatarCreator from "./AvatarCreator";
 
 interface Props {
@@ -29,34 +32,33 @@ const CreateUser = ({ handleClose }: Props) => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 10, backgroundColor: "#00000090" }}>
-      <View style={{ width: "100%", alignItems: "center", backgroundColor: themeColors.deepPurple, borderRadius: 10 }}>
+    <ModalBackground styles={{ padding: 10 }}>
+      <ModalContainer themeColors={themeColors}>
         <Header themeColors={themeColors}>
-          <TouchableOpacity style={{ position: "absolute", top: "50%", right: 20 }} onPress={handleClose}>
+          <CloseButton onPress={handleClose}>
             <MaterialIcons name="close" size={32} color={themeColors.commons.white} />
-          </TouchableOpacity>
+          </CloseButton>
           <StyledText themeColors={themeColors}>Create user</StyledText>
         </Header>
-        <View style={{ padding: 30 }}>
-          <StyledText themeColors={themeColors}>Pick a username</StyledText>
-          <View>
-            <Input onChangeText={setUsername} themeColors={themeColors} value={username} />
-          </View>
-
+        <ContentContainer>
+          <STMText size={14}>Pick a username</STMText>
+          <Input onChangeText={setUsername} themeColors={themeColors} value={username} />
           <AvatarCreator avatarRef={avatarRef} />
-        </View>
-        <TouchableOpacity
-          style={{ padding: 20, marginVertical: 40, backgroundColor: "orange", width: "50%", borderRadius: 10 }}
-          onPress={handleCreateUser}
-        >
-          <Text style={{ color: "white", textAlign: "center" }}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        </ContentContainer>
+        <HomeScreenButton title="create" color={themeColors.mustard} onPress={handleCreateUser} />
+      </ModalContainer>
+    </ModalBackground>
   );
 };
 
 export default CreateUser;
+
+const ModalContainer = styled.View<{ themeColors: colorsModel }>`
+  width: 100%;
+  align-items: center;
+  background-color: ${({ themeColors }) => themeColors.deepPurple};
+  border-radius: 10px;
+`;
 
 const Header = styled.View<{
   themeColors: colorsModel;
@@ -68,6 +70,16 @@ const Header = styled.View<{
   border-top-right-radius: 10px;
   justify-content: center;
   padding: 15px;
+`;
+
+const CloseButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 50%;
+  right: 20px;
+`;
+
+const ContentContainer = styled.View`
+  padding: 30px;
 `;
 
 const StyledText = styled.Text<{
