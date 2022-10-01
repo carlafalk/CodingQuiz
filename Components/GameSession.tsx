@@ -11,6 +11,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { AnswerInfo } from "../models/AnswerInfo";
 import { colorsModel } from "../models/ColorsModel";
 import AnswerCard from "./AnswerCard";
+import ModalBackground from "./ModalBackground";
 import STMText from "./Texts/ShareTechMonoText";
 
 interface Props {
@@ -68,12 +69,6 @@ const GameSession = ({ gameSession, closeModal, category }: Props) => {
   );
 };
 
-const ModalBackground = styled.View`
-  flex: 1;
-  background-color: #00000075;
-  justify-content: center;
-`;
-
 const ModalContainer = styled.View<{ themeColors: colorsModel }>`
   margin: 0 10px;
   background-color: ${({ themeColors }) => themeColors.deepPurple};
@@ -89,9 +84,7 @@ const ModalHeader = styled.View<{ categoryColor: string }>`
   justify-content: space-between;
 `;
 
-const CloseButton = styled.TouchableOpacity`
-
-`;
+const CloseButton = styled.TouchableOpacity``;
 
 const CategoryImage = styled.Image`
   height: 40px;
