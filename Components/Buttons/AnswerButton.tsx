@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components/native";
 import { useSound } from "../../contexts/SoundContext";
 import { useTheme } from "../../contexts/ThemeContext";
+import { colorsModel } from "../../models/ColorsModel";
 import { Answer } from "../../models/QuizItem";
-import { colors } from "../../Styles/Shared";
 import STMText from "../Texts/ShareTechMonoText";
 
 interface Props {
@@ -35,12 +35,13 @@ const Button = styled.TouchableOpacity<{
   index: number;
   selectedAnswer: Answer | null;
   thisAnswer: Answer;
+  themeColors: colorsModel;
 }>`
   width: 45%;
-  ${(props) => props.index === 0 && `background-color: ${colors.anwserButtons.purple}`}
-  ${(props) => props.index === 1 && `background-color: ${colors.anwserButtons.green}`}
-  ${(props) => props.index === 2 && `background-color: ${colors.anwserButtons.orange}`}
-  ${(props) => props.index === 3 && `background-color: ${colors.anwserButtons.blue}`}
+  ${(props) => props.index === 0 && `background-color: ${props.themeColors.anwserButtons.purple}`}
+  ${(props) => props.index === 1 && `background-color: ${props.themeColors.anwserButtons.green}`}
+  ${(props) => props.index === 2 && `background-color: ${props.themeColors.anwserButtons.orange}`}
+  ${(props) => props.index === 3 && `background-color: ${props.themeColors.anwserButtons.blue}`}
   ${(props) => props.selectedAnswer && props.selectedAnswer !== props.thisAnswer && "opacity: 0.5;"}
   border-radius: 10px;
   padding: 20px 5px;

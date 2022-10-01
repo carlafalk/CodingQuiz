@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components/native";
 import { useHaptics } from "../../contexts/HapticsContext";
 import { useSound } from "../../contexts/SoundContext";
-import { colors } from "../../Styles/Shared";
+import { useTheme } from "../../contexts/ThemeContext";
+import { colorsModel } from "../../models/ColorsModel";
 
 type Props = {
   title: string;
@@ -13,6 +14,7 @@ type Props = {
 const HomeScreenButton = ({ onPress, title, color }: Props) => {
   const { playButtonEffect } = useSound();
   const { standardButtonHaptics } = useHaptics();
+  const { themeColors } = useTheme();
   return (
     <Button
       android_disableSound={true}
@@ -23,7 +25,7 @@ const HomeScreenButton = ({ onPress, title, color }: Props) => {
         standardButtonHaptics();
       }}
     >
-      <BtnTitle>{title}</BtnTitle>
+      <BtnTitle themeColors={themeColors}>{title}</BtnTitle>
     </Button>
   );
 };
@@ -41,9 +43,9 @@ const Button = styled.Pressable<{ color: string }>`
   padding: 18px 0px;
 `;
 
-const BtnTitle = styled.Text`
+const BtnTitle = styled.Text<{ themeColors: colorsModel }>`
   font-family: ShareTechMono;
   text-transform: uppercase;
-  color: ${colors.darkPurple};
+  color: ${({ themeColors }) => themeColors.darkPurple};
   font-size: 20px;
 `;

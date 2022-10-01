@@ -47,7 +47,7 @@ const SettingsScreen = () => {
       <View>
         <XlText style={{ color: themeColors.commons.white }}>Settings</XlText>
       </View>
-      <Divider />
+      <Divider color={themeColors.commons.white} />
       {categories.map((category) => (
         <Container key={category}>
           <LgText style={{ color: themeColors.commons.white }}>{category}</LgText>
@@ -61,7 +61,7 @@ const SettingsScreen = () => {
                 setToggleValue={() => getToggleValues(item)}
               />
             ))}
-          <Divider style={{ borderBottomColor: "#fff" }} />
+          <Divider color={themeColors.commons.white} />
         </Container>
       ))}
     </ScrollView>

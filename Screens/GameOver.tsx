@@ -11,7 +11,7 @@ import STMText from "../Components/Texts/ShareTechMonoText";
 import TopSection from "../Components/TopSection";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
-import { colors } from "../Styles/Shared";
+import { colorsModel } from "../models/ColorsModel";
 import { Divider } from "../Styles/views";
 
 type Props = NativeStackScreenProps<RootStackParams, "GameOver">;
@@ -86,14 +86,14 @@ const GameOverScreen = ({ navigation, route }: Props) => {
 
       <ButtonBox>
         <HomeScreenButton
-          color={colors.lightGreen}
+          color={themeColors.lightGreen}
           title="play again"
           onPress={() => {
             navigation.navigate("Categories");
           }}
         />
         <HomeScreenButton
-          color={colors.mustard}
+          color={themeColors.mustard}
           title="main menu"
           onPress={() => {
             navigation.navigate("Home");
@@ -107,8 +107,8 @@ const GameOverScreen = ({ navigation, route }: Props) => {
 
 export default GameOverScreen;
 
-const ScoreBox = styled.View`
-  background-color: ${colors.deepPurple};
+const ScoreBox = styled.View<{ themeColors: colorsModel }>`
+  background-color: ${({ themeColors }) => themeColors.deepPurple};
   justify-content: center;
   align-items: center;
   margin: 0 10px;

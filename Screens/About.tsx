@@ -7,18 +7,20 @@ import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import Logo from "../Components/Logo";
 import TopSection from "../Components/TopSection";
-import { colors } from "../Styles/Shared";
+import { useTheme } from "../contexts/ThemeContext";
+import { colorsModel } from "../models/ColorsModel";
 
 type Props = NativeStackScreenProps<RootStackParams, "About">;
 
 const AboutScreen = ({ navigation }: Props) => {
+  const { themeColors } = useTheme();
   return (
     <Background dark>
       <TopSection title="about" onPress={() => navigation.goBack()} />
       <Logo topMargin={-50} size="medium" />
-      <About>
+      <About themeColors={themeColors}>
         <HeaderContainer>
-          <Header>About</Header>
+          <Header themeColors={themeColors}>About</Header>
           <AntDesign
             name="github"
             size={30}
@@ -27,13 +29,15 @@ const AboutScreen = ({ navigation }: Props) => {
             style={{ position: "absolute", right: 0 }}
           />
         </HeaderContainer>
-        <Description>School project for SUVNET21</Description>
-        <Description style={{ marginBottom: 40 }}>Written in React Native</Description>
-        <Creators>Made by</Creators>
-        <Creators>Tommy</Creators>
-        <Creators>Oscar</Creators>
-        <Creators>Carl</Creators>
-        <Creators>Alex</Creators>
+        <Description themeColors={themeColors}>School project for SUVNET21</Description>
+        <Description style={{ marginBottom: 40 }} themeColors={themeColors}>
+          Written in React Native
+        </Description>
+        <Creators themeColors={themeColors}>Made by</Creators>
+        <Creators themeColors={themeColors}>Tommy</Creators>
+        <Creators themeColors={themeColors}>Oscar</Creators>
+        <Creators themeColors={themeColors}>Carl</Creators>
+        <Creators themeColors={themeColors}>Alex</Creators>
       </About>
     </Background>
   );
@@ -47,8 +51,8 @@ const HeaderContainer = styled.View`
   flex-direction: row;
 `;
 
-const About = styled.View`
-  background-color: ${colors.lightPurple};
+const About = styled.View<{ themeColors: colorsModel }>`
+  background-color: ${({ themeColors }) => themeColors.lightPurple};
   margin: 0 21px;
   border-radius: 15px;
   padding: 25px;
@@ -56,23 +60,23 @@ const About = styled.View`
   elevation: 8;
 `;
 
-const Header = styled.Text`
+const Header = styled.Text<{ themeColors: colorsModel }>`
   flex-direction: row;
   font-size: 30px;
   font-family: ShareTechMono;
-  color: ${colors.commons.white};
+  color: ${({ themeColors }) => themeColors.commons.white};
   margin-bottom: 60px;
   text-transform: uppercase;
 `;
 
-const Description = styled.Text`
+const Description = styled.Text<{ themeColors: colorsModel }>`
   font-size: 15px;
   font-family: ShareTechMono;
-  color: ${colors.commons.white};
+  color: ${({ themeColors }) => themeColors.commons.white};
 `;
 
-const Creators = styled.Text`
+const Creators = styled.Text<{ themeColors: colorsModel }>`
   font-size: 20px;
   font-family: ShareTechMono;
-  color: ${colors.commons.white};
+  color: ${({ themeColors }) => themeColors.commons.white};
 `;
