@@ -99,7 +99,7 @@ const UserInfoContainer = styled.View`
 
 const UserInfoButton = styled.Pressable`
   align-items: center;
-  margin-top: -70;
+  margin-top: -70px;
   width: 50%;
 `;
 
