@@ -92,10 +92,16 @@ const LogInScreen = ({ navigation }: Props) => {
           <Text style={{ textAlign: "center", color: themeColors.commons.white, paddingBottom: 20 }}>or</Text>
           <StandardButton onPress={handlePlayAsGuest} title="Play as guest" color={themeColors.categories.css} />
         </ButtonContainer>
-        <MenuButton onPress={handleOpen}>
-          <MaterialIcons name="settings" size={32} color={themeColors.lightGrey} />
-          <MenuButtonText themeColors={themeColors}>Settings</MenuButtonText>
-        </MenuButton>
+        <MenuButtonContainer>
+          <MenuButton onPress={handleOpen}>
+            <MaterialIcons name="settings" size={32} color={themeColors.lightGrey} />
+            <MenuButtonText themeColors={themeColors}>Settings</MenuButtonText>
+          </MenuButton>
+          <MenuButton onPress={() => navigation.navigate("About")}>
+            <MenuButtonText themeColors={themeColors}>About</MenuButtonText>
+            <MaterialIcons name="help" size={32} color={themeColors.lightGrey} />
+          </MenuButton>
+        </MenuButtonContainer>
       </Background>
       <Modalize
         ref={modalizeRef}
@@ -111,12 +117,19 @@ const LogInScreen = ({ navigation }: Props) => {
 
 export default gestureHandlerRootHOC(LogInScreen);
 
+const MenuButtonContainer = styled.View`
+  bottom: 0px;
+  position: absolute;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 0px;
+`;
+
 const MenuButton = styled.Pressable`
   flex-direction: row;
+  padding: 10px;
   align-items: center;
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
 `;
 
 const MenuButtonText = styled.Text<{ themeColors: colorsModel }>`
