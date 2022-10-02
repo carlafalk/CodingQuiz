@@ -107,7 +107,7 @@ const UserInfoText = styled.Text<{ themeColors: colorsModel }>`
   text-align: center;
   font-size: 16px;
   color: ${({ themeColors }) => themeColors.commons.white};
-  background-color: ${({ themeColors }) => themeColors.commons.black};
+  background-color: ${({ themeColors }) => themeColors.backgrounds.lowOpacity};
   border-radius: 10px;
   padding: 8px 12px;
   margin-top: 5px;

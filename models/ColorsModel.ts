@@ -23,4 +23,7 @@ export interface colorsModel {
     white: string;
     black: string;
   };
+  backgrounds: {
+    lowOpacity: string;
+  };
 }
