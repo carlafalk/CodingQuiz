@@ -39,7 +39,7 @@ const Button = styled.Pressable<{ color: string }>`
   align-items: center;
   background-color: ${(props) => props.color};
   border-radius: 14px;
-  margin: 0 100px;
+  margin: 0 80px;
   margin-bottom: 24px;
   elevation: 8;
   padding: 18px;
