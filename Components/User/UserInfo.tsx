@@ -16,7 +16,7 @@ interface Props {
 
 const UserInfo = ({ handleClose, user }: Props) => {
   const { themeColors } = useTheme();
-  const { deleteUser, currentUser } = useUser();
+  const { deleteUser, currentUser, logOutUser } = useUser();
   return (
     <>
       <View style={{ flexDirection: "row", margin: 12 }}>
@@ -58,6 +58,14 @@ const UserInfo = ({ handleClose, user }: Props) => {
           title="Edit"
           color={themeColors.mustard}
         />
+        <ModalStandardButton
+          onPress={() => {
+            handleClose();
+            logOutUser();
+          }}
+          title="Log out"
+          color={themeColors.mustard}
+        />
       </ButtonContainer>
     </>
   );
@@ -78,12 +86,10 @@ const Header = styled.View<{
 `;
 
 const ButtonContainer = styled.View`
-  width: 50%;
   background-color: red;
   flex-direction: row;
   justify-content: flex-start;
-  margin-bottom: 12px;
-  margin-left: 12px;
+  justify-content: center;
 `;
 
 const StyledText = styled.Text<{
