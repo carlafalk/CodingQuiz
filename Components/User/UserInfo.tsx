@@ -1,4 +1,5 @@
-import React from "react";
+import { MaterialIcons } from "@expo/vector-icons";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
@@ -7,6 +8,7 @@ import { useUser } from "../../contexts/UserContext";
 import { colorsModel } from "../../models/ColorsModel";
 import { User } from "../../models/User";
 import ModalStandardButton from "../Buttons/ModalStandardButton";
+import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
 
 interface Props {
@@ -16,7 +18,10 @@ interface Props {
 
 const UserInfo = ({ handleClose, user }: Props) => {
   const { themeColors } = useTheme();
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const { deleteUser, currentUser, logOutUser } = useUser();
+
+  const deleteUserHeaderImg = <MaterialIcons name="delete-forever" size={28} color="white" />;
   return (
     <>
       <View style={{ flexDirection: "row", margin: 12 }}>
@@ -42,14 +47,7 @@ const UserInfo = ({ handleClose, user }: Props) => {
         </View>
       </View>
       <ButtonContainer>
-        <ModalStandardButton
-          onPress={() => {
-            handleClose();
-            deleteUser(user);
-          }}
-          title="Delete"
-          color={themeColors.mustard}
-        />
+        <ModalStandardButton onPress={() => setConfirmModalOpen(true)} title="Delete" color={themeColors.mustard} />
         <ModalStandardButton
           onPress={() => {
             handleClose();
@@ -67,6 +65,29 @@ const UserInfo = ({ handleClose, user }: Props) => {
           color={themeColors.mustard}
         />
       </ButtonContainer>
+      <QuizModal
+        show={confirmModalOpen}
+        closeModal={() => setConfirmModalOpen(false)}
+        title={"confirm"}
+        headerColor={themeColors.danger}
+        headerImg={deleteUserHeaderImg}
+      >
+        <View style={{ alignItems: "center", padding: 10 }}>
+          <STMText size={15}>Are you sure you want to delete this user?</STMText>
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <ModalStandardButton
+            onPress={() => {
+              setConfirmModalOpen(false);
+              handleClose();
+              deleteUser(user);
+            }}
+            title="Delete"
+            color={themeColors.mustard}
+          />
+          <ModalStandardButton onPress={() => setConfirmModalOpen(false)} title="Cancel" color={themeColors.mustard} />
+        </View>
+      </QuizModal>
     </>
   );
 };

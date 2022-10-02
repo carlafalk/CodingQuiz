@@ -32,6 +32,7 @@ export const ThemeProvider = ({ children }: Props) => {
     lightGrey: isDarkTheme ? "#ACACAC" : "#ACACAC",
     mustard: isDarkTheme ? "#FFB100" : "#FFB100",
     success: isDarkTheme ? "#009806" : "#009806",
+    danger: isDarkTheme ? "#9B1D20" : "#9B1D20",
     categories: {
       react: isDarkTheme ? "#2993CF" : "#0b141a",
       html: isDarkTheme ? "#FF702E" : "#FF702E",
