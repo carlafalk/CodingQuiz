@@ -58,5 +58,5 @@ const CategoriesScreen = ({ navigation }: Props) => {
 export default CategoriesScreen;
 
 const ButtonContainer = styled.View`
-  margin: 0 45px;
+  margin: 0 30px;
 `;
