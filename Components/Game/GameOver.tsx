@@ -11,7 +11,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { AnswerInfo } from "../../models/AnswerInfo";
 import { colorsModel } from "../../models/ColorsModel";
 import { Divider } from "../../Styles/views";
-import HomeScreenButton from "../Buttons/HomeScreenButton";
+import StandardButton from "../Buttons/StandardButton";
 import GameSession from "../GameSession";
 import Logo from "../Logo";
 import QuizModal from "../Modal/QuizModal";
@@ -114,8 +114,8 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
       </ScoreBox>
 
       <ButtonBox>
-        <HomeScreenButton color={themeColors.lightGreen} title="play again" onPress={handlePressPlayAgain} />
-        <HomeScreenButton color={themeColors.mustard} title="main menu" onPress={handlePressHome} />
+        <StandardButton color={themeColors.lightGreen} title="play again" onPress={handlePressPlayAgain} />
+        <StandardButton color={themeColors.mustard} title="main menu" onPress={handlePressHome} />
       </ButtonBox>
       <Logo topMargin={30} size="small" />
     </>

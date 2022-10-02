@@ -5,7 +5,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
 import { defaultAvatar } from "../../data/avatarData";
 import { colorsModel } from "../../models/ColorsModel";
-import HomeScreenButton from "../Buttons/HomeScreenButton";
+import StandardButton from "../Buttons/StandardButton";
 import STMText from "../Texts/ShareTechMonoText";
 import AvatarCreator from "./AvatarCreator";
 
@@ -35,7 +35,7 @@ const CreateUser = ({ handleClose }: Props) => {
         <Input onChangeText={setUsername} themeColors={themeColors} value={username} />
         <AvatarCreator avatarRef={avatarRef} />
       </ContentContainer>
-      <HomeScreenButton title="submit" color={themeColors.mustard} onPress={handleCreateUser} />
+      <StandardButton title="submit" color={themeColors.mustard} onPress={handleCreateUser} />
     </>
   );
 };

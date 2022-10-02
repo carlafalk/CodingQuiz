@@ -5,7 +5,7 @@ import { KeyboardAvoidingView, Platform, Text } from "react-native";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
-import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
+import StandardButton from "../Components/Buttons/StandardButton";
 import Logo from "../Components/Logo";
 import QuizModal from "../Components/Modal/QuizModal";
 import CreateUser from "../Components/User/CreateUser";
@@ -77,10 +77,10 @@ const LogInScreen = ({ navigation }: Props) => {
 
         <Logo size="large" topMargin={120} />
         <ButtonContainer>
-          {users.length > 0 && <HomeScreenButton onPress={() => setLoginModalVisible(true)} title="Log in" color={themeColors.lightGreen} />}
-          <HomeScreenButton onPress={handleCreateUser} title="Create User" color={themeColors.mustard} />
+          {users.length > 0 && <StandardButton onPress={() => setLoginModalVisible(true)} title="Log in" color={themeColors.lightGreen} />}
+          <StandardButton onPress={handleCreateUser} title="Create User" color={themeColors.mustard} />
           <Text style={{ textAlign: "center", color: themeColors.commons.white, paddingBottom: 20 }}>or</Text>
-          <HomeScreenButton onPress={handlePlayAsGuest} title="Play as guest" color={themeColors.categories.css} />
+          <StandardButton onPress={handlePlayAsGuest} title="Play as guest" color={themeColors.categories.css} />
         </ButtonContainer>
       </Background>
     </KeyboardAvoidingView>

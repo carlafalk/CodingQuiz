@@ -11,7 +11,7 @@ type Props = {
   onPress: () => void;
 };
 
-const HomeScreenButton = ({ onPress, title, color }: Props) => {
+const StandardButton = ({ onPress, title, color }: Props) => {
   const { playButtonEffect } = useSound();
   const { standardButtonHaptics } = useHaptics();
   const { themeColors } = useTheme();
@@ -32,7 +32,7 @@ const HomeScreenButton = ({ onPress, title, color }: Props) => {
   );
 };
 
-export default HomeScreenButton;
+export default StandardButton;
 
 const Button = styled.Pressable<{ color: string }>`
   justify-content: center;

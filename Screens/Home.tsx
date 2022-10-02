@@ -8,7 +8,7 @@ import { Modalize } from "react-native-modalize";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
-import HomeScreenButton from "../Components/Buttons/HomeScreenButton";
+import StandardButton from "../Components/Buttons/StandardButton";
 import Logo from "../Components/Logo";
 import QuizModal from "../Components/Modal/QuizModal";
 import UserInfo from "../Components/User/UserInfo";
@@ -65,9 +65,9 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
       </Pressable>
       <Logo size="large" topMargin={120} />
       <ButtonContainer>
-        <HomeScreenButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
-        <HomeScreenButton onPress={handleOpen} title="Settings" color={themeColors.mustard} />
-        <HomeScreenButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} />
+        <StandardButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
+        <StandardButton onPress={handleOpen} title="Settings" color={themeColors.mustard} />
+        <StandardButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} />
       </ButtonContainer>
       <Modalize
         ref={modalizeRef}
