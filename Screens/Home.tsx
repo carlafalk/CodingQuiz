@@ -1,4 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useRef, useState } from "react";
 import { BigHead } from "react-native-bigheads";
@@ -31,6 +32,11 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
   const handleOpen = () => {
     modalizeRef.current?.open();
   };
+  
+  useFocusEffect(() => {
+    console.log("focus effect");
+    !currentUser && navigation.navigate("LogIn");
+  });
 
   useEffect(() => {
     if (isLoaded) {
@@ -43,6 +49,7 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
   useEffect(() => {
     !currentUser && navigation.navigate("LogIn");
   }, [currentUser]);
+
 
   const headerImg = <BigHead {...currentUser?.avatar} size={40} />;
 
