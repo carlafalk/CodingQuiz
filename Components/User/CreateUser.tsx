@@ -8,6 +8,7 @@ import { colorsModel } from "../../models/ColorsModel";
 import StandardButton from "../Buttons/StandardButton";
 import STMText from "../Texts/ShareTechMonoText";
 import AvatarCreator from "./AvatarCreator";
+import uuid from 'react-native-uuid';
 
 interface Props {
   handleClose: () => void;
@@ -21,6 +22,7 @@ const CreateUser = ({ handleClose }: Props) => {
 
   const handleCreateUser = () => {
     createUser({
+      id: uuid.v4() as string,
       username: username,
       avatar: avatarRef.current.valueOf(),
     });
