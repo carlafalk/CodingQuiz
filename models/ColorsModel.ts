@@ -6,6 +6,7 @@ export interface colorsModel {
   lightGrey: string;
   mustard: string;
   success: string;
+  danger: string;
   categories: {
     react: string;
     html: string;
