@@ -23,7 +23,7 @@ const UserExists = ({ handleLogIn }: Props) => {
       </InfoText>
       <ScrollView style={{ height: "80%" }}>
         {users.map((user) => (
-          <View key={user.username} style={{ padding: 5, alignItems: "center" }}>
+          <View key={user.id} style={{ padding: 5, alignItems: "center" }}>
             <UserButton onPress={() => handleLogIn(user)} themeColors={themeColors}>
               <ButtonEffect themeColors={themeColors} />
               <BigHead {...user.avatar} size={75} />

@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext } from "react";
 import { defaultAvatar } from "../data/avatarData";
 import useAsyncStorage from "../hooks/useAsyncStorage";
 import { User } from "../models/User";
+import uuid from "react-native-uuid";
 
 interface UserContext {
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
@@ -30,6 +31,7 @@ interface Props {
 }
 
 const guest: User = {
+  id: uuid.v4() as string,
   username: "guest123",
   avatar: defaultAvatar,
 };

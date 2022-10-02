@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, Text } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
+import uuid from "react-native-uuid";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
@@ -30,6 +31,7 @@ const LogInScreen = ({ navigation }: Props) => {
 
   const randomGuestNumber = Math.floor(Math.random() * 9999);
   const guestUser = {
+    id: uuid.v4() as string,
     username: "guest#" + randomGuestNumber,
     avatar: defaultAvatar,
   };
