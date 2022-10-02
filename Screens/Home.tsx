@@ -1,4 +1,4 @@
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useRef, useState } from "react";
 import { Pressable } from "react-native";
@@ -15,6 +15,7 @@ import UserInfo from "../Components/User/UserInfo";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { useUser } from "../contexts/UserContext";
+import { colorsModel } from "../models/ColorsModel";
 import { User } from "../models/User";
 import SettingsScreen from "./Settings";
 
@@ -66,9 +67,12 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
       <Logo size="large" topMargin={120} />
       <ButtonContainer>
         <HomeScreenButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
-        <HomeScreenButton onPress={handleOpen} title="Settings" color={themeColors.mustard} />
         <HomeScreenButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} />
       </ButtonContainer>
+      <MenuButton onPress={handleOpen}>
+        <MaterialIcons name="settings" size={32} color={themeColors.lightGrey} />
+        <MenuButtonText themeColors={themeColors}>Settings</MenuButtonText>
+      </MenuButton>
       <Modalize
         ref={modalizeRef}
         rootStyle={modalRootStyle}
@@ -82,6 +86,19 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
 };
 
 export default gestureHandlerRootHOC(HomeScreen);
+
+const MenuButton = styled.Pressable`
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+`;
+
+const MenuButtonText = styled.Text<{ themeColors: colorsModel }>`
+  padding: 10px;
+  color: ${({ themeColors }) => themeColors.commons.white};
+`;
 
 const modalRootStyle = {
   backgroundColor: "rgba(0,0,0,0.5)",
