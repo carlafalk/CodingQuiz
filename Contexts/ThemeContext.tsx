@@ -49,6 +49,9 @@ export const ThemeProvider = ({ children }: Props) => {
       white: isDarkTheme ? "#FFFFFF" : "#000000",
       black: isDarkTheme ? "#000000" : "#FFFFFF",
     },
+    backgrounds: {
+      lowOpacity: isDarkTheme ? "#000000ab" : "#ffffffab",
+    },
   };
   return <ThemeContext.Provider value={{ isDarkTheme, toggleThemeIsDisabled, themeColors }}>{children}</ThemeContext.Provider>;
 };

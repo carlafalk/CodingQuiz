@@ -1,7 +1,6 @@
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useRef, useState } from "react";
-import { Pressable } from "react-native";
 import { BigHead } from "react-native-bigheads";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
@@ -27,7 +26,7 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
   const { playHomeMusic, isMusicMuted, isLoaded } = useSound();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { currentUser, logOutUser } = useUser();
+  const { currentUser } = useUser();
 
   const handleOpen = () => {
     modalizeRef.current?.open();
@@ -45,10 +44,6 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
     !currentUser && navigation.navigate("LogIn");
   }, [currentUser]);
 
-  const handleLogOut = () => {
-    logOutUser();
-  };
-
   const headerImg = <BigHead {...currentUser?.avatar} size={40} />;
 
   return (
@@ -56,15 +51,13 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
       <QuizModal show={modalVisible} closeModal={() => setModalVisible(false)} title={"selected user"} headerImg={headerImg}>
         <UserInfo handleClose={() => setModalVisible(false)} user={currentUser ? currentUser : ({} as User)} />
       </QuizModal>
-      {/* logoutbutton */}
-      <Pressable onPress={() => handleLogOut()} style={{ marginTop: 120, right: 60, position: "absolute", zIndex: 999 }}>
-        <FontAwesome name="user-circle-o" size={24} color={themeColors.lightGrey} />
-      </Pressable>
-      {/* UserInfo */}
-      <Pressable onPress={() => setModalVisible(true)} style={{ marginTop: 120, right: 20, position: "absolute", zIndex: 999 }}>
-        <FontAwesome name="user-circle-o" size={24} color={themeColors.lightGrey} />
-      </Pressable>
-      <Logo size="large" topMargin={120} />
+      <Logo size="large" topMargin={80} />
+      <UserInfoContainer>
+        <UserInfoButton onPress={() => setModalVisible(true)}>
+          <BigHead {...currentUser?.avatar} size={150} />
+          <UserInfoText themeColors={themeColors}>{currentUser?.username}</UserInfoText>
+        </UserInfoButton>
+      </UserInfoContainer>
       <ButtonContainer>
         <StandardButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
         <StandardButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} />
@@ -100,6 +93,26 @@ const MenuButtonText = styled.Text<{ themeColors: colorsModel }>`
   color: ${({ themeColors }) => themeColors.commons.white};
 `;
 
+const UserInfoContainer = styled.View`
+  align-items: center;
+`;
+
+const UserInfoButton = styled.Pressable`
+  align-items: center;
+  margin-top: -70px;
+  width: 50%;
+`;
+
+const UserInfoText = styled.Text<{ themeColors: colorsModel }>`
+  text-align: center;
+  font-size: 16px;
+  color: ${({ themeColors }) => themeColors.commons.white};
+  background-color: ${({ themeColors }) => themeColors.backgrounds.lowOpacity};
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-top: 5px;
+`;
+
 const modalRootStyle = {
   backgroundColor: "rgba(0,0,0,0.5)",
 };
@@ -110,5 +123,5 @@ const modalModalStyle = {
 };
 
 const ButtonContainer = styled.View`
-  margin-top: 48px;
+  margin-top: 28px;
 `;
