@@ -35,7 +35,7 @@ const AnswerCard = ({ answerInfo, questionNr, categoryColor }: Props) => {
         ) : (
           <MaterialCommunityIcons name="close-thick" size={40} color="red" />
         )}
-        <STMText size={18} styles={{ marginHorizontal: 10 }}>
+        <STMText size={18} styles={{ marginHorizontal: 10, maxWidth: "80%" }}>
           {answerInfo.answer ? "You answered:\n" + answerInfo.answer.answer : "You didn't select an answer in time"}
         </STMText>
       </SectionContainer>

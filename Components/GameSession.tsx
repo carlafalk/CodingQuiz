@@ -13,7 +13,7 @@ const GameSession = ({ gameSession, categoryColor }: Props) => {
     <AnswerCard key={index} answerInfo={info} questionNr={index + 1} categoryColor={categoryColor} />
   ));
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{ paddingVertical: 20 }}>
       <ScrollView horizontal={true} decelerationRate={0} snapToInterval={320} snapToAlignment={"center"}>
         {answerCards}
       </ScrollView>
