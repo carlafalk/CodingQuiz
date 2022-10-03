@@ -8,7 +8,7 @@ import { User } from "../models/User";
 interface UserContext {
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
   createUser: (user: User) => void;
-  editUser: () => void;
+  editUser: (user: User) => void;
   users: User[];
   deleteUser: (user: User) => void;
   currentUser: User | undefined;
@@ -63,8 +63,12 @@ function UserProvider({ children }: Props) {
     loginUser(user);
   };
 
-  const editUser = () => {
-    //TODO: Edit user
+  const editUser = (user: User) => {
+    const userIndex = users.findIndex((x) => x.id === user.id);
+    const usersCopy = [...users];
+    usersCopy[userIndex] = user;
+    setUsers(usersCopy);
+    setCurrentUser(user);
   };
 
   const addGameSession = (gameSession: GameSessionModel) => {

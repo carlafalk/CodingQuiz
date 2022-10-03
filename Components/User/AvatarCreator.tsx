@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AvatarProps, BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
+import { useUser } from "../../contexts/UserContext";
 import { avatarProps, avatarPropsArray, defaultAvatar } from "../../data/avatarData";
 import InfoSelector from "./InfoSelector";
 
@@ -10,7 +11,8 @@ interface Props {
 
 const AvatarCreator = ({ avatarRef }: Props) => {
   const [selectedProp, setSelectedProp] = useState<keyof AvatarProps>("accessory");
-  const [avatar, setAvatar] = useState<AvatarProps>(defaultAvatar);
+  const { currentUser } = useUser();
+  const [avatar, setAvatar] = useState<AvatarProps>(currentUser ? currentUser.avatar : defaultAvatar);
   const [selectedValue, setSelectedValue] = useState<any>(avatar[selectedProp]);
 
   useEffect(() => {

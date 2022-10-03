@@ -51,6 +51,7 @@ export const ThemeProvider = ({ children }: Props) => {
       black: isDarkTheme ? "#000000" : "#FFFFFF",
     },
     backgrounds: {
+      superLowOpacity: isDarkTheme ? "#00000022" : "#ffffff30",
       lowOpacity: isDarkTheme ? "#000000ab" : "#ffffffab",
     },
   };
