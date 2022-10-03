@@ -11,7 +11,6 @@ const useAsyncStorage = <T,>(key: string, initialValue: T) => {
       let value = initialValue;
       if (fromStorage) {
         value = JSON.parse(fromStorage);
-        console.log("from storage: " + value);
       }
       setState(value);
       setIsLoaded(true);

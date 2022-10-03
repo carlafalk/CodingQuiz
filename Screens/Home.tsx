@@ -34,7 +34,6 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
   };
 
   useFocusEffect(() => {
-    console.log("focus effect");
     !currentUser && navigation.navigate("LogIn");
   });
 

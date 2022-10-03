@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { AvatarProps } from "react-native-bigheads";
+import uuid from "react-native-uuid";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
@@ -8,7 +9,6 @@ import { colorsModel } from "../../models/ColorsModel";
 import StandardButton from "../Buttons/StandardButton";
 import STMText from "../Texts/ShareTechMonoText";
 import AvatarCreator from "./AvatarCreator";
-import uuid from 'react-native-uuid';
 
 interface Props {
   handleClose: () => void;
@@ -25,6 +25,7 @@ const CreateUser = ({ handleClose }: Props) => {
       id: uuid.v4() as string,
       username: username,
       avatar: avatarRef.current.valueOf(),
+      gameSessions: [],
     });
 
     handleClose();

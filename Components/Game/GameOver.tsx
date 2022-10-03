@@ -8,8 +8,9 @@ import ReactImg from "../../assets/languageIcons/react.png";
 import TSImg from "../../assets/languageIcons/typescript.png";
 import { useSound } from "../../contexts/SoundContext";
 import { useTheme } from "../../contexts/ThemeContext";
-import { AnswerInfo } from "../../models/AnswerInfo";
+import { useUser } from "../../contexts/UserContext";
 import { colorsModel } from "../../models/ColorsModel";
+import { GameSessionModel } from "../../models/GameSessionModel";
 import { Divider } from "../../Styles/views";
 import StandardButton from "../Buttons/StandardButton";
 import GameSession from "../GameSession";
@@ -19,7 +20,7 @@ import STMText from "../Texts/ShareTechMonoText";
 import TopSection from "../TopSection";
 
 interface Props {
-  gameSession: AnswerInfo[];
+  gameSession: GameSessionModel;
   category: string;
   handlePressHome: () => void;
   handlePressPlayAgain: () => void;
@@ -29,7 +30,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
-  const [answerTimes, setAnswerTimes] = useState<number[]>([]);
+  const { addGameSession } = useUser();
 
   let categoryImg = HTMLImg;
   let categoryColor: string = "";
@@ -55,25 +56,8 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
 
   useEffect(() => {
     playHomeMusic();
-    extractAnswerTimes();
   }, []);
 
-  function extractAnswerTimes() {
-    let times: number[] = [];
-    gameSession
-      .filter((question) => question.answer?.isCorrect)
-      .forEach((question) => {
-        times.push(question.answerTime);
-      });
-    setAnswerTimes(times);
-  }
-
-  function getFastestTime() {
-    return answerTimes.sort((n1, n2) => n1 - n2)[0];
-  }
-  function getSlowestTime() {
-    return answerTimes.sort((n1, n2) => n1 - n2)[answerTimes.length - 1];
-  }
   return (
     <>
       <QuizModal
@@ -90,19 +74,24 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
       <ScoreBox themeColors={themeColors}>
         <TextBox>
           <STMText size={20}>Score</STMText>
-          <STMText size={20}>{gameSession.filter((question) => question.answer?.isCorrect).length}/10</STMText>
+          <STMText size={20}>{gameSession.points}/10</STMText>
         </TextBox>
         <Divider style={{ width: "85%", verticalPadding: 0 }} color={themeColors.commons.white} />
-        {answerTimes.length !== 0 && (
+        {gameSession.answers.length !== 0 && (
           <>
             <TextBox>
               <STMText size={20}>Fastest answer</STMText>
-              <STMText size={20}>{getFastestTime()}s</STMText>
+              <STMText size={20}>{gameSession.fastestTime}s</STMText>
             </TextBox>
             <Divider style={{ width: "85%" }} color={themeColors.commons.white} />
             <TextBox>
               <STMText size={20}>Slowest answer</STMText>
-              <STMText size={20}>{getSlowestTime()}s</STMText>
+              <STMText size={20}>{gameSession.slowestTime}s</STMText>
+            </TextBox>
+            <Divider style={{ width: "85%" }} color={themeColors.commons.white} />
+            <TextBox>
+              <STMText size={20}>Avarage time</STMText>
+              <STMText size={20}>{gameSession.avgTime === -1 ? "-" : gameSession.avgTime}s</STMText>
             </TextBox>
           </>
         )}
@@ -130,7 +119,6 @@ const ScoreBox = styled.View<{ themeColors: colorsModel }>`
   align-items: center;
   margin: 0 10px;
   border-radius: 14px;
-  /* height: 10px; */
 `;
 
 const ButtonBox = styled.View`

@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext } from "react";
 import uuid from "react-native-uuid";
 import { defaultAvatar } from "../data/avatarData";
 import useAsyncStorage from "../hooks/useAsyncStorage";
+import { GameSessionModel } from "../models/GameSessionModel";
 import { User } from "../models/User";
 
 interface UserContext {
@@ -13,6 +14,7 @@ interface UserContext {
   currentUser: User | undefined;
   loginUser: (user: User) => void;
   logOutUser: () => void;
+  addGameSession: (gameSession: GameSessionModel) => void;
 }
 
 const UserContext = createContext<UserContext>({
@@ -24,6 +26,9 @@ const UserContext = createContext<UserContext>({
   createUser: () => console.warn("No provider found."),
   editUser: () => console.warn("No provider found."),
   deleteUser: (user: User) => console.warn("no provider found."),
+  addGameSession: (gameSession: GameSessionModel) => {
+    console.log("no provider found");
+  },
 });
 
 interface Props {
@@ -34,6 +39,7 @@ const guest: User = {
   id: uuid.v4() as string,
   username: "guest123",
   avatar: defaultAvatar,
+  gameSessions: [] as GameSessionModel[],
 };
 
 function UserProvider({ children }: Props) {
@@ -65,6 +71,20 @@ function UserProvider({ children }: Props) {
     setCurrentUser(user);
   };
 
+  const addGameSession = (gameSession: GameSessionModel) => {
+    if (currentUser) {
+      const currentUserCopy = { ...currentUser, gameSessions: [...currentUser.gameSessions, gameSession] };
+      setCurrentUser(currentUserCopy);
+
+      const usersCopy = [...users];
+
+      const currentUserIndex = usersCopy.findIndex((user) => user.id === currentUser.id);
+      usersCopy.splice(currentUserIndex, 1, currentUserCopy);
+
+      setUsers(usersCopy);
+    }
+  };
+
   const deleteUser = (user: User) => {
     const userIndex = users.findIndex((x) => x.username === user.username);
     if (userIndex !== -1) {
@@ -76,7 +96,7 @@ function UserProvider({ children }: Props) {
   };
 
   return (
-    <UserContext.Provider value={{ editUser, setUsers, users, createUser, deleteUser, currentUser, loginUser, logOutUser }}>
+    <UserContext.Provider value={{ editUser, setUsers, users, createUser, deleteUser, currentUser, loginUser, logOutUser, addGameSession }}>
       {children}
     </UserContext.Provider>
   );
