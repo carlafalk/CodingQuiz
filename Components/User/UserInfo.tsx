@@ -21,20 +21,28 @@ const UserInfo = ({ handleClose, user }: Props) => {
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const { deleteUser, currentUser, logOutUser, editUser } = useUser();
   const [username, setUsername] = useState(currentUser?.username);
+  const [isFocused, setIsFocused] = useState(false);
 
   const deleteUserHeaderImg = <MaterialIcons name="delete-forever" size={28} color="white" />;
   return (
     <>
       <View style={{ flexDirection: "row", margin: 12 }}>
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <UserInfoContainer>
           <BigHead {...user.avatar} size={100} />
-          <UserInfoText
-            themeColors={themeColors}
-            onChangeText={setUsername}
-            value={username}
-            onSubmitEditing={() => editUser({ ...user, username: username as string })}
-          />
-        </View>
+          <UserInfoTextContainer themeColors={themeColors}>
+            <UsernameInput
+              themeColors={themeColors}
+              onChangeText={setUsername}
+              value={username}
+              onSubmitEditing={() => {
+                editUser({ ...user, username: username as string });
+                setIsFocused(false);
+              }}
+              onFocus={() => setIsFocused(true)}
+            />
+            {!isFocused && <MaterialIcons name="mode-edit" size={16} color={themeColors.commons.white} style={{ marginRight: 10 }} />}
+          </UserInfoTextContainer>
+        </UserInfoContainer>
       </View>
       <View style={{ margin: 4, alignItems: "center", flex: 1 }}>
         <View style={{ backgroundColor: themeColors.lightPurple, borderRadius: 5, paddingHorizontal: 24, paddingVertical: 10, elevation: 8 }}>
@@ -181,12 +189,30 @@ const AvatarImage = styled.Image`
   width: 50px;
 `;
 
-const UserInfoText = styled.TextInput<{ themeColors: colorsModel }>`
-  text-align: center;
+const UserInfoTextContainer = styled.View<{ themeColors: colorsModel }>`
   font-size: 16px;
-  color: ${({ themeColors }) => themeColors.commons.white};
-  background-color: ${({ themeColors }) => themeColors.backgrounds.lowOpacity};
+  border: 1px solid ${({ themeColors }) => themeColors.lightPurple};
   border-radius: 10px;
-  padding: 8px 12px;
-  margin-top: 5px;
+  background-color: ${({ themeColors }) => themeColors.backgrounds.superLowOpacity};
+  margin-top: 10px;
+  width: 50%;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+`;
+
+const UserInfoContainer = styled.View`
+flex: 1;
+align-items: center;
+justify-content: center;
+`;
+
+const UsernameInput = styled.TextInput<{ themeColors: colorsModel }>`
+  padding: 10px 0px;
+  text-align: center;
+  font-size: 20px;
+  color: ${({ themeColors }) => themeColors.commons.white};
+  margin-right: auto;
+  width: 100%;
+  z-index: 999;
 `;
