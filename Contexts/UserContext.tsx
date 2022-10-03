@@ -1,13 +1,13 @@
 import { createContext, ReactNode, useContext } from "react";
+import uuid from "react-native-uuid";
 import { defaultAvatar } from "../data/avatarData";
 import useAsyncStorage from "../hooks/useAsyncStorage";
 import { User } from "../models/User";
-import uuid from "react-native-uuid";
 
 interface UserContext {
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
   createUser: (user: User) => void;
-  editUser: () => void;
+  editUser: (user: User) => void;
   users: User[];
   deleteUser: (user: User) => void;
   currentUser: User | undefined;
@@ -57,8 +57,12 @@ function UserProvider({ children }: Props) {
     loginUser(user);
   };
 
-  const editUser = () => {
-    //TODO: Edit user
+  const editUser = (user: User) => {
+    const userIndex = users.findIndex((x) => x.id === user.id);
+    const usersCopy = [...users];
+    usersCopy[userIndex] = user;
+    setUsers(usersCopy);
+    setCurrentUser(user);
   };
 
   const deleteUser = (user: User) => {
