@@ -12,7 +12,7 @@ interface Props {
 }
 
 const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
-  const [timeLeft, setTimeLeft] = useState(100);
+  const [timeLeft, setTimeLeft] = useState(300);
   const { themeColors } = useTheme();
 
   useEffect(() => {
@@ -20,15 +20,15 @@ const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
       setTimeLeft((prev) => {
         prev <= 0 && clearInterval(timer);
 
-        return prev > 0 ? prev - 10 : 0;
+        return prev > 0 ? prev - 0.5 : 0;
       });
-    }, 1000);
+    }, 50);
 
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    setTimeLeft(100);
+    setTimeLeft(300);
   }, [currentQuestion]);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
       <TimeBarShine themeColors={themeColors} />
       <TimeBarClock themeColors={themeColors}>
         <TimeBarTime size={20} themeColors={themeColors}>
-          {timeLeft / 10}
+          {Math.round(timeLeft / 10)}
         </TimeBarTime>
       </TimeBarClock>
     </TimeBar>
@@ -63,7 +63,7 @@ const TimeBar = styled.View`
 const RemainingTimeBar = styled.View<{ width: number; themeColors: colorsModel }>`
   background-color: ${({ themeColors }) => themeColors.lightGreen};
   border-radius: 8px;
-  width: ${(props) => props.width}%;
+  width: ${(props) => props.width / 3}%;
   position: absolute;
   left: 0;
   right: 0;
