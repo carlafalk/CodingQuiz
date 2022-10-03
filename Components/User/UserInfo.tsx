@@ -19,7 +19,8 @@ interface Props {
 const UserInfo = ({ handleClose, user }: Props) => {
   const { themeColors } = useTheme();
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
-  const { deleteUser, currentUser, logOutUser } = useUser();
+  const { deleteUser, currentUser, logOutUser, editUser } = useUser();
+  const [username, setUsername] = useState(currentUser?.username);
 
   const deleteUserHeaderImg = <MaterialIcons name="delete-forever" size={28} color="white" />;
   return (
@@ -27,7 +28,12 @@ const UserInfo = ({ handleClose, user }: Props) => {
       <View style={{ flexDirection: "row", margin: 12 }}>
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <BigHead {...user.avatar} size={100} />
-          <InfoText themeColors={themeColors}>{user.username}</InfoText>
+          <UserInfoText
+            themeColors={themeColors}
+            onChangeText={setUsername}
+            value={username}
+            onSubmitEditing={() => editUser({ ...user, username: username as string })}
+          />
         </View>
       </View>
       <View style={{ margin: 4, alignItems: "center", flex: 1 }}>
@@ -173,4 +179,14 @@ const InfoText = styled(StyledText)`
 const AvatarImage = styled.Image`
   height: 50px;
   width: 50px;
+`;
+
+const UserInfoText = styled.TextInput<{ themeColors: colorsModel }>`
+  text-align: center;
+  font-size: 16px;
+  color: ${({ themeColors }) => themeColors.commons.white};
+  background-color: ${({ themeColors }) => themeColors.backgrounds.lowOpacity};
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-top: 5px;
 `;
