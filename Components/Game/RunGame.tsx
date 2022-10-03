@@ -2,11 +2,13 @@ import React, { useEffect, useReducer, useRef } from "react";
 import styled from "styled-components/native";
 import { useSound } from "../../contexts/SoundContext";
 import { useTheme } from "../../contexts/ThemeContext";
-import { AnswerInfo } from "../../models/AnswerInfo";
+import { useUser } from "../../contexts/UserContext";
 import { colorsModel } from "../../models/ColorsModel";
+import { GameSessionModel } from "../../models/GameSessionModel";
 import { Answer } from "../../models/QuizItem";
 import { gameReducer } from "../../reducers/gameReducer";
 import { Divider } from "../../Styles/views";
+import { buildGameSession } from "../../utils/GameSessionBuilder";
 import QuizItemRandomizer from "../../utils/QuizItemRandomizer";
 import AnswerButton from "../Buttons/AnswerButton";
 import Logo from "../Logo";
@@ -18,21 +20,24 @@ interface Props {
   category: string;
   gameIsOver: boolean;
   setGameIsOver: React.Dispatch<React.SetStateAction<boolean>>;
-  setGameSession: React.Dispatch<React.SetStateAction<AnswerInfo[]>>;
+  setGameSession: React.Dispatch<React.SetStateAction<GameSessionModel>>;
+  gameSession: GameSessionModel;
 }
 
-const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession }: Props) => {
+const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession, gameSession }: Props) => {
   const [state, dispatch] = useReducer(gameReducer, {
     quizItems: [],
     currentQuestion: 0,
     selectedAnswer: null,
     timeIsUp: false,
-    gameSession: [],
+    gameSession: gameSession,
   });
+
   // hooks
   const timeLeftRef = useRef(100);
   const { playGameMusic, playSubmitSound } = useSound();
   const { themeColors } = useTheme();
+  const { addGameSession } = useUser();
 
   // consts
   const lastQuestion = state.currentQuestion === state.quizItems.length - 1;
@@ -53,8 +58,10 @@ const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession }: Props)
   }, [state.currentQuestion]);
 
   useEffect(() => {
-    if (state.gameSession.length === 10) {
-      setGameSession(state.gameSession);
+    if (state.gameSession.answers.length === 10) {
+      const latestGameSession = buildGameSession(state.gameSession);
+      setGameSession(latestGameSession);
+      addGameSession(latestGameSession);
       setGameIsOver(true);
     }
   }, [state.gameSession]);

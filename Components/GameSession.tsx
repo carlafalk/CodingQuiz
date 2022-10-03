@@ -1,15 +1,16 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
 import { AnswerInfo } from "../models/AnswerInfo";
+import { GameSessionModel } from "../models/GameSessionModel";
 import AnswerCard from "./AnswerCard";
 
 interface Props {
-  gameSession: AnswerInfo[];
+  gameSession: GameSessionModel;
   categoryColor: string;
 }
 
 const GameSession = ({ gameSession, categoryColor }: Props) => {
-  const answerCards = gameSession.map((info, index) => (
+  const answerCards = gameSession.answers.map((info, index) => (
     <AnswerCard key={index} answerInfo={info} questionNr={index + 1} categoryColor={categoryColor} />
   ));
   return (

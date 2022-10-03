@@ -1,4 +1,5 @@
 import { AnswerInfo } from "../models/AnswerInfo";
+import { GameSessionModel } from "../models/GameSessionModel";
 import QuizItem, { Answer } from "../models/QuizItem";
 
 export interface GameState {
@@ -6,7 +7,7 @@ export interface GameState {
   currentQuestion: number;
   selectedAnswer: Answer | null;
   timeIsUp: boolean;
-  gameSession: AnswerInfo[];
+  gameSession: GameSessionModel;
 }
 
 interface SetQuizItemsAction {

@@ -26,7 +26,6 @@ function HapticsProvider({ children }: Props) {
   const standardButtonHaptics = async () => {
     if (!isHapticsDisabled) {
       await Haptics.selectionAsync();
-      console.log("selection haptics brrrr");
     }
   };
 
@@ -37,7 +36,6 @@ function HapticsProvider({ children }: Props) {
     if (isHapticsDisabled) {
       setIsHapticsDisabled(false);
     }
-    console.log("haptics disabled: " + isHapticsDisabled);
   };
 
   return (
