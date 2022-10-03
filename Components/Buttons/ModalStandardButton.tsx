@@ -23,6 +23,7 @@ const Button = styled.Pressable<{ color: string }>`
   border-radius: 5px;
   padding: 4px 12px;
   margin: 8px;
+  elevation: 8;
 `;
 
 export default ModalStandardButton;

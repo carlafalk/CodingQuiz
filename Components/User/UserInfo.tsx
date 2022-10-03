@@ -25,29 +25,76 @@ const UserInfo = ({ handleClose, user }: Props) => {
   return (
     <>
       <View style={{ flexDirection: "row", margin: 12 }}>
-        <View style={{ flex: 1, backgroundColor: "blue", alignItems: "center", justifyContent: "center", padding: 8 }}>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <BigHead {...user.avatar} size={100} />
           <InfoText themeColors={themeColors}>{user.username}</InfoText>
         </View>
-        <View style={{ backgroundColor: "green", flex: 2, padding: 12 }}>
+      </View>
+      <View style={{ margin: 4, alignItems: "center", flex: 1 }}>
+        <View style={{ backgroundColor: themeColors.lightPurple, borderRadius: 5, paddingHorizontal: 24, paddingVertical: 10, elevation: 8 }}>
           <STMText size={16} center uppercase>
             stats
           </STMText>
-          <View style={{ backgroundColor: "teal" }}>
-            <STMText size={14} styles={{ padding: 4 }}>
-              Stat 1:
-            </STMText>
-            <STMText size={14} styles={{ padding: 4 }}>
-              Stat 2:
-            </STMText>
-            <STMText size={14} styles={{ padding: 4 }}>
-              Stat 3:
-            </STMText>
+        </View>
+        <View style={{ flexDirection: "row", flex: 1 }}>
+          <View style={{ padding: 10, flex: 1 }}>
+            <View
+              style={{
+                backgroundColor: themeColors.lightGreen,
+                borderRadius: 5,
+                paddingHorizontal: 24,
+                paddingVertical: 6,
+                marginBottom: 6,
+                elevation: 8,
+              }}
+            >
+              <STMText size={16} center uppercase>
+                General
+              </STMText>
+            </View>
+            <View style={{ backgroundColor: themeColors.darkPurple, borderRadius: 8, elevation: 8, flex: 1 }}>
+              <STMText size={14} styles={{ padding: 4 }}>
+                [Games played] 69
+              </STMText>
+              <STMText size={14} styles={{ padding: 4 }}>
+                [R:Q] 0.44
+              </STMText>
+              <STMText size={14} styles={{ padding: 4 }}>
+                [Best Category] React
+              </STMText>
+            </View>
+          </View>
+          <View style={{ padding: 10, flex: 1 }}>
+            <View
+              style={{
+                backgroundColor: themeColors.categories.javaScript,
+                borderRadius: 5,
+                paddingHorizontal: 24,
+                paddingVertical: 6,
+                marginBottom: 6,
+                elevation: 8,
+              }}
+            >
+              <STMText size={16} center uppercase>
+                Categories
+              </STMText>
+            </View>
+            <View style={{ backgroundColor: themeColors.darkPurple, borderRadius: 8, elevation: 8, flex: 1 }}>
+              <STMText size={14} styles={{ padding: 4 }}>
+                Games played: 69
+              </STMText>
+              <STMText size={14} styles={{ padding: 4 }}>
+                Stat 2:
+              </STMText>
+              <STMText size={14} styles={{ padding: 4 }}>
+                Stat 3:
+              </STMText>
+            </View>
           </View>
         </View>
       </View>
       <ButtonContainer>
-        <ModalStandardButton onPress={() => setConfirmModalOpen(true)} title="Delete" color={themeColors.mustard} />
+        <ModalStandardButton onPress={() => setConfirmModalOpen(true)} title="Delete" color={themeColors.danger} />
         <ModalStandardButton
           onPress={() => {
             handleClose();
@@ -62,7 +109,7 @@ const UserInfo = ({ handleClose, user }: Props) => {
             logOutUser();
           }}
           title="Log out"
-          color={themeColors.mustard}
+          color={themeColors.lightGrey}
         />
       </ButtonContainer>
       <QuizModal
@@ -107,10 +154,10 @@ const Header = styled.View<{
 `;
 
 const ButtonContainer = styled.View`
-  background-color: red;
   flex-direction: row;
   justify-content: flex-start;
   justify-content: center;
+  padding: 12px 0px;
 `;
 
 const StyledText = styled.Text<{
