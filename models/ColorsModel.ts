@@ -25,6 +25,7 @@ export interface colorsModel {
     black: string;
   };
   backgrounds: {
+    superLowOpacity: string;
     lowOpacity: string;
   };
 }

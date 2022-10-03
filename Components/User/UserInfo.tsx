@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { View } from "react-native";
-import { BigHead } from "react-native-bigheads";
+import { AvatarProps, BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
@@ -10,6 +10,8 @@ import { User } from "../../models/User";
 import ModalStandardButton from "../Buttons/ModalStandardButton";
 import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
+import AvatarCreator from "./AvatarCreator";
+import { FontAwesome } from '@expo/vector-icons';
 
 interface Props {
   handleClose: () => void;
@@ -19,16 +21,36 @@ interface Props {
 const UserInfo = ({ handleClose, user }: Props) => {
   const { themeColors } = useTheme();
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
-  const { deleteUser, currentUser, logOutUser } = useUser();
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const { deleteUser, currentUser, logOutUser, editUser } = useUser();
+  const [username, setUsername] = useState(currentUser?.username);
+  const [isFocused, setIsFocused] = useState(false);
+  const avatarRef = useRef<AvatarProps>(user?.avatar as AvatarProps);
 
+  const editUserHeaderImg = <MaterialIcons name="mode-edit" size={28} color="white" />;
   const deleteUserHeaderImg = <MaterialIcons name="delete-forever" size={28} color="white" />;
   return (
     <>
       <View style={{ flexDirection: "row", margin: 12 }}>
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-          <BigHead {...user.avatar} size={100} />
-          <InfoText themeColors={themeColors}>{user.username}</InfoText>
-        </View>
+        <UserInfoContainer>
+          <View>
+          <BigHead {...user.avatar} size={150} onPress={() => setEditModalOpen(true)} />
+          <FontAwesome name="paint-brush" size={16} color={themeColors.categories.react} style={{position: 'absolute', bottom: 5, right: 5}} />
+          </View>
+          <UserInfoTextContainer themeColors={themeColors}>
+            <UsernameInput
+              themeColors={themeColors}
+              onChangeText={setUsername}
+              value={username}
+              onSubmitEditing={() => {
+                editUser({ ...user, username: username as string });
+                setIsFocused(false);
+              }}
+              onFocus={() => setIsFocused(true)}
+            />
+            {!isFocused && <MaterialIcons name="mode-edit" size={16} color={themeColors.categories.react} style={{ marginRight: 10 }} />}
+          </UserInfoTextContainer>
+        </UserInfoContainer>
       </View>
       <View style={{ margin: 4, alignItems: "center", flex: 1 }}>
         <View style={{ backgroundColor: themeColors.lightPurple, borderRadius: 5, paddingHorizontal: 24, paddingVertical: 10, elevation: 8 }}>
@@ -135,6 +157,31 @@ const UserInfo = ({ handleClose, user }: Props) => {
           <ModalStandardButton onPress={() => setConfirmModalOpen(false)} title="Cancel" color={themeColors.mustard} />
         </View>
       </QuizModal>
+      <QuizModal
+        show={editModalOpen}
+        closeModal={() => setEditModalOpen(false)}
+        title={"edit avatar"}
+        headerColor={themeColors.darkPurple}
+        headerImg={editUserHeaderImg}
+      >
+        <View style={{ alignItems: "center", padding: 10 }}>
+          <STMText size={15}>Edit your avatar!</STMText>
+        </View>
+        <View style={{ padding: 15, marginTop: -20 }}>
+          <AvatarCreator avatarRef={avatarRef} />
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <ModalStandardButton
+            onPress={() => {
+              editUser({ ...user, avatar: avatarRef.current.valueOf() });
+              setEditModalOpen(false);
+            }}
+            title="Save"
+            color={themeColors.success}
+          />
+          <ModalStandardButton onPress={() => setEditModalOpen(false)} title="Cancel" color={themeColors.mustard} />
+        </View>
+      </QuizModal>
     </>
   );
 };
@@ -173,4 +220,33 @@ const InfoText = styled(StyledText)`
 const AvatarImage = styled.Image`
   height: 50px;
   width: 50px;
+`;
+
+const UserInfoTextContainer = styled.View<{ themeColors: colorsModel }>`
+  font-size: 16px;
+  border: 1px solid ${({ themeColors }) => themeColors.lightPurple};
+  border-radius: 10px;
+  background-color: ${({ themeColors }) => themeColors.backgrounds.superLowOpacity};
+  margin-top: 10px;
+  width: 50%;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+`;
+
+const UserInfoContainer = styled.View`
+  margin-top: -10px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+const UsernameInput = styled.TextInput<{ themeColors: colorsModel }>`
+  padding: 10px 0px;
+  text-align: center;
+  font-size: 20px;
+  color: ${({ themeColors }) => themeColors.commons.white};
+  margin-right: auto;
+  width: 100%;
+  z-index: 999;
 `;
