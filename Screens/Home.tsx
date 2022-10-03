@@ -32,7 +32,7 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
   const handleOpen = () => {
     modalizeRef.current?.open();
   };
-  
+
   useFocusEffect(() => {
     console.log("focus effect");
     !currentUser && navigation.navigate("LogIn");
@@ -50,12 +50,11 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
     !currentUser && navigation.navigate("LogIn");
   }, [currentUser]);
 
-
   const headerImg = <BigHead {...currentUser?.avatar} size={40} />;
 
   return (
     <Background>
-      <QuizModal show={modalVisible} closeModal={() => setModalVisible(false)} title={"selected user"} headerImg={headerImg}>
+      <QuizModal show={modalVisible} closeModal={() => setModalVisible(false)} title={"selected user"} headerImg={headerImg} modalHeight={"85%"}>
         <UserInfo handleClose={() => setModalVisible(false)} user={currentUser ? currentUser : ({} as User)} />
       </QuizModal>
       <Logo size="large" topMargin={80} />
