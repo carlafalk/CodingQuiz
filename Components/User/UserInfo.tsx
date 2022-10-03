@@ -11,6 +11,7 @@ import ModalStandardButton from "../Buttons/ModalStandardButton";
 import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
 import AvatarCreator from "./AvatarCreator";
+import { FontAwesome } from '@expo/vector-icons';
 
 interface Props {
   handleClose: () => void;
@@ -32,7 +33,10 @@ const UserInfo = ({ handleClose, user }: Props) => {
     <>
       <View style={{ flexDirection: "row", margin: 12 }}>
         <UserInfoContainer>
+          <View>
           <BigHead {...user.avatar} size={150} onPress={() => setEditModalOpen(true)} />
+          <FontAwesome name="paint-brush" size={16} color={themeColors.categories.react} style={{position: 'absolute', bottom: 5, right: 5}} />
+          </View>
           <UserInfoTextContainer themeColors={themeColors}>
             <UsernameInput
               themeColors={themeColors}
@@ -44,7 +48,7 @@ const UserInfo = ({ handleClose, user }: Props) => {
               }}
               onFocus={() => setIsFocused(true)}
             />
-            {!isFocused && <MaterialIcons name="mode-edit" size={16} color={themeColors.commons.white} style={{ marginRight: 10 }} />}
+            {!isFocused && <MaterialIcons name="mode-edit" size={16} color={themeColors.categories.react} style={{ marginRight: 10 }} />}
           </UserInfoTextContainer>
         </UserInfoContainer>
       </View>
