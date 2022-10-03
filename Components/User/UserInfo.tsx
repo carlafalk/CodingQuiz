@@ -163,8 +163,8 @@ const UserInfo = ({ handleClose, user }: Props) => {
         <View style={{ alignItems: "center", padding: 10 }}>
           <STMText size={15}>Edit your avatar!</STMText>
         </View>
-        <View style={{padding: 15, marginTop: -20}}>
-        <AvatarCreator avatarRef={avatarRef} />
+        <View style={{ padding: 15, marginTop: -20 }}>
+          <AvatarCreator avatarRef={avatarRef} />
         </View>
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
           <ModalStandardButton
@@ -175,7 +175,7 @@ const UserInfo = ({ handleClose, user }: Props) => {
             title="Save"
             color={themeColors.success}
           />
-          <ModalStandardButton onPress={() => setConfirmModalOpen(false)} title="Cancel" color={themeColors.mustard} />
+          <ModalStandardButton onPress={() => setEditModalOpen(false)} title="Cancel" color={themeColors.mustard} />
         </View>
       </QuizModal>
     </>
