@@ -63,7 +63,7 @@ export default function App() {
                 <RootStack.Screen name="LogIn" component={LogInScreen} />
                 <RootStack.Screen name="Categories" component={CategoriesScreen} />
                 <RootStack.Screen name="Settings" component={SettingsScreen} />
-                <RootStack.Screen name="Game" component={GameScreen} />
+                <RootStack.Screen name="Game" component={GameScreen} options={{ gestureEnabled: false }} />
               </RootStack.Navigator>
             </NavigationContainer>
           </SoundProvider>
