@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
+import { BackHandler } from "react-native";
 import { RootStackParams } from "../App";
 import Background from "../Components/Background";
 import CountDown from "../Components/Game/CountDown";
@@ -13,6 +14,11 @@ const GameScreen = ({ navigation, route }: Props) => {
   const [countingDown, setCountingDown] = useState(true);
   const [gameIsOver, setGameIsOver] = useState(false);
   const [gameSession, setGameSession] = useState<AnswerInfo[]>([]);
+
+  useEffect(() => {
+    const backhandler = BackHandler.addEventListener("hardwareBackPress", () => true);
+    return () => backhandler.remove();
+  }, []);
 
   useEffect(() => {}, [gameSession]);
 
