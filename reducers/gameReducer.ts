@@ -18,7 +18,7 @@ export function gameReducer(state: GameState, action: KnownAction) {
       return { ...state, timeIsUp: true };
     }
     case "ADD_ANSWER_INFO": {
-      return { ...state, gameSession: [...state.gameSession, action.payload] };
+      return { ...state, gameSession: { ...state.gameSession, answers: [...state.gameSession.answers, action.payload]}};
     }
     case "DESELECT_ANSWER": {
       return { ...state, selectedAnswer: null };
