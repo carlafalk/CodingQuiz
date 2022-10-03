@@ -56,7 +56,6 @@ function SoundProvider({ children }: Props) {
   const [isButtonSoundMuted, setIsButtonSoundMuted] = useAsyncStorage<boolean>("button-muted", false);
 
   useEffect(() => {
-    console.log("LOADING ALL SOUNDS");
     LoadAllSounds();
   }, []);
 

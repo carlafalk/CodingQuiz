@@ -30,10 +30,12 @@ const LogInScreen = ({ navigation }: Props) => {
   const { createUser, loginUser, currentUser, users } = useUser();
 
   const randomGuestNumber = Math.floor(Math.random() * 9999);
-  const guestUser = {
+
+  const guestUser: User = {
     id: uuid.v4() as string,
     username: "guest#" + randomGuestNumber,
     avatar: defaultAvatar,
+    gameSessions: [],
   };
 
   useEffect(() => {
