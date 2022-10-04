@@ -1,4 +1,4 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
 import { View } from "react-native";
 import { AvatarProps, BigHead } from "react-native-bigheads";
@@ -7,11 +7,11 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
 import { colorsModel } from "../../models/ColorsModel";
 import { User } from "../../models/User";
+import { Divider } from "../../Styles/views";
 import ModalStandardButton from "../Buttons/ModalStandardButton";
 import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
 import AvatarCreator from "./AvatarCreator";
-import { FontAwesome } from '@expo/vector-icons';
 
 interface Props {
   handleClose: () => void;
@@ -29,13 +29,37 @@ const UserInfo = ({ handleClose, user }: Props) => {
 
   const editUserHeaderImg = <MaterialIcons name="mode-edit" size={28} color="white" />;
   const deleteUserHeaderImg = <MaterialIcons name="delete-forever" size={28} color="white" />;
+
+  const mostPlayedCategory = () => {
+    if (currentUser) {
+      if (currentUser.gameSessions.length > 0) {
+        const gameSessionCopy = { ...currentUser };
+        const mostPlayed = gameSessionCopy.gameSessions.sort(
+          (a, b) =>
+            currentUser.gameSessions.filter((v) => v.category === a.category).length -
+            currentUser.gameSessions.filter((v) => v.category === b.category).length
+        );
+        return mostPlayed[mostPlayed.length - 1].category;
+      } else return "N/A";
+    } else return "N/A";
+  };
+
+  const totalPoints = () => {
+    // use reduce instead
+    if (currentUser) {
+      let totalPoints = 0;
+      currentUser.gameSessions.forEach((gameSession) => (totalPoints += gameSession.points));
+      return totalPoints;
+    } else return 0;
+  };
+
   return (
     <>
       <View style={{ flexDirection: "row", margin: 12 }}>
         <UserInfoContainer>
           <View>
-          <BigHead {...user.avatar} size={150} onPress={() => setEditModalOpen(true)} />
-          <FontAwesome name="paint-brush" size={16} color={themeColors.categories.react} style={{position: 'absolute', bottom: 5, right: 5}} />
+            <BigHead {...user.avatar} size={150} onPress={() => setEditModalOpen(true)} />
+            <FontAwesome name="paint-brush" size={16} color={themeColors.categories.react} style={{ position: "absolute", bottom: 5, right: 5 }} />
           </View>
           <UserInfoTextContainer themeColors={themeColors}>
             <UsernameInput
@@ -75,14 +99,33 @@ const UserInfo = ({ handleClose, user }: Props) => {
               </STMText>
             </View>
             <View style={{ backgroundColor: themeColors.darkPurple, borderRadius: 8, elevation: 8, flex: 1 }}>
-              <STMText size={14} styles={{ padding: 4 }}>
-                [Games played] 69
+              <View>
+                <STMText size={15} styles={{ padding: 4 }} uppercase>
+                  Games played
+                </STMText>
+                <STMText size={14} styles={{ padding: 4 }}>
+                  {currentUser?.gameSessions.length}
+                </STMText>
+                <Divider color={themeColors.commons.white} style={{ width: "100%" }} />
+              </View>
+
+              <View>
+                <STMText size={15} styles={{ padding: 4 }}>
+                  Correct answers
+                </STMText>
+                <STMText size={14} styles={{ padding: 4 }}>
+                  {totalPoints()} / {currentUser && currentUser.gameSessions.length * 10}
+                </STMText>
+                <Divider color={themeColors.commons.white} style={{ width: "100%" }} />
+              </View>
+              <STMText size={15} styles={{ padding: 4 }}>
+                Right / Question
               </STMText>
               <STMText size={14} styles={{ padding: 4 }}>
-                [R:Q] 0.44
+                {currentUser && totalPoints() / (currentUser.gameSessions.length * 10)}
               </STMText>
               <STMText size={14} styles={{ padding: 4 }}>
-                [Best Category] React
+                Favorite category {mostPlayedCategory()}
               </STMText>
             </View>
           </View>
