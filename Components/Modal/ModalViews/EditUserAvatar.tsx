@@ -47,7 +47,7 @@ const Title = styled.View`
 `;
 
 const AvatarCreatorContainer = styled.View`
-  padding: 15;
+  padding: 15px;
   margin-top: -20px;
 `;
 
