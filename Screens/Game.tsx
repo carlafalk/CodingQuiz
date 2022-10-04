@@ -20,6 +20,7 @@ const GameScreen = ({ navigation, route }: Props) => {
     avgTime: -1,
     points: -1,
     answers: [],
+    gameTime: -1,
   });
 
   useEffect(() => {
@@ -33,6 +34,10 @@ const GameScreen = ({ navigation, route }: Props) => {
 
   function handlePressPlayAgain() {
     navigation.navigate("Categories");
+  }
+
+  function handlePressLeaderboard() {
+    navigation.navigate("Leaderboard");
   }
 
   return (
@@ -54,6 +59,7 @@ const GameScreen = ({ navigation, route }: Props) => {
             category={route.params.category}
             handlePressHome={handlePressHome}
             handlePressPlayAgain={handlePressPlayAgain}
+            handlePressLeaderboard={handlePressLeaderboard}
           />
         )
       )}

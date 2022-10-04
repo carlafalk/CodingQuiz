@@ -18,18 +18,18 @@ export function buildGameSession(gameSession: GameSessionModel) {
       .forEach((question) => {
         times.push(question.answerTime);
       });
-      return times;
+    return times;
   };
 
+  gameSession.gameTime = answerTimes().reduce((acc, curr) => acc + curr);
   gameSession.fastestTime = answerTimes().sort((n1, n2) => n1 - n2)[0];
   gameSession.slowestTime = answerTimes().sort((n1, n2) => n1 - n2)[answerTimes().length - 1];
-  if(answerTimes().length > 0)
-  {
-      gameSession.avgTime = Number((answerTimes().reduce((acc, time) => acc + time) / gameSession.answers.filter(x => x.answer?.isCorrect).length).toFixed(2));
-
+  if (answerTimes().length > 0) {
+    gameSession.avgTime = Number(
+      (answerTimes().reduce((acc, time) => acc + time) / gameSession.answers.filter((x) => x.answer?.isCorrect).length).toFixed(2)
+    );
   }
-  gameSession.points = gameSession.answers.filter(x => x.answer?.isCorrect).length;
+  gameSession.points = gameSession.answers.filter((x) => x.answer?.isCorrect).length;
 
   return gameSession;
-
 }
