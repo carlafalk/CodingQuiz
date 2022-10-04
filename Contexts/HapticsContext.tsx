@@ -7,6 +7,7 @@ interface HapticsContextValue {
   isHapticsDisabled: boolean;
   setIsHapticsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   toggleHapticsIsDisabled: () => void;
+  hapticsSuccess: () => void;
 }
 
 const HapticsContext = createContext<HapticsContextValue>({
@@ -14,6 +15,7 @@ const HapticsContext = createContext<HapticsContextValue>({
   isHapticsDisabled: false,
   setIsHapticsDisabled: () => {},
   toggleHapticsIsDisabled: () => {},
+  hapticsSuccess: () => console.warn("no provider found"),
 });
 
 interface Props {
@@ -29,6 +31,13 @@ function HapticsProvider({ children }: Props) {
     }
   };
 
+  const hapticsSuccess = async () => {
+    if (!isHapticsDisabled) {
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      console.log("brr haptics succes");
+    }
+  };
+
   const toggleHapticsIsDisabled = () => {
     if (!isHapticsDisabled) {
       setIsHapticsDisabled(true);
@@ -39,7 +48,7 @@ function HapticsProvider({ children }: Props) {
   };
 
   return (
-    <HapticsContext.Provider value={{ standardButtonHaptics, isHapticsDisabled, setIsHapticsDisabled, toggleHapticsIsDisabled }}>
+    <HapticsContext.Provider value={{ standardButtonHaptics, hapticsSuccess, isHapticsDisabled, setIsHapticsDisabled, toggleHapticsIsDisabled }}>
       {children}
     </HapticsContext.Provider>
   );
