@@ -34,7 +34,6 @@ function HapticsProvider({ children }: Props) {
   const hapticsSuccess = async () => {
     if (!isHapticsDisabled) {
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      console.log("brr haptics succes");
     }
   };
 
