@@ -39,6 +39,7 @@ export default function CurrentUserInfoContainer({ user }: Props) {
               editUser({ ...user, username: username as string });
               setIsFocused(false);
             }}
+            maxLength={15}
             onFocus={() => setIsFocused(true)}
           />
           {!isFocused && <MaterialIcons name="mode-edit" size={16} color={themeColors.categories.react} style={{ marginRight: 10 }} />}
@@ -64,7 +65,7 @@ const UserInfoTextContainer = styled.View<{ themeColors: colorsModel }>`
   border-radius: 10px;
   background-color: ${({ themeColors }) => themeColors.backgrounds.superLowOpacity};
   margin-top: 10px;
-  width: 50%;
+  width: 60%;
   flex-direction: row;
   align-items: center;
   overflow: hidden;
