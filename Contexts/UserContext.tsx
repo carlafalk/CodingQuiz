@@ -15,6 +15,8 @@ interface UserContext {
   loginUser: (user: User) => void;
   logOutUser: () => void;
   addGameSession: (gameSession: GameSessionModel) => void;
+  mostPlayedCategory: () => string;
+  totalPoints: () => number;
 }
 
 const UserContext = createContext<UserContext>({
@@ -29,6 +31,8 @@ const UserContext = createContext<UserContext>({
   addGameSession: (gameSession: GameSessionModel) => {
     console.log("no provider found");
   },
+  mostPlayedCategory: () => "",
+  totalPoints: () => 0,
 });
 
 interface Props {
@@ -50,6 +54,29 @@ function UserProvider({ children }: Props) {
     if (user) {
       setCurrentUser(user);
     }
+  };
+
+  const mostPlayedCategory = () => {
+    if (currentUser) {
+      if (currentUser.gameSessions.length > 0) {
+        const gameSessionCopy = { ...currentUser };
+        const mostPlayed = gameSessionCopy.gameSessions.sort(
+          (a, b) =>
+            currentUser.gameSessions.filter((v) => v.category === a.category).length -
+            currentUser.gameSessions.filter((v) => v.category === b.category).length
+        );
+        return mostPlayed[mostPlayed.length - 1].category;
+      } else return "N/A";
+    } else return "N/A";
+  };
+
+  const totalPoints = () => {
+    // use reduce instead
+    if (currentUser) {
+      let totalPoints = 0;
+      currentUser.gameSessions.forEach((gameSession) => (totalPoints += gameSession.points));
+      return totalPoints;
+    } else return 0;
   };
 
   const logOutUser = () => {
@@ -96,7 +123,21 @@ function UserProvider({ children }: Props) {
   };
 
   return (
-    <UserContext.Provider value={{ editUser, setUsers, users, createUser, deleteUser, currentUser, loginUser, logOutUser, addGameSession }}>
+    <UserContext.Provider
+      value={{
+        editUser,
+        setUsers,
+        users,
+        createUser,
+        deleteUser,
+        currentUser,
+        loginUser,
+        logOutUser,
+        addGameSession,
+        mostPlayedCategory,
+        totalPoints,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

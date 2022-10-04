@@ -27,7 +27,7 @@ const UserInfo = ({ handleClose, user }: Props) => {
   const { themeColors } = useTheme();
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const { deleteUser, currentUser, logOutUser, editUser } = useUser();
+  const { deleteUser, currentUser, logOutUser, editUser, mostPlayedCategory, totalPoints } = useUser();
   const [username, setUsername] = useState(currentUser?.username);
   const [isFocused, setIsFocused] = useState(false);
   const avatarRef = useRef<AvatarProps>(user?.avatar as AvatarProps);
@@ -42,58 +42,31 @@ const UserInfo = ({ handleClose, user }: Props) => {
     if (category === "javascript") return JSImg;
     if (category === "typescript") return TSImg;
   }
-  const mostPlayedCategory = () => {
-    if (currentUser) {
-      if (currentUser.gameSessions.length > 0) {
-        const gameSessionCopy = { ...currentUser };
-        const mostPlayed = gameSessionCopy.gameSessions.sort(
-          (a, b) =>
-            currentUser.gameSessions.filter((v) => v.category === a.category).length -
-            currentUser.gameSessions.filter((v) => v.category === b.category).length
-        );
-        return mostPlayed[mostPlayed.length - 1].category;
-      } else return "N/A";
-    } else return "N/A";
-  };
-
-  const totalPoints = () => {
-    // use reduce instead
-    if (currentUser) {
-      let totalPoints = 0;
-      currentUser.gameSessions.forEach((gameSession) => (totalPoints += gameSession.points));
-      return totalPoints;
-    } else return 0;
-  };
 
   return (
     <>
-      <View style={{ flexDirection: "row", margin: 12 }}>
-        <UserInfoContainer>
-          <View>
-            <BigHead {...user.avatar} size={150} onPress={() => setEditModalOpen(true)} />
-            <FontAwesome name="paint-brush" size={16} color={themeColors.categories.react} style={{ position: "absolute", bottom: 5, right: 5 }} />
-          </View>
-          <UserInfoTextContainer themeColors={themeColors}>
-            <UsernameInput
-              themeColors={themeColors}
-              onChangeText={setUsername}
-              value={username}
-              onSubmitEditing={() => {
-                editUser({ ...user, username: username as string });
-                setIsFocused(false);
-              }}
-              onFocus={() => setIsFocused(true)}
-            />
-            {!isFocused && <MaterialIcons name="mode-edit" size={16} color={themeColors.categories.react} style={{ marginRight: 10 }} />}
-          </UserInfoTextContainer>
-        </UserInfoContainer>
-      </View>
-      <View style={{ margin: 4, alignItems: "center", flex: 1 }}>
-        <View style={{ backgroundColor: themeColors.lightPurple, borderRadius: 5, paddingHorizontal: 24, paddingVertical: 10, elevation: 8 }}>
-          <STMText size={16} center uppercase>
-            stats
-          </STMText>
+      {/* <View style={{ flexDirection: "row", margin: 12, backgroundColor: "red" }}> */}
+      <UserInfoContainer>
+        <View>
+          <BigHead {...user.avatar} size={150} onPress={() => setEditModalOpen(true)} style={{ backgroundColor: "yellow" }} />
+          <FontAwesome name="paint-brush" size={16} color={themeColors.categories.react} style={{ position: "absolute", bottom: 5, right: 5 }} />
         </View>
+        <UserInfoTextContainer themeColors={themeColors}>
+          <UsernameInput
+            themeColors={themeColors}
+            onChangeText={setUsername}
+            value={username}
+            onSubmitEditing={() => {
+              editUser({ ...user, username: username as string });
+              setIsFocused(false);
+            }}
+            onFocus={() => setIsFocused(true)}
+          />
+          {!isFocused && <MaterialIcons name="mode-edit" size={16} color={themeColors.categories.react} style={{ marginRight: 10 }} />}
+        </UserInfoTextContainer>
+      </UserInfoContainer>
+      {/* </View> */}
+      <View style={{ margin: 4, alignItems: "center", flex: 1 }}>
         <View style={{ flexDirection: "row", flex: 1 }}>
           <View style={{ padding: 10, flex: 1 }}>
             <View
@@ -107,7 +80,7 @@ const UserInfo = ({ handleClose, user }: Props) => {
               }}
             >
               <STMText size={16} center uppercase>
-                General
+                all-time
               </STMText>
             </View>
             <View style={{ backgroundColor: themeColors.darkPurple, borderRadius: 8, elevation: 8, height: 200 }}>
@@ -117,7 +90,6 @@ const UserInfo = ({ handleClose, user }: Props) => {
                 </STMText>
                 <STMText size={11}>{currentUser?.gameSessions.length}</STMText>
               </View>
-              {/* <Divider color={themeColors.commons.white} style={{ width: "100%" }} /> */}
 
               <View style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 8, paddingHorizontal: 4 }}>
                 <STMText size={11} uppercase>
@@ -127,20 +99,17 @@ const UserInfo = ({ handleClose, user }: Props) => {
                   {totalPoints()}/{currentUser && currentUser.gameSessions.length * 10}
                 </STMText>
               </View>
-              {/* <Divider color={themeColors.commons.white} style={{ width: "100%" }} /> */}
               <View style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 8, paddingHorizontal: 4 }}>
                 <STMText size={11} uppercase>
                   Rights / Quiz
                 </STMText>
                 <STMText size={11}>{currentUser && (totalPoints() * 10) / (currentUser.gameSessions.length * 10)}</STMText>
               </View>
-              {/* <Divider color={themeColors.commons.white} style={{ width: "100%" }} /> */}
               <View style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 8, paddingHorizontal: 4, alignItems: "center" }}>
                 <STMText size={11} uppercase>
                   Favorite category
                 </STMText>
                 <Image source={getFavoriteImg(mostPlayedCategory())} style={{ width: 15, height: 15 }}></Image>
-                {/* <STMText size={11}>{mostPlayedCategory()}</STMText> */}
               </View>
             </View>
           </View>
@@ -173,14 +142,7 @@ const UserInfo = ({ handleClose, user }: Props) => {
       </View>
       <ButtonContainer>
         <ModalStandardButton onPress={() => setConfirmModalOpen(true)} title="Delete" color={themeColors.danger} />
-        <ModalStandardButton
-          onPress={() => {
-            handleClose();
-            console.log("edit user");
-          }}
-          title="Edit"
-          color={themeColors.mustard}
-        />
+
         <ModalStandardButton
           onPress={() => {
             handleClose();
@@ -265,9 +227,12 @@ const UserInfoTextContainer = styled.View<{ themeColors: colorsModel }>`
 
 const UserInfoContainer = styled.View`
   margin-top: -10px;
-  flex: 1;
+  /* flex: 1; */
   align-items: center;
   justify-content: center;
+  /* flex-direction: row; */
+  background-color: green;
+  margin: 12px;
 `;
 
 const UsernameInput = styled.TextInput<{ themeColors: colorsModel }>`
