@@ -70,7 +70,7 @@ const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession, gameSess
 
   function getAnswerTime() {
     if (state.selectedAnswer) {
-      return 10 - timeLeftRef.current / 10;
+      return Number((30 - timeLeftRef.current / 10).toFixed(2));
     } else return -1;
   }
 
