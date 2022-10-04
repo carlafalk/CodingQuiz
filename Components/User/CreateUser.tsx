@@ -35,7 +35,7 @@ const CreateUser = ({ handleClose }: Props) => {
     <>
       <ContentContainer>
         <STMText size={14}>Pick a username</STMText>
-        <Input onChangeText={setUsername} themeColors={themeColors} value={username} />
+        <Input onChangeText={setUsername} themeColors={themeColors} value={username} maxLength={15} />
         <AvatarCreator avatarRef={avatarRef} />
       </ContentContainer>
       <StandardButton title="submit" color={themeColors.mustard} onPress={handleCreateUser} />
