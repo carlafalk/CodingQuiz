@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, View } from "react-native";
+import styled from "styled-components/native";
 import CSSImg from "../assets/languageIcons/css-3.png";
 import HTMLImg from "../assets/languageIcons/html-5.png";
 import JSImg from "../assets/languageIcons/js.png";
@@ -51,35 +51,59 @@ const CategoryStats = ({ category }: Props) => {
   }, []);
 
   return (
-    <View style={{ marginBottom: 10 }}>
-      <Image
-        source={categoryImg as any}
-        style={{ width: 35, height: 35, alignSelf: "center", overflow: "visible", zIndex: 100, marginBottom: -20 }}
-      />
-      <View style={{ backgroundColor: categoryColor, position: "relative", borderRadius: 5, padding: 5 }}>
-        <View style={{ marginTop: 20 }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+    <OuterContainer>
+      <HeaderImg source={categoryImg as any} />
+      <InnerContainer backgroundColor={categoryColor}>
+        <StatsContainer>
+          <StatRow>
             <STMText size={11} uppercase>
               Games played
             </STMText>
             <STMText size={11}>{gamesPlayed}</STMText>
-          </View>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          </StatRow>
+          <StatRow>
             <STMText size={11} uppercase>
               Correct answers
             </STMText>
             <STMText size={11}>{correctAnswers}</STMText>
-          </View>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          </StatRow>
+          <StatRow>
             <STMText size={11} uppercase>
               Rights / Quiz
             </STMText>
             <STMText size={11}>{gamesPlayed > 0 && Number(((gamesPlayed / correctAnswers) * 10).toFixed(2))}</STMText>
-          </View>
-        </View>
-      </View>
-    </View>
+          </StatRow>
+        </StatsContainer>
+      </InnerContainer>
+    </OuterContainer>
   );
 };
+
+const OuterContainer = styled.View`
+  padding: 5px;
+`;
+
+const InnerContainer = styled.View<{ backgroundColor: string }>`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  border-radius: 6px;
+  padding: 5px;
+`;
+
+const StatsContainer = styled.View`
+  margin-top: 20px;
+`;
+
+const StatRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const HeaderImg = styled.Image`
+  width: 35px;
+  height: 35px;
+  align-self: center;
+  z-index: 1;
+  margin-bottom: -20px;
+`;
 
 export default CategoryStats;
