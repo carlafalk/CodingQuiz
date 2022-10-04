@@ -49,13 +49,13 @@ const UserStats = () => {
             <STMText size={11} uppercase>
               Rights / Quiz
             </STMText>
-            <STMText size={11}>{currentUser && (totalPoints() * 10) / (currentUser.gameSessions.length * 10)}</STMText>
+            <STMText size={11}>{currentUser && (totalPoints() / currentUser.gameSessions.length).toFixed(2)}</STMText>
           </StatRow>
           <StatRow>
             <STMText size={11} uppercase>
               Favorite category
             </STMText>
-            <Image source={getFavoriteImg(mostPlayedCategory())} style={{ width: 15, height: 15 }}></Image>
+            <Image source={getFavoriteImg(mostPlayedCategory())} style={{ width: 15, height: 15, marginTop: -2 }}></Image>
           </StatRow>
         </InnerStatsContainer>
       </OuterStatsContainer>
