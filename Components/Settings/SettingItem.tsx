@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Switch, View } from "react-native";
+import { useHaptics } from "../../contexts/HapticsContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import { SettingModel } from "../../models/SettingModel";
 import { MdText, SmText } from "../../Styles/texts";
@@ -11,8 +12,8 @@ interface Props {
   setToggleValue: (item: SettingModel) => boolean;
 }
 const SettingItem = ({ item, handleToggle, setToggleValue }: Props) => {
-  const [isEnabled, setIsEnabled] = useState(item.isEnabled);
   const { themeColors } = useTheme();
+  const { hapticsSuccess } = useHaptics();
   return (
     <FlexBox>
       <View>
@@ -24,7 +25,9 @@ const SettingItem = ({ item, handleToggle, setToggleValue }: Props) => {
           trackColor={{ false: themeColors.lightGrey, true: themeColors.lightGreen }}
           thumbColor={"#fff"}
           ios_backgroundColor={themeColors.deepPurple}
-          onValueChange={(value) => handleToggle(value, item)}
+          onValueChange={(value) => {
+            handleToggle(value, item), hapticsSuccess();
+          }}
           value={setToggleValue(item)}
         />
       </View>
