@@ -1,6 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 import styled from "styled-components/native";
+import { useHaptics } from "../../contexts/HapticsContext";
 
 interface Props {
   title: string;
@@ -9,8 +10,16 @@ interface Props {
 }
 
 const ModalStandardButton = ({ title, color, onPress }: Props) => {
+  const { hapticsSuccess } = useHaptics();
+
   return (
-    <Button color={color} onPress={onPress}>
+    <Button
+      color={color}
+      onPress={() => {
+        onPress();
+        hapticsSuccess();
+      }}
+    >
       <Text>{title}</Text>
     </Button>
   );
