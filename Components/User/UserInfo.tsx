@@ -1,14 +1,19 @@
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { View } from "react-native";
+import { Image, ScrollView, View } from "react-native";
 import { AvatarProps, BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
+import CSSImg from "../../assets/languageIcons/css-3.png";
+import HTMLImg from "../../assets/languageIcons/html-5.png";
+import JSImg from "../../assets/languageIcons/js.png";
+import ReactImg from "../../assets/languageIcons/react.png";
+import TSImg from "../../assets/languageIcons/typescript.png";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
 import { colorsModel } from "../../models/ColorsModel";
 import { User } from "../../models/User";
-import { Divider } from "../../Styles/views";
 import ModalStandardButton from "../Buttons/ModalStandardButton";
+import CategoryStats from "../CategoryStats";
 import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
 import AvatarCreator from "./AvatarCreator";
@@ -30,6 +35,13 @@ const UserInfo = ({ handleClose, user }: Props) => {
   const editUserHeaderImg = <MaterialIcons name="mode-edit" size={28} color="white" />;
   const deleteUserHeaderImg = <MaterialIcons name="delete-forever" size={28} color="white" />;
 
+  function getFavoriteImg(category: string) {
+    if (category === "react") return ReactImg;
+    if (category === "html") return CSSImg;
+    if (category === "css") return HTMLImg;
+    if (category === "javascript") return JSImg;
+    if (category === "typescript") return TSImg;
+  }
   const mostPlayedCategory = () => {
     if (currentUser) {
       if (currentUser.gameSessions.length > 0) {
@@ -98,35 +110,38 @@ const UserInfo = ({ handleClose, user }: Props) => {
                 General
               </STMText>
             </View>
-            <View style={{ backgroundColor: themeColors.darkPurple, borderRadius: 8, elevation: 8, flex: 1 }}>
-              <View>
-                <STMText size={15} styles={{ padding: 4 }} uppercase>
+            <View style={{ backgroundColor: themeColors.darkPurple, borderRadius: 8, elevation: 8, height: 200 }}>
+              <View style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 8, paddingHorizontal: 4 }}>
+                <STMText size={11} uppercase>
                   Games played
                 </STMText>
-                <STMText size={14} styles={{ padding: 4 }}>
-                  {currentUser?.gameSessions.length}
-                </STMText>
-                <Divider color={themeColors.commons.white} style={{ width: "100%" }} />
+                <STMText size={11}>{currentUser?.gameSessions.length}</STMText>
               </View>
+              {/* <Divider color={themeColors.commons.white} style={{ width: "100%" }} /> */}
 
-              <View>
-                <STMText size={15} styles={{ padding: 4 }}>
+              <View style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 8, paddingHorizontal: 4 }}>
+                <STMText size={11} uppercase>
                   Correct answers
                 </STMText>
-                <STMText size={14} styles={{ padding: 4 }}>
-                  {totalPoints()} / {currentUser && currentUser.gameSessions.length * 10}
+                <STMText size={11}>
+                  {totalPoints()}/{currentUser && currentUser.gameSessions.length * 10}
                 </STMText>
-                <Divider color={themeColors.commons.white} style={{ width: "100%" }} />
               </View>
-              <STMText size={15} styles={{ padding: 4 }}>
-                Right / Question
-              </STMText>
-              <STMText size={14} styles={{ padding: 4 }}>
-                {currentUser && totalPoints() / (currentUser.gameSessions.length * 10)}
-              </STMText>
-              <STMText size={14} styles={{ padding: 4 }}>
-                Favorite category {mostPlayedCategory()}
-              </STMText>
+              {/* <Divider color={themeColors.commons.white} style={{ width: "100%" }} /> */}
+              <View style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 8, paddingHorizontal: 4 }}>
+                <STMText size={11} uppercase>
+                  Rights / Quiz
+                </STMText>
+                <STMText size={11}>{currentUser && (totalPoints() * 10) / (currentUser.gameSessions.length * 10)}</STMText>
+              </View>
+              {/* <Divider color={themeColors.commons.white} style={{ width: "100%" }} /> */}
+              <View style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 8, paddingHorizontal: 4, alignItems: "center" }}>
+                <STMText size={11} uppercase>
+                  Favorite category
+                </STMText>
+                <Image source={getFavoriteImg(mostPlayedCategory())} style={{ width: 15, height: 15 }}></Image>
+                {/* <STMText size={11}>{mostPlayedCategory()}</STMText> */}
+              </View>
             </View>
           </View>
           <View style={{ padding: 10, flex: 1 }}>
@@ -144,16 +159,14 @@ const UserInfo = ({ handleClose, user }: Props) => {
                 Categories
               </STMText>
             </View>
-            <View style={{ backgroundColor: themeColors.darkPurple, borderRadius: 8, elevation: 8, flex: 1 }}>
-              <STMText size={14} styles={{ padding: 4 }}>
-                Games played: 69
-              </STMText>
-              <STMText size={14} styles={{ padding: 4 }}>
-                Stat 2:
-              </STMText>
-              <STMText size={14} styles={{ padding: 4 }}>
-                Stat 3:
-              </STMText>
+            <View style={{ height: 200, padding: 5, borderRadius: 8, backgroundColor: themeColors.darkPurple }}>
+              <ScrollView decelerationRate={0} snapToAlignment={"center"}>
+                <CategoryStats category="react" />
+                <CategoryStats category="html" />
+                <CategoryStats category="css" />
+                <CategoryStats category="javascript" />
+                <CategoryStats category="typescript" />
+              </ScrollView>
             </View>
           </View>
         </View>
@@ -231,38 +244,11 @@ const UserInfo = ({ handleClose, user }: Props) => {
 
 export default UserInfo;
 
-const Header = styled.View<{
-  themeColors: colorsModel;
-}>`
-  background-color: ${(props) => props.themeColors.darkPurple};
-  align-items: center;
-  width: 100%;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  justify-content: center;
-  padding: 15px;
-`;
-
 const ButtonContainer = styled.View`
   flex-direction: row;
   justify-content: flex-start;
   justify-content: center;
   padding: 12px 0px;
-`;
-
-const StyledText = styled.Text<{
-  themeColors: colorsModel;
-}>`
-  color: ${(props) => props.themeColors.commons.white};
-`;
-
-const InfoText = styled(StyledText)`
-  padding: 10px;
-`;
-
-const AvatarImage = styled.Image`
-  height: 50px;
-  width: 50px;
 `;
 
 const UserInfoTextContainer = styled.View<{ themeColors: colorsModel }>`
