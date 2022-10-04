@@ -12,9 +12,14 @@ interface Props {
 const AvatarCreator = ({ avatarRef }: Props) => {
   const [selectedProp, setSelectedProp] = useState<keyof AvatarProps>("accessory");
   const { currentUser } = useUser();
-  const [avatar, setAvatar] = useState<AvatarProps>(currentUser ? currentUser.avatar : defaultAvatar);
+  const [avatar, setAvatar] = useState<AvatarProps>(defaultAvatar);
   const [selectedValue, setSelectedValue] = useState<any>(avatar[selectedProp]);
 
+  useEffect(() => {
+    if (currentUser) {
+      setAvatar(currentUser?.avatar);
+    }
+  }, []);
   useEffect(() => {
     avatarRef.current = avatar;
   }, [avatar]);
