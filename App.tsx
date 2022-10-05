@@ -7,6 +7,7 @@ import HapticsProvider from "./contexts/HapticsContext";
 import SoundProvider from "./contexts/SoundContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import UserProvider from "./contexts/UserContext";
+import VibrationsProvider from "./contexts/VibrationsContext";
 import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
 import GameScreen from "./Screens/Game";
@@ -55,18 +56,20 @@ export default function App() {
     <UserProvider>
       <ThemeProvider>
         <HapticsProvider>
-          <SoundProvider>
-            <NavigationContainer onReady={onLayoutRootView}>
-              <RootStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, animation: "fade" }}>
-                <RootStack.Screen name="Home" component={HomeScreen} />
-                <RootStack.Screen name="About" component={AboutScreen} />
-                <RootStack.Screen name="LogIn" component={LogInScreen} />
-                <RootStack.Screen name="Categories" component={CategoriesScreen} />
-                <RootStack.Screen name="Settings" component={SettingsScreen} />
-                <RootStack.Screen name="Game" component={GameScreen} options={{ gestureEnabled: false }} />
-              </RootStack.Navigator>
-            </NavigationContainer>
-          </SoundProvider>
+          <VibrationsProvider>
+            <SoundProvider>
+              <NavigationContainer onReady={onLayoutRootView}>
+                <RootStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, animation: "fade" }}>
+                  <RootStack.Screen name="Home" component={HomeScreen} />
+                  <RootStack.Screen name="About" component={AboutScreen} />
+                  <RootStack.Screen name="LogIn" component={LogInScreen} />
+                  <RootStack.Screen name="Categories" component={CategoriesScreen} />
+                  <RootStack.Screen name="Settings" component={SettingsScreen} />
+                  <RootStack.Screen name="Game" component={GameScreen} options={{ gestureEnabled: false }} />
+                </RootStack.Navigator>
+              </NavigationContainer>
+            </SoundProvider>
+          </VibrationsProvider>
         </HapticsProvider>
       </ThemeProvider>
     </UserProvider>
