@@ -14,7 +14,6 @@ import { GameSessionModel } from "../../models/GameSessionModel";
 import { Divider } from "../../Styles/views";
 import StandardButton from "../Buttons/StandardButton";
 import GameSession from "../GameSession";
-import Logo from "../Logo";
 import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
 import TopSection from "../TopSection";
@@ -108,7 +107,6 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
         <StandardButton color={themeColors.mustard} title="main menu" onPress={handlePressHome} />
         <StandardButton color={themeColors.mustard} title="leaderboard" onPress={handlePressLeaderboard} />
       </ButtonBox>
-      <Logo topMargin={30} size="small" />
     </>
   );
 };
