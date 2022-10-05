@@ -9,6 +9,7 @@ import TSImg from "../../assets/languageIcons/typescript.png";
 import { useSound } from "../../contexts/SoundContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
+import { useVibrations } from "../../contexts/VibrationsContext";
 import { colorsModel } from "../../models/ColorsModel";
 import { GameSessionModel } from "../../models/GameSessionModel";
 import { Divider } from "../../Styles/views";
@@ -30,7 +31,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
-  const { addGameSession } = useUser();
+  const { gameCompleteVibration } = useVibrations();
 
   let categoryImg = HTMLImg;
   let categoryColor: string = "";
@@ -56,6 +57,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
 
   useEffect(() => {
     playHomeMusic();
+    gameCompleteVibration();
   }, []);
 
   return (
