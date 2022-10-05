@@ -37,7 +37,7 @@ const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession, gameSess
   const timeLeftRef = useRef(100);
   const { playGameMusic, playSubmitSound } = useSound();
   const { themeColors } = useTheme();
-  const { addGameSession } = useUser();
+  const { addGameSession, currentUser } = useUser();
 
   // consts
   const lastQuestion = state.currentQuestion === state.quizItems.length - 1;
@@ -58,8 +58,8 @@ const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession, gameSess
   }, [state.currentQuestion]);
 
   useEffect(() => {
-    if (state.gameSession.answers.length === 10) {
-      const latestGameSession = buildGameSession(state.gameSession);
+    if (state.gameSession.answers.length === 10 && currentUser) {
+      const latestGameSession = buildGameSession(state.gameSession, currentUser);
       setGameSession(latestGameSession);
       addGameSession(latestGameSession);
       setGameIsOver(true);
