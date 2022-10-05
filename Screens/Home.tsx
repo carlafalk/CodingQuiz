@@ -11,6 +11,7 @@ import Background from "../Components/Background";
 import StandardButton from "../Components/Buttons/StandardButton";
 import Logo from "../Components/Logo";
 import QuizModal from "../Components/Modal/QuizModal";
+import RegularText from "../Components/Texts/RegularText";
 import UserInfo from "../Components/User/UserInfo";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
@@ -70,7 +71,9 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
       </ButtonContainer>
       <MenuButton onPress={handleOpen}>
         <MaterialIcons name="settings" size={32} color={themeColors.lightGrey} />
-        <MenuButtonText themeColors={themeColors}>Settings</MenuButtonText>
+        <RegularText size={14} styles={{ padding: 10 }}>
+          Settings
+        </RegularText>
       </MenuButton>
       <Modalize
         ref={modalizeRef}
@@ -92,11 +95,6 @@ const MenuButton = styled.Pressable`
   position: absolute;
   bottom: 20px;
   left: 20px;
-`;
-
-const MenuButtonText = styled.Text<{ themeColors: colorsModel }>`
-  padding: 10px;
-  color: ${({ themeColors }) => themeColors.commons.white};
 `;
 
 const UserInfoContainer = styled.View`

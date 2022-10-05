@@ -33,7 +33,7 @@ const AnswerCard = ({ answerInfo, questionNr, categoryColor }: Props) => {
         {answerInfo.answer?.isCorrect ? (
           <MaterialCommunityIcons name="check-bold" size={40} color={themeColors.lightGreen} />
         ) : (
-          <MaterialCommunityIcons name="close-thick" size={40} color="red" />
+          <MaterialCommunityIcons name="close-thick" size={40} color={themeColors.danger} />
         )}
         <STMText size={18} styles={{ marginHorizontal: 10, maxWidth: "80%" }}>
           {answerInfo.answer ? "You answered:\n" + answerInfo.answer.answer : "You didn't select an answer in time"}

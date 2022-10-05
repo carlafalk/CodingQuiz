@@ -4,7 +4,7 @@ import { AvatarProps } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { mapAvatarValues } from "../../data/avatarData";
-import { LgText, MdText } from "../../Styles/texts";
+import RegularText from "../Texts/RegularText";
 
 interface Props {
   size: "small" | "regular";
@@ -38,9 +38,15 @@ const InfoSelector = ({ size, decrement, increment, selectedProp, selectedValue 
         size={size}
       >
         {selectedProp && (
-          <LgText style={{ color: themeColors.commons.white, textAlign: "center" }}>{mapAvatarValues[selectedProp.toString()]}</LgText>
+          <RegularText size={28} center>
+            {mapAvatarValues[selectedProp.toString()]}
+          </RegularText>
         )}
-        {selectedValue && <MdText style={{ color: themeColors.commons.white, textAlign: "center" }}>{selectedValue}</MdText>}
+        {selectedValue && (
+          <RegularText size={20} center>
+            {selectedValue}
+          </RegularText>
+        )}
       </AvatarInfo>
       <ArrowButton onPress={increment}>
         <Octicons name="chevron-right" size={size === "regular" ? 32 : 24} color={themeColors.commons.white} />

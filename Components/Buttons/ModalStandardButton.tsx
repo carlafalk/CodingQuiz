@@ -1,6 +1,7 @@
 import React from "react";
-import { Text } from "react-native";
 import styled from "styled-components/native";
+import { useHaptics } from "../../contexts/HapticsContext";
+import STMText from "../Texts/ShareTechMonoText";
 
 interface Props {
   title: string;
@@ -9,9 +10,19 @@ interface Props {
 }
 
 const ModalStandardButton = ({ title, color, onPress }: Props) => {
+  const { hapticsSuccess } = useHaptics();
+
   return (
-    <Button color={color} onPress={onPress}>
-      <Text>{title}</Text>
+    <Button
+      color={color}
+      onPress={() => {
+        onPress();
+        hapticsSuccess();
+      }}
+    >
+      <STMText size={15} styles={{ paddingVertical: 4 }} uppercase>
+        {title}
+      </STMText>
     </Button>
   );
 };
