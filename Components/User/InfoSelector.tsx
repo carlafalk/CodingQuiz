@@ -71,7 +71,7 @@ const ArrowButton = styled.TouchableOpacity`
 `;
 
 const AvatarInfo = styled.View<{ size: string }>`
-  width: ${({ size }) => (size === "regular" ? "80%" : "75%")};
+  width: ${({ size }) => (size === "regular" ? "90%" : "80%")};
 `;
 
 export default InfoSelector;
