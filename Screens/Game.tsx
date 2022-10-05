@@ -21,6 +21,7 @@ const GameScreen = ({ navigation, route }: Props) => {
     points: -1,
     answers: [],
     gameTime: -1,
+    userId: "",
   });
 
   useEffect(() => {
