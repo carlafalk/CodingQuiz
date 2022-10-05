@@ -6,6 +6,7 @@ import RegularText from "../Components/Texts/RegularText";
 import { useHaptics } from "../contexts/HapticsContext";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
+import { useVibrations } from "../contexts/VibrationsContext";
 import settingsData from "../data/settingsData";
 import { SettingModel } from "../models/SettingModel";
 import { Container, Divider } from "../Styles/views";
@@ -15,7 +16,8 @@ const SettingsScreen = () => {
 
   const { themeColors, isDarkTheme, toggleThemeIsDisabled } = useTheme();
   const { toggleMuteMusic, toggleMuteButtonSound, setIsButtonSoundMuted, isButtonSoundMuted, isMusicMuted, setIsMusicMuted } = useSound();
-  const { setIsHapticsDisabled, isHapticsDisabled, toggleHapticsIsDisabled } = useHaptics();
+  const { isHapticsDisabled, toggleHapticsIsDisabled } = useHaptics();
+  const { toggleIsVibrationsDisabled, isVibrationsDisabled } = useVibrations();
 
   function handleToggle(item: SettingModel, value: boolean) {
     if (item.title === "Dark Mode") {
@@ -31,6 +33,9 @@ const SettingsScreen = () => {
     if (item.title === "Haptics") {
       toggleHapticsIsDisabled();
     }
+    if (item.title === "Vibration") {
+      toggleIsVibrationsDisabled();
+    }
   }
 
   const getToggleValues = (item: SettingModel) => {
@@ -38,6 +43,7 @@ const SettingsScreen = () => {
     if (item.title === "Effects") return !isButtonSoundMuted;
     if (item.title === "Music") return !isMusicMuted;
     if (item.title === "Haptics") return !isHapticsDisabled;
+    if (item.title === "Vibration") return !isVibrationsDisabled;
     return true;
   };
 
