@@ -58,7 +58,7 @@ const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession, gameSess
   }, [state.currentQuestion]);
 
   useEffect(() => {
-    if (state.gameSession.answers.length === 10) {
+    if (state.gameSession.answers.length === 10 && currentUser) {
       const latestGameSession = buildGameSession(state.gameSession, currentUser);
       setGameSession(latestGameSession);
       addGameSession(latestGameSession);
