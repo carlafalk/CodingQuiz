@@ -15,7 +15,6 @@ import { GameSessionModel } from "../../models/GameSessionModel";
 import { Divider } from "../../Styles/views";
 import StandardButton from "../Buttons/StandardButton";
 import GameSession from "../GameSession";
-import Logo from "../Logo";
 import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
 import TopSection from "../TopSection";
@@ -25,9 +24,10 @@ interface Props {
   category: string;
   handlePressHome: () => void;
   handlePressPlayAgain: () => void;
+  handlePressLeaderboard: () => void;
 }
 
-const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain }: Props) => {
+const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain, handlePressLeaderboard }: Props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
@@ -107,8 +107,8 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
       <ButtonBox>
         <StandardButton color={themeColors.lightGreen} title="play again" onPress={handlePressPlayAgain} />
         <StandardButton color={themeColors.mustard} title="main menu" onPress={handlePressHome} />
+        <StandardButton color={themeColors.mustard} title="leaderboard" onPress={handlePressLeaderboard} />
       </ButtonBox>
-      <Logo topMargin={30} size="small" />
     </>
   );
 };

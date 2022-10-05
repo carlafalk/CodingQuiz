@@ -12,6 +12,7 @@ import AboutScreen from "./Screens/About";
 import CategoriesScreen from "./Screens/Categories";
 import GameScreen from "./Screens/Game";
 import HomeScreen from "./Screens/Home";
+import LeaderboardScreen from "./Screens/Leaderboard";
 import LogInScreen from "./Screens/LogIn";
 import SettingsScreen from "./Screens/Settings";
 // import UserScreen from "./Screens/UserScreen";
@@ -26,6 +27,7 @@ export type RootStackParams = {
   Categories: undefined;
   Settings: undefined;
   Game: { category: string };
+  Leaderboard: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParams>();
@@ -66,6 +68,7 @@ export default function App() {
                   <RootStack.Screen name="Categories" component={CategoriesScreen} />
                   <RootStack.Screen name="Settings" component={SettingsScreen} />
                   <RootStack.Screen name="Game" component={GameScreen} options={{ gestureEnabled: false }} />
+                  <RootStack.Screen name="Leaderboard" component={LeaderboardScreen} />
                 </RootStack.Navigator>
               </NavigationContainer>
             </SoundProvider>

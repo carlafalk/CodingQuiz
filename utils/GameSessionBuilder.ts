@@ -1,6 +1,7 @@
 import { GameSessionModel } from "../models/GameSessionModel";
+import { User } from "../models/User";
 
-export function buildGameSession(gameSession: GameSessionModel) {
+export function buildGameSession(gameSession: GameSessionModel, currentUser: User) {
   // let answerTimes:number[];
 
   // function getAnswertimes(){
@@ -21,6 +22,9 @@ export function buildGameSession(gameSession: GameSessionModel) {
     return times;
   };
 
+  if (currentUser) gameSession.userId = currentUser.id;
+
+  gameSession.gameTime = answerTimes().reduce((acc, curr) => acc + curr);
   gameSession.fastestTime = answerTimes().sort((n1, n2) => n1 - n2)[0];
   gameSession.slowestTime = answerTimes().sort((n1, n2) => n1 - n2)[answerTimes().length - 1];
   if (answerTimes().length > 0) {
