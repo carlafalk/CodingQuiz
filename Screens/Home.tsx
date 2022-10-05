@@ -66,6 +66,7 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
       <ButtonContainer>
         <StandardButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
         <StandardButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} />
+        <StandardButton onPress={() => navigation.navigate("Leaderboard")} title="Leaderboard" color={themeColors.mustard} />
       </ButtonContainer>
       <MenuButton onPress={handleOpen}>
         <MaterialIcons name="settings" size={32} color={themeColors.lightGrey} />
