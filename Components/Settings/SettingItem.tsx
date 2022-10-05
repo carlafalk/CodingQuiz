@@ -3,8 +3,8 @@ import { Switch, View } from "react-native";
 import { useHaptics } from "../../contexts/HapticsContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import { SettingModel } from "../../models/SettingModel";
-import { MdText, SmText } from "../../Styles/texts";
 import { FlexBox } from "../../Styles/views";
+import RegularText from "../Texts/RegularText";
 
 interface Props {
   item: SettingModel;
@@ -17,8 +17,8 @@ const SettingItem = ({ item, handleToggle, setToggleValue }: Props) => {
   return (
     <FlexBox>
       <View>
-        <MdText style={{ color: themeColors.commons.white }}>{item.title}</MdText>
-        <SmText style={{ color: themeColors.commons.white }}>{item.desc}</SmText>
+        <RegularText size={20}>{item.title}</RegularText>
+        <RegularText size={14}>{item.desc}</RegularText>
       </View>
       <View>
         <Switch

@@ -2,12 +2,12 @@ import React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import SettingItem from "../Components/Settings/SettingItem";
+import RegularText from "../Components/Texts/RegularText";
 import { useHaptics } from "../contexts/HapticsContext";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
 import settingsData from "../data/settingsData";
 import { SettingModel } from "../models/SettingModel";
-import { LgText, XlText } from "../Styles/texts";
 import { Container, Divider } from "../Styles/views";
 
 const SettingsScreen = () => {
@@ -44,12 +44,12 @@ const SettingsScreen = () => {
   return (
     <ScrollView>
       <View>
-        <XlText style={{ color: themeColors.commons.white }}>Settings</XlText>
+        <RegularText size={32}>Settings</RegularText>
       </View>
       <Divider color={themeColors.commons.white} />
       {categories.map((category) => (
         <Container key={category}>
-          <LgText style={{ color: themeColors.commons.white }}>{category}</LgText>
+          <RegularText size={28}>{category}</RegularText>
           {settingsData
             .filter((setting) => setting.category === category)
             .map((item) => (

@@ -103,11 +103,11 @@ const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession, gameSess
     <>
       <TopSection title={category} />
       <QuestionContainer themeColors={themeColors}>
-        <Question size={20} center>
+        <Question size={20} center styles={{ marginBottom: 10 }}>
           {state.quizItems[state.currentQuestion].question}
         </Question>
         <Divider style={{ width: "100%" }} color={themeColors.commons.white} />
-        <CurrentQuestion size={20} center>
+        <CurrentQuestion size={20} center styles={{ marginTop: 10 }}>
           {state.currentQuestion + 1} / {state.quizItems.length}
         </CurrentQuestion>
         <AnswerContainer>
@@ -138,13 +138,9 @@ const QuestionContainer = styled.View<{ themeColors: colorsModel }>`
   elevation: 8;
 `;
 
-const Question = styled(STMText)`
-  margin-bottom: 10px;
-`;
+const Question = styled(STMText)``;
 
-const CurrentQuestion = styled(STMText)`
-  margin-top: 10px;
-`;
+const CurrentQuestion = styled(STMText)``;
 
 const AnswerContainer = styled.View`
   flex-direction: row;
