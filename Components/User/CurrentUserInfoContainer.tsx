@@ -1,5 +1,5 @@
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AvatarProps, BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";

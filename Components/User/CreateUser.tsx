@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
+import { Formik } from "formik";
+import React, { useRef } from "react";
 import { AvatarProps } from "react-native-bigheads";
 import uuid from "react-native-uuid";
 import styled from "styled-components/native";
+import * as Yup from "yup";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
 import { defaultAvatar } from "../../data/avatarData";
@@ -11,35 +13,61 @@ import STMText from "../Texts/ShareTechMonoText";
 import AvatarCreator from "./AvatarCreator";
 
 interface Props {
+  userName: string;
   handleClose: () => void;
 }
 
+const userNameSchema = Yup.object().shape({
+  username: Yup.string().required("Required").min(2, "must contain atleast 2 characters"),
+});
+
 const CreateUser = ({ handleClose }: Props) => {
-  const [username, setUsername] = useState("");
   const { themeColors } = useTheme();
   const { createUser } = useUser();
   const avatarRef = useRef<AvatarProps>(defaultAvatar);
 
-  const handleCreateUser = () => {
-    createUser({
-      id: uuid.v4() as string,
-      username: username,
-      avatar: avatarRef.current.valueOf(),
-      gameSessions: [],
-      achievements: [],
-    });
-
-    handleClose();
-  };
 
   return (
     <>
       <ContentContainer>
-        <STMText size={14}>Pick a username</STMText>
-        <Input onChangeText={setUsername} themeColors={themeColors} value={username} maxLength={15} />
-        <AvatarCreator avatarRef={avatarRef} />
+        <Formik
+          validationSchema={userNameSchema}
+          initialValues={{
+            username: "",
+          }}
+          onSubmit={(values) => {
+            createUser({
+              id: uuid.v4() as string,
+              username: values.username,
+              avatar: avatarRef.current.valueOf(),
+              gameSessions: [],
+              achievements: []
+            });
+
+            handleClose();
+          }}
+        >
+          {({ handleChange, handleBlur, touched, handleSubmit, values, errors }) => {
+            return (
+              <>
+                <Input
+                  themeColors={themeColors}
+                  label="username"
+                  value={values.username}
+                  error={errors.username}
+                  touched={touched.username}
+                  isValidating
+                  onChangeText={handleChange("username")}
+                  handleBlur={handleBlur("username")}
+                />
+                {errors.username && <STMText size={10}>{errors.username}</STMText>}
+                <AvatarCreator avatarRef={avatarRef} />
+                <StandardButton title="submit" color={themeColors.mustard} onPress={handleSubmit} />
+              </>
+            );
+          }}
+        </Formik>
       </ContentContainer>
-      <StandardButton title="submit" color={themeColors.mustard} onPress={handleCreateUser} />
     </>
   );
 };
