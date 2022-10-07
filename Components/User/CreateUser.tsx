@@ -17,15 +17,17 @@ interface Props {
   handleClose: () => void;
 }
 
-const userNameSchema = Yup.object().shape({
-  username: Yup.string().required("Required").min(2, "must contain atleast 2 characters"),
+export const userNameSchema = Yup.object().shape({
+  username: Yup.string()
+    .required("username cant be empty")
+    .min(2, "must contain atleast 2 characters")
+    .matches(/^\S*$/, "username cannot contain spaces"),
 });
 
 const CreateUser = ({ handleClose }: Props) => {
   const { themeColors } = useTheme();
   const { createUser } = useUser();
   const avatarRef = useRef<AvatarProps>(defaultAvatar);
-
 
   return (
     <>
@@ -41,7 +43,7 @@ const CreateUser = ({ handleClose }: Props) => {
               username: values.username,
               avatar: avatarRef.current.valueOf(),
               gameSessions: [],
-              achievements: []
+              achievements: [],
             });
 
             handleClose();
