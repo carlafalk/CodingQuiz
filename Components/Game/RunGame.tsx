@@ -37,7 +37,7 @@ const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession, gameSess
   const timeLeftRef = useRef(100);
   const { playGameMusic, playSubmitSound } = useSound();
   const { themeColors } = useTheme();
-  const { addGameSession, updateAchievements } = useUser();
+  const { addGameSession } = useUser();
 
   // consts
   const lastQuestion = state.currentQuestion === state.quizItems.length - 1;
@@ -88,9 +88,7 @@ const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession, gameSess
   function handleSubmit() {
     handleAnswer();
     playSubmitSound();
-    if (lastQuestion) {
-      updateAchievements();
-    }
+
     if (!lastQuestion) {
       dispatch({ type: "SET_TIME_IS_UP_FALSE" });
       dispatch({ type: "INCREMENT_CURRENT_QUESTION" });

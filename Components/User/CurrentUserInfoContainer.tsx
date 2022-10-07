@@ -1,7 +1,6 @@
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { Pressable } from "react-native";
-import { AvatarProps, BigHead, theme } from "react-native-bigheads";
+import { AvatarProps, BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";

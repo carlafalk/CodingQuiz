@@ -46,6 +46,7 @@ function UserProvider({ children }: Props) {
 
   const loginUser = (user: User) => {
     if (user) {
+      updateAchievements();
       setCurrentUser(user);
     }
   };
@@ -111,12 +112,17 @@ function UserProvider({ children }: Props) {
 
   const updateAchievements = () => {
     if (currentUser) {
-      const newUser = { ...currentUser };
-      buildAchievement(newUser);
-      setCurrentUser(newUser);
-      const userIndex = users.findIndex((x) => x.id === newUser.id);
+      const currentUserCopy = { ...currentUser, gameSessions: [...currentUser.gameSessions], achievements: [...currentUser.achievements] };
+
+      buildAchievement(currentUserCopy);
+
+      setCurrentUser(currentUserCopy);
+
       const usersCopy = [...users];
-      usersCopy[userIndex] = newUser;
+
+      const currentUserIndex = usersCopy.findIndex((user) => user.id === currentUser.id);
+      usersCopy.splice(currentUserIndex, 1, currentUserCopy);
+
       setUsers(usersCopy);
     }
   };

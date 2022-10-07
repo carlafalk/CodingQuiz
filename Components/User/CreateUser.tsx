@@ -4,7 +4,6 @@ import uuid from "react-native-uuid";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
-import achievementData from "../../data/achievementData";
 import { defaultAvatar } from "../../data/avatarData";
 import { colorsModel } from "../../models/ColorsModel";
 import StandardButton from "../Buttons/StandardButton";
@@ -27,7 +26,7 @@ const CreateUser = ({ handleClose }: Props) => {
       username: username,
       avatar: avatarRef.current.valueOf(),
       gameSessions: [],
-      achievements: achievementData,
+      achievements: [],
     });
 
     handleClose();
