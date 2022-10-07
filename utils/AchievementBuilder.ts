@@ -12,7 +12,9 @@ export function buildAchievement(user: User) {
         user.achievements.push(achievementData[0])
     }
         
-    if (user.gameSessions.length > 2 && !checkIndex(achievementData[1].title)) {
-        user.achievements.push(achievementData[1])
+    if (achievementData[1].objective) {
+        if (user.gameSessions.length >= achievementData[1].objective && !checkIndex(achievementData[1].title)) {
+            user.achievements.push(achievementData[1])
+        }
     }
 }

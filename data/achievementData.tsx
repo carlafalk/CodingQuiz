@@ -23,7 +23,7 @@ const achievementData: AchievementModel[] = [
     title: "I like all dem flavors",
     desc: "Play a game in each category",
     imageURL: logo,
-    objective: 4,
+    objective: 5,
   },
   {
     title: "If in doubt, AFK out",
