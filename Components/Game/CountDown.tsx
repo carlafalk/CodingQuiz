@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing } from "react-native";
 import styled from "styled-components/native";
 import { useSound } from "../../contexts/SoundContext";
+import TopSection from "../Layout/TopSection";
 import STMText from "../Texts/ShareTechMonoText";
-import TopSection from "../TopSection";
 
 interface Props {
   setCountingDown: React.Dispatch<React.SetStateAction<boolean>>;

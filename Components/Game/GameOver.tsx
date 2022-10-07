@@ -14,10 +14,10 @@ import { colorsModel } from "../../models/ColorsModel";
 import { GameSessionModel } from "../../models/GameSessionModel";
 import { Divider } from "../../Styles/views";
 import StandardButton from "../Buttons/StandardButton";
-import GameSession from "../GameSession";
+import TopSection from "../Layout/TopSection";
 import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
-import TopSection from "../TopSection";
+import GameSession from "./GameSession";
 
 interface Props {
   gameSession: GameSessionModel;

@@ -11,10 +11,10 @@ import { Divider } from "../../Styles/views";
 import { buildGameSession } from "../../utils/GameSessionBuilder";
 import QuizItemRandomizer from "../../utils/QuizItemRandomizer";
 import AnswerButton from "../Buttons/AnswerButton";
-import Logo from "../Logo";
+import Logo from "../Layout/Logo";
+import TopSection from "../Layout/TopSection";
 import STMText from "../Texts/ShareTechMonoText";
-import TimerBar from "../TimerBar";
-import TopSection from "../TopSection";
+import TimerBar from "./TimerBar";
 
 interface Props {
   category: string;

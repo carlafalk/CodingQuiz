@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
-import { useTheme } from "../contexts/ThemeContext";
-import { useUser } from "../contexts/UserContext";
-import { colorsModel } from "../models/ColorsModel";
-import { GameSessionModel } from "../models/GameSessionModel";
-import STMText from "./Texts/ShareTechMonoText";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useUser } from "../../contexts/UserContext";
+import { colorsModel } from "../../models/ColorsModel";
+import { GameSessionModel } from "../../models/GameSessionModel";
+import STMText from "../Texts/ShareTechMonoText";
 
 const LeaderboardCard = () => {
   const { users } = useUser();

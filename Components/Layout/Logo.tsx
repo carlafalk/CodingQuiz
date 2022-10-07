@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import logo from "../assets/Images/logo.png";
+import logo from "../../assets/Images/logo.png";
 
 interface Props {
   topMargin: number;

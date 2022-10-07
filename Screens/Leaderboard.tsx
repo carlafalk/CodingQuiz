@@ -1,9 +1,9 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { RootStackParams } from "../App";
-import Background from "../Components/Background";
-import LeaderboardCard from "../Components/LeaderboardCard";
-import TopSection from "../Components/TopSection";
+import LeaderboardCard from "../Components/Game/LeaderboardCard";
+import Background from "../Components/Layout/Background";
+import TopSection from "../Components/Layout/TopSection";
 
 type Props = NativeStackScreenProps<RootStackParams, "Leaderboard">;
 

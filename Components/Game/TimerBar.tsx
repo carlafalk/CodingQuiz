@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ImageBackground } from "react-native";
 import styled from "styled-components/native";
-import TimerBlur from "../assets/Images/timer_blur.png";
-import { useTheme } from "../contexts/ThemeContext";
-import { colorsModel } from "../models/ColorsModel";
-import { KnownAction } from "../reducers/types";
-import STMText from "./Texts/ShareTechMonoText";
+import TimerBlur from "../../assets/Images/timer_blur.png";
+import { useTheme } from "../../contexts/ThemeContext";
+import { colorsModel } from "../../models/ColorsModel";
+import { KnownAction } from "../../reducers/types";
+import STMText from "../Texts/ShareTechMonoText";
 
 interface Props {
   setTimeIsUp: React.Dispatch<KnownAction>;

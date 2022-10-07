@@ -7,9 +7,9 @@ import HTMLImg from "../assets/languageIcons/html-5.png";
 import JSImg from "../assets/languageIcons/js.png";
 import ReactImg from "../assets/languageIcons/react.png";
 import TSImg from "../assets/languageIcons/typescript.png";
-import Background from "../Components/Background";
 import CategoryButton from "../Components/Buttons/CategoryButton";
-import TopSection from "../Components/TopSection";
+import Background from "../Components/Layout/Background";
+import TopSection from "../Components/Layout/TopSection";
 import { useTheme } from "../contexts/ThemeContext";
 
 type Props = NativeStackScreenProps<RootStackParams, "Categories">;
