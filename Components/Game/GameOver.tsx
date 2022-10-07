@@ -32,7 +32,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
   const { gameCompleteVibration } = useVibrations();
-  const { updateAchievements } = useUser()
+  const { updateAchievements } = useUser();
 
   let categoryImg = HTMLImg;
   let categoryColor: string = "";
@@ -81,7 +81,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
           <STMText size={20}>{gameSession.points}/10</STMText>
         </TextBox>
         <Divider style={{ width: "85%", verticalPadding: 0 }} color={themeColors.commons.white} />
-        {gameSession.answers.length !== 0 && (
+        {gameSession.points !== 0 && (
           <>
             <TextBox>
               <STMText size={20}>Fastest answer</STMText>
