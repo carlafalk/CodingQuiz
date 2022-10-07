@@ -41,7 +41,6 @@ const CountDown = ({ setCountingDown }: Props) => {
   }, []);
 
   return (
-    // <Background>
     <>
       <TopSection title="get ready" />
       <Animated.View style={{ marginTop: 100 }}>
@@ -50,7 +49,6 @@ const CountDown = ({ setCountingDown }: Props) => {
         </Counter>
       </Animated.View>
     </>
-    /* </Background> */
   );
 };
 

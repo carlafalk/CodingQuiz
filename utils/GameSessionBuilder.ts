@@ -2,16 +2,6 @@ import { GameSessionModel } from "../models/GameSessionModel";
 import { User } from "../models/User";
 
 export function buildGameSession(gameSession: GameSessionModel, currentUser: User) {
-  // let answerTimes:number[];
-
-  // function getAnswertimes(){
-  //    return gameSession.answers
-  //   .filter((question) => question.answer?.isCorrect)
-  // //   .find((question) => {
-  // //     answerTimes.push(question.answerTime);
-  // //   });
-  // }
-
   const answerTimes = () => {
     let times: number[] = [];
     gameSession.answers

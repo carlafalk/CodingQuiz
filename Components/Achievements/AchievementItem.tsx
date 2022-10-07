@@ -56,5 +56,3 @@ const AchievementInfo = styled.View<{ themeColors: colorsModel; exists: () => bo
   height: 100%;
   background-color: ${({ themeColors, exists }) => (exists() ? themeColors.success : themeColors.lightPurple)};
 `;
-
-/* background-color: ${(achievement, themeColor) => (achievement.isCompleted ? themeColor.success : themeColor.lightGrey)}; */
