@@ -32,6 +32,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
   const { gameCompleteVibration } = useVibrations();
+  const { updateAchievements } = useUser()
 
   let categoryImg = HTMLImg;
   let categoryColor: string = "";
@@ -57,6 +58,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
 
   useEffect(() => {
     playHomeMusic();
+    updateAchievements();
     gameCompleteVibration();
   }, []);
 
