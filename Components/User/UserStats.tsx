@@ -49,7 +49,7 @@ const UserStats = () => {
             <STMText size={11} uppercase>
               Rights / Quiz
             </STMText>
-            <STMText size={11}>{currentUser && (totalPoints() / currentUser.gameSessions.length).toFixed(2)}</STMText>
+            <STMText size={11}>{currentUser && totalPoints() > 0 && (totalPoints() / currentUser.gameSessions.length).toFixed(2)}</STMText>
           </StatRow>
           <StatRow>
             <STMText size={11} uppercase>
