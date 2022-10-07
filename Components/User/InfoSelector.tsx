@@ -55,22 +55,23 @@ const InfoSelector = ({ size, decrement, increment, selectedProp, selectedValue 
 };
 
 const AvatarInfoContainer = styled.View`
-  padding: 0 10px;
   align-items: center;
+  flex-direction: row;
+  margin: 10px 0;
   border-radius: 10px;
   border-color: #eeeeee32;
   border-width: 1px;
-  flex-direction: row;
-  margin: 10px 0;
+  width: 100%;
+  justify-content: center;
+padding: 10px 0px;
 `;
 
 const ArrowButton = styled.TouchableOpacity`
-  padding: 10px;
-  width: 10%;
+  /* padding: 10px; */
 `;
 
 const AvatarInfo = styled.View<{ size: string }>`
-  width: ${({ size }) => (size === "regular" ? "90%" : "80%")};
+  width: ${({ size }) => (size === "regular" ? "85%" : "85%")};
 `;
 
 export default InfoSelector;
