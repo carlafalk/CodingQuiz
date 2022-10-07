@@ -1,5 +1,6 @@
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-import { useRef, useState } from "react";
+import { Formik } from "formik";
+import React, { useRef, useState } from "react";
 import { AvatarProps, BigHead } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
@@ -9,6 +10,8 @@ import { User } from "../../models/User";
 import EditUserAvatar from "../Modal/ModalViews/EditUserAvatar";
 import UserAchievements from "../Modal/ModalViews/UserAchievements";
 import QuizModal from "../Modal/QuizModal";
+import STMText from "../Texts/ShareTechMonoText";
+import { userNameSchema } from "./CreateUser";
 
 interface Props {
   user: User;
@@ -17,7 +20,6 @@ interface Props {
 export default function CurrentUserInfoContainer({ user }: Props) {
   const { editUser, currentUser } = useUser();
   const { themeColors } = useTheme();
-  const [username, setUsername] = useState(currentUser?.username);
   const [isFocused, setIsFocused] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [achievementModalOpen, setAchievementModalOpen] = useState(false);
@@ -30,26 +32,49 @@ export default function CurrentUserInfoContainer({ user }: Props) {
     <>
       <UserInfoContainer>
         <AchievementButton themeColors={themeColors} onPress={() => setAchievementModalOpen(true)}>
-      <FontAwesome name="trophy" size={22} color={themeColors.categories.react} />
-      </AchievementButton>
+          <FontAwesome name="trophy" size={22} color={themeColors.categories.react} />
+        </AchievementButton>
         <BigHeadContainer>
           <BigHead {...user.avatar} size={150} onPress={() => setEditModalOpen(true)} />
           <FontAwesome name="paint-brush" size={16} color={themeColors.categories.react} style={{ position: "absolute", bottom: 5, right: 5 }} />
         </BigHeadContainer>
-        <UserInfoTextContainer themeColors={themeColors}>
-          <UsernameInput
-            themeColors={themeColors}
-            onChangeText={setUsername}
-            value={username}
-            onSubmitEditing={() => {
-              editUser({ ...user, username: username as string });
-              setIsFocused(false);
-            }}
-            maxLength={15}
-            onFocus={() => setIsFocused(true)}
-          />
-          {!isFocused && <MaterialIcons name="mode-edit" size={16} color={themeColors.categories.react} style={{ marginRight: 10 }} />}
-        </UserInfoTextContainer>
+        <Formik
+          validationSchema={userNameSchema}
+          initialValues={{ username: user.username }}
+          onSubmit={(values) => {
+            console.log("ASD");
+            currentUser && editUser({ ...currentUser, username: values.username });
+          }}
+        >
+          {({ handleChange, handleBlur, touched, handleSubmit, values, errors }) => {
+            return (
+              <>
+                <UserInfoTextContainer themeColors={themeColors}>
+                  <UsernameInput
+                    themeColors={themeColors}
+                    onChangeText={handleChange("username")}
+                    isValidating
+                    value={values.username}
+                    onSubmitEditing={() => {
+                      handleSubmit();
+                      setIsFocused(false);
+                    }}
+                    handleBlur={handleBlur("username")}
+                    error={errors.username}
+                    maxLength={15}
+                    onFocus={() => setIsFocused(true)}
+                  />
+                  {!isFocused && <MaterialIcons name="mode-edit" size={16} color={themeColors.categories.react} style={{ marginRight: 10 }} />}
+                </UserInfoTextContainer>
+                {errors.username && (
+                  <STMText size={10} styles={{ margin: 4 }}>
+                    {errors.username}
+                  </STMText>
+                )}
+              </>
+            );
+          }}
+        </Formik>
       </UserInfoContainer>
       <QuizModal
         show={editModalOpen}
@@ -104,7 +129,7 @@ const UsernameInput = styled.TextInput<{ themeColors: colorsModel }>`
   z-index: 999;
 `;
 
-const AchievementButton = styled.Pressable<{themeColors: colorsModel}>`
+const AchievementButton = styled.Pressable<{ themeColors: colorsModel }>`
   padding: 15px;
   z-index: 999;
   position: absolute;
@@ -112,4 +137,4 @@ const AchievementButton = styled.Pressable<{themeColors: colorsModel}>`
   left: 0px;
   background-color: ${({ themeColors }) => themeColors.backgrounds.superLowOpacity};
   border-radius: 15px;
-`
+`;
