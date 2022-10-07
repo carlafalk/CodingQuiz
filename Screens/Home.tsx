@@ -48,7 +48,6 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
 
   useEffect(() => {
     !currentUser && navigation.navigate("LogIn");
-    console.log(currentUser);
   }, [currentUser]);
 
   const headerImg = <BigHead {...currentUser?.avatar} size={40} />;

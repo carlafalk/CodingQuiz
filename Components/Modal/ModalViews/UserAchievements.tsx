@@ -6,9 +6,6 @@ import achievementData from "../../../data/achievementData";
 import AchievementItem from "../../Achievements/AchievementItem";
 
 const UserAchievements = () => {
-  const { currentUser } = useUser();
-  console.log(currentUser?.achievements)
-
   return (
     <ScrollView style={{ padding: 5 }}>
       <View>
