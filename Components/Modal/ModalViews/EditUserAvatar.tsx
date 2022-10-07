@@ -35,7 +35,7 @@ const EditUserAvatar = ({ avatarRef, user, setModalIsOpen }: Props) => {
           title="Save"
           color={themeColors.success}
         />
-        <ModalStandardButton onPress={() => setModalIsOpen(false)} title="Cancel" color={themeColors.mustard} />
+        <ModalStandardButton onPress={() => setModalIsOpen(false)} title="Cancel" color={themeColors.lightGrey} />
       </ButtonContainer>
     </>
   );

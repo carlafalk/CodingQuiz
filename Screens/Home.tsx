@@ -11,6 +11,7 @@ import Background from "../Components/Background";
 import StandardButton from "../Components/Buttons/StandardButton";
 import Logo from "../Components/Logo";
 import QuizModal from "../Components/Modal/QuizModal";
+import RegularText from "../Components/Texts/RegularText";
 import UserInfo from "../Components/User/UserInfo";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
@@ -66,12 +67,23 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
       </UserInfoContainer>
       <ButtonContainer>
         <StandardButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
-        <StandardButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} />
+        {/* <StandardButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} /> */}
+        <StandardButton onPress={() => navigation.navigate("Leaderboard")} title="Leaderboard" color={themeColors.mustard} />
       </ButtonContainer>
-      <MenuButton onPress={handleOpen}>
-        <MaterialIcons name="settings" size={32} color={themeColors.lightGrey} />
-        <MenuButtonText themeColors={themeColors}>Settings</MenuButtonText>
-      </MenuButton>
+      <MenuButtonContainer>
+        <MenuButton onPress={handleOpen}>
+          <MaterialIcons name="settings" size={32} color={themeColors.lightGrey} />
+          <RegularText size={14} styles={{ padding: 10 }}>
+            Settings
+          </RegularText>
+        </MenuButton>
+        <MenuButton onPress={() => navigation.navigate("About")}>
+          <RegularText size={14} styles={{ padding: 10 }}>
+            About
+          </RegularText>
+          <MaterialIcons name="help" size={32} color={themeColors.lightGrey} />
+        </MenuButton>
+      </MenuButtonContainer>
       <Modalize
         ref={modalizeRef}
         rootStyle={modalRootStyle}
@@ -88,15 +100,7 @@ export default gestureHandlerRootHOC(HomeScreen);
 
 const MenuButton = styled.Pressable`
   flex-direction: row;
-  align-items: center;
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-`;
-
-const MenuButtonText = styled.Text<{ themeColors: colorsModel }>`
-  padding: 10px;
-  color: ${({ themeColors }) => themeColors.commons.white};
+  margin: 0 20px;
 `;
 
 const UserInfoContainer = styled.View`
@@ -130,4 +134,13 @@ const modalModalStyle = {
 
 const ButtonContainer = styled.View`
   margin-top: 28px;
+`;
+
+const MenuButtonContainer = styled.View`
+  bottom: 0px;
+  position: absolute;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 0px;
 `;

@@ -9,12 +9,12 @@ import TSImg from "../../assets/languageIcons/typescript.png";
 import { useSound } from "../../contexts/SoundContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
+import { useVibrations } from "../../contexts/VibrationsContext";
 import { colorsModel } from "../../models/ColorsModel";
 import { GameSessionModel } from "../../models/GameSessionModel";
 import { Divider } from "../../Styles/views";
 import StandardButton from "../Buttons/StandardButton";
 import GameSession from "../GameSession";
-import Logo from "../Logo";
 import QuizModal from "../Modal/QuizModal";
 import STMText from "../Texts/ShareTechMonoText";
 import TopSection from "../TopSection";
@@ -24,13 +24,15 @@ interface Props {
   category: string;
   handlePressHome: () => void;
   handlePressPlayAgain: () => void;
+  handlePressLeaderboard: () => void;
 }
 
-const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain }: Props) => {
+const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain, handlePressLeaderboard }: Props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { themeColors } = useTheme();
   const { playHomeMusic } = useSound();
-  const { addGameSession, currentUser, updateAchievements, users } = useUser();
+  const { gameCompleteVibration } = useVibrations();
+  const { updateAchievements } = useUser()
 
   let categoryImg = HTMLImg;
   let categoryColor: string = "";
@@ -57,6 +59,7 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
   useEffect(() => {
     playHomeMusic();
     updateAchievements();
+    gameCompleteVibration();
   }, []);
 
   return (
@@ -106,8 +109,8 @@ const GameOver = ({ gameSession, category, handlePressHome, handlePressPlayAgain
       <ButtonBox>
         <StandardButton color={themeColors.lightGreen} title="play again" onPress={handlePressPlayAgain} />
         <StandardButton color={themeColors.mustard} title="main menu" onPress={handlePressHome} />
+        <StandardButton color={themeColors.mustard} title="leaderboard" onPress={handlePressLeaderboard} />
       </ButtonBox>
-      <Logo topMargin={30} size="small" />
     </>
   );
 };

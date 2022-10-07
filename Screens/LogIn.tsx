@@ -11,6 +11,7 @@ import Background from "../Components/Background";
 import StandardButton from "../Components/Buttons/StandardButton";
 import Logo from "../Components/Logo";
 import QuizModal from "../Components/Modal/QuizModal";
+import RegularText from "../Components/Texts/RegularText";
 import CreateUser from "../Components/User/CreateUser";
 import UserExists from "../Components/User/UserExists";
 import { useTheme } from "../contexts/ThemeContext";
@@ -101,10 +102,14 @@ const LogInScreen = ({ navigation }: Props) => {
         <MenuButtonContainer>
           <MenuButton onPress={handleOpen}>
             <MaterialIcons name="settings" size={32} color={themeColors.lightGrey} />
-            <MenuButtonText themeColors={themeColors}>Settings</MenuButtonText>
+            <RegularText size={14} styles={{ padding: 10 }}>
+              Settings
+            </RegularText>
           </MenuButton>
           <MenuButton onPress={() => navigation.navigate("About")}>
-            <MenuButtonText themeColors={themeColors}>About</MenuButtonText>
+            <RegularText size={14} styles={{ padding: 10 }}>
+              About
+            </RegularText>
             <MaterialIcons name="help" size={32} color={themeColors.lightGrey} />
           </MenuButton>
         </MenuButtonContainer>
@@ -136,11 +141,6 @@ const MenuButton = styled.Pressable`
   flex-direction: row;
   padding: 10px;
   align-items: center;
-`;
-
-const MenuButtonText = styled.Text<{ themeColors: colorsModel }>`
-  padding: 10px;
-  color: ${({ themeColors }) => themeColors.commons.white};
 `;
 
 const ButtonContainer = styled.View`

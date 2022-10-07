@@ -2,12 +2,13 @@ import React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import SettingItem from "../Components/Settings/SettingItem";
+import RegularText from "../Components/Texts/RegularText";
 import { useHaptics } from "../contexts/HapticsContext";
 import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
+import { useVibrations } from "../contexts/VibrationsContext";
 import settingsData from "../data/settingsData";
 import { SettingModel } from "../models/SettingModel";
-import { LgText, XlText } from "../Styles/texts";
 import { Container, Divider } from "../Styles/views";
 
 const SettingsScreen = () => {
@@ -15,7 +16,8 @@ const SettingsScreen = () => {
 
   const { themeColors, isDarkTheme, toggleThemeIsDisabled } = useTheme();
   const { toggleMuteMusic, toggleMuteButtonSound, setIsButtonSoundMuted, isButtonSoundMuted, isMusicMuted, setIsMusicMuted } = useSound();
-  const { setIsHapticsDisabled, isHapticsDisabled, toggleHapticsIsDisabled } = useHaptics();
+  const { isHapticsDisabled, toggleHapticsIsDisabled } = useHaptics();
+  const { toggleIsVibrationsDisabled, isVibrationsDisabled } = useVibrations();
 
   function handleToggle(item: SettingModel, value: boolean) {
     if (item.title === "Dark Mode") {
@@ -31,6 +33,9 @@ const SettingsScreen = () => {
     if (item.title === "Haptics") {
       toggleHapticsIsDisabled();
     }
+    if (item.title === "Vibration") {
+      toggleIsVibrationsDisabled();
+    }
   }
 
   const getToggleValues = (item: SettingModel) => {
@@ -38,18 +43,19 @@ const SettingsScreen = () => {
     if (item.title === "Effects") return !isButtonSoundMuted;
     if (item.title === "Music") return !isMusicMuted;
     if (item.title === "Haptics") return !isHapticsDisabled;
+    if (item.title === "Vibration") return !isVibrationsDisabled;
     return true;
   };
 
   return (
     <ScrollView>
       <View>
-        <XlText style={{ color: themeColors.commons.white }}>Settings</XlText>
+        <RegularText size={32}>Settings</RegularText>
       </View>
       <Divider color={themeColors.commons.white} />
       {categories.map((category) => (
         <Container key={category}>
-          <LgText style={{ color: themeColors.commons.white }}>{category}</LgText>
+          <RegularText size={28}>{category}</RegularText>
           {settingsData
             .filter((setting) => setting.category === category)
             .map((item) => (

@@ -17,8 +17,8 @@ const DeleteUser = ({ handleDelete, setConfirmModalOpen }: Props) => {
         <STMText size={15}>Are you sure you want to delete this user?</STMText>
       </TextContainer>
       <ButtonContainer>
-        <ModalStandardButton onPress={handleDelete} title="Delete" color={themeColors.mustard} />
-        <ModalStandardButton onPress={() => setConfirmModalOpen(false)} title="Cancel" color={themeColors.mustard} />
+        <ModalStandardButton onPress={handleDelete} title="Delete" color={themeColors.danger} />
+        <ModalStandardButton onPress={() => setConfirmModalOpen(false)} title="Cancel" color={themeColors.lightGrey} />
       </ButtonContainer>
     </>
   );
