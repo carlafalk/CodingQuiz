@@ -88,6 +88,7 @@ const RunGame = ({ category, gameIsOver, setGameIsOver, setGameSession, gameSess
   function handleSubmit() {
     handleAnswer();
     playSubmitSound();
+
     if (!lastQuestion) {
       dispatch({ type: "SET_TIME_IS_UP_FALSE" });
       dispatch({ type: "INCREMENT_CURRENT_QUESTION" });

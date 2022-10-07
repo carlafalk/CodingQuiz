@@ -1,9 +1,8 @@
 import { createContext, ReactNode, useContext } from "react";
-import uuid from "react-native-uuid";
-import { defaultAvatar } from "../data/avatarData";
 import useAsyncStorage from "../hooks/useAsyncStorage";
 import { GameSessionModel } from "../models/GameSessionModel";
 import { User } from "../models/User";
+import { buildAchievement } from "../utils/AchievementBuilder";
 
 interface UserContext {
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
@@ -17,6 +16,7 @@ interface UserContext {
   addGameSession: (gameSession: GameSessionModel) => void;
   mostPlayedCategory: () => string;
   totalPoints: () => number;
+  updateAchievements: () => void;
 }
 
 const UserContext = createContext<UserContext>({
@@ -27,31 +27,26 @@ const UserContext = createContext<UserContext>({
   logOutUser: () => console.warn("No provider found."),
   createUser: () => console.warn("No provider found."),
   editUser: () => console.warn("No provider found."),
-  deleteUser: (user: User) => console.warn("no provider found."),
+  deleteUser: (user: User) => console.warn("No provider found."),
   addGameSession: (gameSession: GameSessionModel) => {
-    console.log("no provider found");
+    console.warn("No provider found.");
   },
   mostPlayedCategory: () => "",
   totalPoints: () => 0,
+  updateAchievements: () => console.warn("No provider found."),
 });
 
 interface Props {
   children: ReactNode;
 }
 
-const guest: User = {
-  id: uuid.v4() as string,
-  username: "guest123",
-  avatar: defaultAvatar,
-  gameSessions: [] as GameSessionModel[],
-};
-
 function UserProvider({ children }: Props) {
-  const [users, setUsers, isLoaded] = useAsyncStorage<User[]>("newUsers", [guest]);
+  const [users, setUsers, isLoaded] = useAsyncStorage<User[]>("newUsers", []);
   const [currentUser, setCurrentUser] = useAsyncStorage<User | undefined>("current-user-test", undefined);
 
   const loginUser = (user: User) => {
     if (user) {
+      updateAchievements();
       setCurrentUser(user);
     }
   };
@@ -100,7 +95,27 @@ function UserProvider({ children }: Props) {
 
   const addGameSession = (gameSession: GameSessionModel) => {
     if (currentUser) {
-      const currentUserCopy = { ...currentUser, gameSessions: [...currentUser.gameSessions, gameSession] };
+      const currentUserCopy = {
+        ...currentUser,
+        gameSessions: [...currentUser.gameSessions, gameSession],
+      };
+      setCurrentUser(currentUserCopy);
+
+      const usersCopy = [...users];
+
+      const currentUserIndex = usersCopy.findIndex((user) => user.id === currentUser.id);
+      usersCopy.splice(currentUserIndex, 1, currentUserCopy);
+
+      setUsers(usersCopy);
+    }
+  };
+
+  const updateAchievements = () => {
+    if (currentUser) {
+      const currentUserCopy = { ...currentUser, gameSessions: [...currentUser.gameSessions], achievements: [...currentUser.achievements] };
+
+      buildAchievement(currentUserCopy);
+
       setCurrentUser(currentUserCopy);
 
       const usersCopy = [...users];
@@ -136,6 +151,7 @@ function UserProvider({ children }: Props) {
         addGameSession,
         mostPlayedCategory,
         totalPoints,
+        updateAchievements,
       }}
     >
       {children}

@@ -26,6 +26,7 @@ const CreateUser = ({ handleClose }: Props) => {
       username: username,
       avatar: avatarRef.current.valueOf(),
       gameSessions: [],
+      achievements: [],
     });
 
     handleClose();

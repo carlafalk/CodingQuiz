@@ -16,6 +16,7 @@ import CreateUser from "../Components/User/CreateUser";
 import UserExists from "../Components/User/UserExists";
 import { useTheme } from "../contexts/ThemeContext";
 import { useUser } from "../contexts/UserContext";
+import achievementData from "../data/achievementData";
 import { defaultAvatar } from "../data/avatarData";
 import { colorsModel } from "../models/ColorsModel";
 import { User } from "../models/User";
@@ -37,6 +38,7 @@ const LogInScreen = ({ navigation }: Props) => {
     username: "guest#" + randomGuestNumber,
     avatar: defaultAvatar,
     gameSessions: [],
+    achievements: [],
   };
 
   useEffect(() => {
