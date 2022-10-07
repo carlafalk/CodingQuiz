@@ -1,4 +1,4 @@
-import { Audio, AVPlaybackStatus } from "expo-av";
+import { Audio } from "expo-av";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import AllSounds, { SoundObject } from "../data/soundData";
 import useAsyncStorage from "../hooks/useAsyncStorage";
@@ -51,13 +51,8 @@ function SoundProvider({ children }: Props) {
   const [allSounds, setAllSounds] = useState<SoundObject[]>(AllSounds);
   const [music, setMusic] = useState<Audio.Sound>();
   const [buttonEffect, setButtonEffect] = useState<Audio.Sound>();
-  const [soundStatus, setSoundStatus] = useState<AVPlaybackStatus>();
   const [isMusicMuted, setIsMusicMuted, isLoaded] = useAsyncStorage<boolean>("music-muted", false);
   const [isButtonSoundMuted, setIsButtonSoundMuted] = useAsyncStorage<boolean>("button-muted", false);
-
-  useEffect(() => {
-    LoadAllSounds();
-  }, []);
 
   useEffect(() => {
     return music
@@ -94,15 +89,7 @@ function SoundProvider({ children }: Props) {
     }
   };
 
-  const LoadAllSounds = async () => {
-    //TODO: find some way to load all sounds at once? :O
-    // const { sound, status } = await Audio.Sound.createAsync(allSounds[1].sound);
-    // setButtonEffect(sound);
-  };
-
   const playButtonEffect = async () => {
-    // TODO play sound on buttonPress
-
     if (!isButtonSoundMuted) {
       const { sound, status } = await Audio.Sound.createAsync(allSounds[1].sound);
       await sound.playAsync();
@@ -135,17 +122,13 @@ function SoundProvider({ children }: Props) {
   };
 
   const toggleMuteMusic = async () => {
-    //TODO: Stop sound
     if (!isMusicMuted) {
       setIsMusicMuted(true);
       music && (await music.setIsMutedAsync(true));
-    }
-    if (isMusicMuted) {
+    } else {
       setIsMusicMuted(false);
       music && (await music.setIsMutedAsync(false));
     }
-
-    // !isMusicMuted ? music && setSoundStatus(await music.setIsMutedAsync(true)) : music && setSoundStatus(await music.setIsMutedAsync(false));
   };
 
   const toggleMuteButtonSound = async () => {
