@@ -1,5 +1,4 @@
 import { Octicons } from "@expo/vector-icons";
-import React from "react";
 import { AvatarProps } from "react-native-bigheads";
 import styled from "styled-components/native";
 import { useTheme } from "../../contexts/ThemeContext";
