@@ -2,10 +2,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { BackHandler } from "react-native";
 import { RootStackParams } from "../App";
-import Background from "../Components/Background";
 import CountDown from "../Components/Game/CountDown";
 import GameOver from "../Components/Game/GameOver";
 import RunGame from "../Components/Game/RunGame";
+import Background from "../Components/Layout/Background";
 import { GameSessionModel } from "../models/GameSessionModel";
 
 type Props = NativeStackScreenProps<RootStackParams, "Game">;

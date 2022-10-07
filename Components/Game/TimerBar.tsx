@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { ImageBackground } from "react-native";
 import styled from "styled-components/native";
-import { useTheme } from "../contexts/ThemeContext";
-import { colorsModel } from "../models/ColorsModel";
-import { KnownAction } from "../reducers/types";
-import STMText from "./Texts/ShareTechMonoText";
+import TimerBlur from "../../assets/Images/timer_blur.png";
+import { useTheme } from "../../contexts/ThemeContext";
+import { colorsModel } from "../../models/ColorsModel";
+import { KnownAction } from "../../reducers/types";
+import STMText from "../Texts/ShareTechMonoText";
 
 interface Props {
   setTimeIsUp: React.Dispatch<KnownAction>;
@@ -41,9 +43,11 @@ const TimerBar = ({ setTimeIsUp, currentQuestion, timeLeftRef }: Props) => {
       <RemainingTimeBar themeColors={themeColors} width={timeLeft} />
       <TimeBarShine themeColors={themeColors} />
       <TimeBarClock themeColors={themeColors}>
-        <TimeBarTime size={20} themeColors={themeColors}>
-          {Math.round(timeLeft / 10)}
-        </TimeBarTime>
+        <ImageBackground source={TimerBlur} style={{ width: 60, height: 60, alignItems: "center", justifyContent: "center" }}>
+          <TimeBarTime size={20} themeColors={themeColors}>
+            {Math.round(timeLeft / 10)}
+          </TimeBarTime>
+        </ImageBackground>
       </TimeBarClock>
     </TimeBar>
   );
@@ -89,8 +93,6 @@ const TimeBarClock = styled.View<{ themeColors: colorsModel }>`
   right: 5px;
   height: 60px;
   width: 60px;
-  background-color: ${({ themeColors }) => themeColors.lightPurple};
-  border: 5px solid ${({ themeColors }) => themeColors.mustard};
   border-radius: 50px;
   elevation: 8;
 `;

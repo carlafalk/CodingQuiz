@@ -13,7 +13,6 @@ import STMText from "../Texts/ShareTechMonoText";
 import AvatarCreator from "./AvatarCreator";
 
 interface Props {
-  userName: string;
   handleClose: () => void;
 }
 

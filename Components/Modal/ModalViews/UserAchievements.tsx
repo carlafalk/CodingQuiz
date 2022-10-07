@@ -1,7 +1,6 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
 import styled from "styled-components/native";
-import { useUser } from "../../../contexts/UserContext";
 import achievementData from "../../../data/achievementData";
 import AchievementItem from "../../Achievements/AchievementItem";
 

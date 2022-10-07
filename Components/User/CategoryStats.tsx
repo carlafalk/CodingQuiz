@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
-import CSSImg from "../assets/languageIcons/css-3.png";
-import HTMLImg from "../assets/languageIcons/html-5.png";
-import JSImg from "../assets/languageIcons/js.png";
-import ReactImg from "../assets/languageIcons/react.png";
-import TSImg from "../assets/languageIcons/typescript.png";
-import { useTheme } from "../contexts/ThemeContext";
-import { useUser } from "../contexts/UserContext";
-import STMText from "./Texts/ShareTechMonoText";
+import CSSImg from "../../assets/languageIcons/css-3.png";
+import HTMLImg from "../../assets/languageIcons/html-5.png";
+import JSImg from "../../assets/languageIcons/js.png";
+import ReactImg from "../../assets/languageIcons/react.png";
+import TSImg from "../../assets/languageIcons/typescript.png";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useUser } from "../../contexts/UserContext";
+import STMText from "../Texts/ShareTechMonoText";
 
 interface Props {
   category: "react" | "html" | "css" | "javascript" | "typescript";

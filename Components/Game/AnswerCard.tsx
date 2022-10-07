@@ -1,11 +1,11 @@
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import styled from "styled-components/native";
-import { useTheme } from "../contexts/ThemeContext";
-import { AnswerInfo } from "../models/AnswerInfo";
-import { colorsModel } from "../models/ColorsModel";
-import { Divider } from "../Styles/views";
-import STMText from "./Texts/ShareTechMonoText";
+import { useTheme } from "../../contexts/ThemeContext";
+import { AnswerInfo } from "../../models/AnswerInfo";
+import { colorsModel } from "../../models/ColorsModel";
+import { Divider } from "../../Styles/views";
+import STMText from "../Texts/ShareTechMonoText";
 
 interface Props {
   answerInfo: AnswerInfo;

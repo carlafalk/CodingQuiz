@@ -7,9 +7,9 @@ import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import styled from "styled-components/native";
 import { RootStackParams } from "../App";
-import Background from "../Components/Background";
 import StandardButton from "../Components/Buttons/StandardButton";
-import Logo from "../Components/Logo";
+import Background from "../Components/Layout/Background";
+import Logo from "../Components/Layout/Logo";
 import QuizModal from "../Components/Modal/QuizModal";
 import RegularText from "../Components/Texts/RegularText";
 import UserInfo from "../Components/User/UserInfo";
@@ -66,7 +66,6 @@ const HomeScreen = ({ navigation, route }: HomeNavigationProps) => {
       </UserInfoContainer>
       <ButtonContainer>
         <StandardButton onPress={() => navigation.navigate("Categories")} title="Play" color={themeColors.lightGreen} />
-        {/* <StandardButton onPress={() => navigation.navigate("About")} title="About" color={themeColors.lightPurple} /> */}
         <StandardButton onPress={() => navigation.navigate("Leaderboard")} title="Leaderboard" color={themeColors.mustard} />
       </ButtonContainer>
       <MenuButtonContainer>

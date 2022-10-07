@@ -1,15 +1,15 @@
 import React from "react";
 import { Image, ScrollView } from "react-native";
 import styled from "styled-components/native";
-import CSSImg from "../assets/languageIcons/css-3.png";
-import HTMLImg from "../assets/languageIcons/html-5.png";
-import JSImg from "../assets/languageIcons/js.png";
-import ReactImg from "../assets/languageIcons/react.png";
-import TSImg from "../assets/languageIcons/typescript.png";
-import { useTheme } from "../contexts/ThemeContext";
-import { useUser } from "../contexts/UserContext";
+import CSSImg from "../../assets/languageIcons/css-3.png";
+import HTMLImg from "../../assets/languageIcons/html-5.png";
+import JSImg from "../../assets/languageIcons/js.png";
+import ReactImg from "../../assets/languageIcons/react.png";
+import TSImg from "../../assets/languageIcons/typescript.png";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useUser } from "../../contexts/UserContext";
+import STMText from "../Texts/ShareTechMonoText";
 import CategoryStats from "./CategoryStats";
-import STMText from "./Texts/ShareTechMonoText";
 
 const UserStats = () => {
   const { themeColors } = useTheme();
@@ -49,7 +49,7 @@ const UserStats = () => {
             <STMText size={11} uppercase>
               Rights / Quiz
             </STMText>
-            <STMText size={11}>{currentUser && (totalPoints() / currentUser.gameSessions.length).toFixed(2)}</STMText>
+            <STMText size={11}>{currentUser && totalPoints() > 0 && (totalPoints() / currentUser.gameSessions.length).toFixed(2)}</STMText>
           </StatRow>
           <StatRow>
             <STMText size={11} uppercase>

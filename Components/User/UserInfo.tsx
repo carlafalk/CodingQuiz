@@ -7,8 +7,8 @@ import { User } from "../../models/User";
 import ModalStandardButton from "../Buttons/ModalStandardButton";
 import DeleteUser from "../Modal/ModalViews/DeleteUser";
 import QuizModal from "../Modal/QuizModal";
-import UserStats from "../UserStats";
 import CurrentUserInfoContainer from "./CurrentUserInfoContainer";
+import UserStats from "./UserStats";
 
 interface Props {
   handleClose: () => void;
